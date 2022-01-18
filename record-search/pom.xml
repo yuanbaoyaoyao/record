@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.yuanbao</groupId>
+    <artifactId>record-search</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>record-search</name>
+    <description>record-search project for record</description>
+    <packaging>jar</packaging>
+
+    <parent>
+        <artifactId>record</artifactId>
+        <groupId>com.yuanbao.record</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.yuanbao.record</groupId>
+            <artifactId>record-mbp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yuanbao</groupId>
+            <artifactId>record-common</artifactId>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.data</groupId>-->
+<!--            <artifactId>spring-data-commons</artifactId>-->
+<!--        </dependency>-->
+
+    </dependencies>
+
+</project>

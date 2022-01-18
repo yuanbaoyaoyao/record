@@ -1,0 +1,14 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/record?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    userName: root
+    passWord:
+
+## 显示dao 执⾏sql语句
+logging:
+  level:
+    com.yuanbao.recording.mapper: debug # 改成你的dao接口文件所在包路径可以打印出sql语句
