@@ -11,4 +11,9 @@ spring:
 ## 显示dao 执⾏sql语句
 logging:
   level:
-    com.yuanbao.recording.mapper: debug # 改成你的dao接口文件所在包路径可以打印出sql语句
+    com.yuanbao.record.mbp.mapper: debug # 改成你的dao接口文件所在包路径可以打印出sql语句
+
+#mybatis-plus:
+#  mapper-locations: classpath*:com/yuanbao/**/mapper/*.xml
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml

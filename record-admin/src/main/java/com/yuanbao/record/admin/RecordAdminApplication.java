@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = "com.yuanbao.**")
-@MapperScan(basePackages = {"com.yuanbao.**.mapper"})
+@MapperScan(basePackages = {"com.yuanbao.record.mbp.mapper"})
 public class RecordAdminApplication {
 
     public static void main(String[] args) {

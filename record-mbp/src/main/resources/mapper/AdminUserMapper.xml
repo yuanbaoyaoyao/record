@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuanbao.record.mbp.mapper.AdminUserMapper">
+    <resultMap id="adminUserMap" type="com.yuanbao.record.mbp.entity.AdminUser">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="password" property="password"></result>
+        <result column="avatar" property="avatar"></result>
+        <result column="role_id" property="roleId"></result>
+        <result column="created_at" property="createdAt"></result>
+        <result column="updated_at" property="updatedAt"></result>
+        <result column="deleted" property="deleted"></result>
+        <collection property="role" ofType="com.yuanbao.record.mbp.entity.AdminRole" javaType="java.util.List">
+            <id column="id" property="id"></id>
+            <result column="name" property="name"></result>
+        </collection>
+    </resultMap>
+
+    <select id="selectAdminList" resultType="com.yuanbao.record.mbp.entity.AdminUser">
+        SELECT au.NAME,
+               au.PASSWORD,
+               au.avatar,
+               au.created_at,
+               ar.NAME AS role
+        FROM admin_role ar
+                 INNER JOIN admin_user au ON au.role_id = ar.id
+    </select>
+    <!-- test 一定要正确注释 -->
+    <select id="selectAdminAll" resultType="com.yuanbao.record.mbp.entity.AdminUser">
+        select *
+        from admin_user
+    </select>
+
+</mapper>

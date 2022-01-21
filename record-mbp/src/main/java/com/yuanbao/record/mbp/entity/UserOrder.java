@@ -6,13 +6,15 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
-public class User implements Serializable {
+public class UserOrder implements Serializable {
     static final Long serialVersionUID = 1L;
     private Long id;
-    private String name;
-    private String email;
-    private String emailVerifiedAt;
-    private String password;
+    private Integer userId;
+    private Integer userAddressId;
+    private String orderSn;
+    private String orderStatus;
+    private String orderRemarks;
+    private Float totalCost;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Boolean deleted;
