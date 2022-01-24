@@ -4,12 +4,8 @@ package com.yuanbao.record.admin.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuanbao.record.mbp.entity.AdminUser;
-
-import java.util.List;
+import com.yuanbao.record.mbp.vo.AdminUserVo;
 
 public interface AdminUserService extends IService<AdminUser> {
-    List<AdminUser> selectAdminList(IPage<AdminUser> page);
-
-//    test
-    List<AdminUser> selectAdminAll(List<AdminUser> adminUsers);
+    IPage<AdminUserVo> selectAdminList(Integer pageNum, Integer pageSize, IPage<AdminUser> page);
 }

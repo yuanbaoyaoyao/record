@@ -4,15 +4,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuanbao.record.admin.service.AdminUserService;
 import com.yuanbao.record.mbp.entity.AdminUser;
+import com.yuanbao.record.mbp.vo.AdminUserVo;
 import com.yuanbao.recordcommon.api.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @CrossOrigin
@@ -23,9 +19,11 @@ public class AdminUserController {
 
     @GetMapping(value = "/list")
     @ResponseBody
-    public CommonResult<List<AdminUser>> getAllAdminUser(){
-        IPage<AdminUser> page = new Page<AdminUser>(1,5);
-        List<AdminUser> adminUserIPage = adminUserService.selectAdminList(page);
+    public CommonResult<IPage<AdminUserVo>> getAllAdminUser(
+            @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+        IPage<AdminUser> page = new Page<AdminUser>();
+        IPage<AdminUserVo> adminUserIPage = adminUserService.selectAdminList(pageNum, pageSize, page);
         return CommonResult.success(adminUserIPage);
     }
 }

@@ -5,23 +5,19 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuanbao.record.admin.service.AdminUserService;
 import com.yuanbao.record.mbp.entity.AdminUser;
 import com.yuanbao.record.mbp.mapper.AdminUserMapper;
+import com.yuanbao.record.mbp.vo.AdminUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper,AdminUser> implements AdminUserService {
+public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser> implements AdminUserService {
     @Autowired
-    private  AdminUserMapper adminUserMapper;
+    private AdminUserMapper adminUserMapper;
 
     @Override
-    public List<AdminUser> selectAdminList(IPage<AdminUser> page) {
-        return adminUserMapper.selectAdminList(page);
-    }
-
-    @Override
-    public List<AdminUser> selectAdminAll(List<AdminUser> adminUsers) {
-        return adminUserMapper.selectAdminAll(adminUsers);
+    public IPage<AdminUserVo> selectAdminList(Integer pageNum, Integer pageSize, IPage<AdminUser> page) {
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        return adminUserMapper.selectAdminList(pageNum,pageSize,page);
     }
 }
