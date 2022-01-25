@@ -25,10 +25,19 @@
         FROM admin_role ar
                  INNER JOIN admin_user au ON au.role_id = ar.id
     </select>
-    <!-- test 一定要正确注释 -->
-    <select id="selectAdminAll" resultType="com.yuanbao.record.mbp.entity.AdminUser">
-        select *
-        from admin_user
+
+    <select id="selectAdminListSearch" resultType="com.yuanbao.record.mbp.entity.AdminUser">
+        SELECT au.NAME,
+        au.PASSWORD,
+        au.avatar,
+        au.created_at,
+        ar.NAME AS role
+        FROM admin_role ar
+        INNER JOIN admin_user au ON au.role_id = ar.id
+        <if test="keyword != 'null'.toString() and keyword != '' ">
+            AND au.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
+        </if>
     </select>
+    <!-- test 一定要正确注释 -->
 
 </mapper>

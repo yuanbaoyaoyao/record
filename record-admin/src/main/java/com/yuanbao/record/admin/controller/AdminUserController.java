@@ -21,9 +21,20 @@ public class AdminUserController {
     @ResponseBody
     public CommonResult<IPage<AdminUserVo>> getAllAdminUser(
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "keyword",defaultValue = "null") String keyword) {
         IPage<AdminUser> page = new Page<AdminUser>();
-        IPage<AdminUserVo> adminUserIPage = adminUserService.selectAdminList(pageNum, pageSize, page);
+        IPage<AdminUserVo> adminUserIPage = adminUserService.selectAdminListSearch(pageNum, pageSize, page,keyword);
         return CommonResult.success(adminUserIPage);
     }
+
+//    @GetMapping(value = "/list")
+//    @ResponseBody
+//    public CommonResult<IPage<AdminUserVo>> getAllAdminUserSearch(
+//            @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+//            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+//        IPage<AdminUser> page = new Page<AdminUser>();
+//        IPage<AdminUserVo> adminUserIPage = adminUserService.selectAdminList(pageNum, pageSize, page);
+//        return CommonResult.success(adminUserIPage);
+//    }
 }

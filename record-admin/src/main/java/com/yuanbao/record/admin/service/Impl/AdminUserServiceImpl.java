@@ -20,4 +20,11 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         page.setSize(pageSize);
         return adminUserMapper.selectAdminList(pageNum,pageSize,page);
     }
+
+    @Override
+    public IPage<AdminUserVo> selectAdminListSearch(Integer pageNum, Integer pageSize, IPage<AdminUser> page, String keyword) {
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        return adminUserMapper.selectAdminListSearch(pageNum,pageSize,page,keyword);
+    }
 }
