@@ -1,4 +1,4 @@
-package com.yuanbao.recordcommon.api;
+package com.yuanbao.record.common.api;
 
 /**
  * 通用返回对象

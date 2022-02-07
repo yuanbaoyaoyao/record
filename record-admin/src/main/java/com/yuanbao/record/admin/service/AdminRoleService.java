@@ -1,12 +1,11 @@
-package com.yuanbao.record.mbp.mapper;
+package com.yuanbao.record.admin.service;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuanbao.record.mbp.entity.AdminRole;
 import com.yuanbao.record.mbp.vo.AdminRoleVo;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
-public interface AdminRoleMapper extends BaseMapper<AdminRole> {
+public interface AdminRoleService extends IService<AdminRole> {
     IPage<AdminRoleVo> selectRoleList(Integer pageNum, Integer pageSize, IPage<AdminRoleVo> page, String keyword);
+
 }

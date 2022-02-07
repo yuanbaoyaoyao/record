@@ -1,29 +1,28 @@
 package com.yuanbao.record.admin.controller;
 
-import com.yuanbao.record.mbp.entity.AdminRole;
-import com.yuanbao.record.mbp.mapper.AdminRoleMapper;
-import com.yuanbao.recordcommon.api.CommonResult;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yuanbao.record.admin.service.AdminRoleService;
+import com.yuanbao.record.common.api.CommonResult;
+import com.yuanbao.record.mbp.vo.AdminRoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@Controller
+@RestController
 @CrossOrigin
 @RequestMapping("adminRole")
 public class AdminRoleController {
     @Autowired
-    private AdminRoleMapper adminRoleMapper;
+    private AdminRoleService adminRoleService;
 
     @GetMapping(value = "list")
-    @ResponseBody
-    public CommonResult<List<AdminRole>> getAllAdminRole(){
-        List<AdminRole> adminRoles = adminRoleMapper.selectList(null);
-        return CommonResult.success(adminRoles);
+    public CommonResult<IPage<AdminRoleVo>> getAllAdminRole(
+        @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+        @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+        @RequestParam(value = "keyword",defaultValue = "null") String keyword) {
+            IPage<AdminRoleVo> page = new Page<>();
+            IPage<AdminRoleVo> adminRoleVoIPage = adminRoleService.selectRoleList(pageNum, pageSize, page,keyword);
+            return CommonResult.success(adminRoleVoIPage);
     }
 
 }

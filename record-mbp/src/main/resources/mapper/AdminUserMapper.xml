@@ -16,16 +16,6 @@
         </collection>
     </resultMap>
 
-    <select id="selectAdminList" resultType="com.yuanbao.record.mbp.entity.AdminUser">
-        SELECT au.NAME,
-               au.PASSWORD,
-               au.avatar,
-               au.created_at,
-               ar.NAME AS role
-        FROM admin_role ar
-                 INNER JOIN admin_user au ON au.role_id = ar.id
-    </select>
-
     <select id="selectAdminListSearch" resultType="com.yuanbao.record.mbp.entity.AdminUser">
         SELECT au.NAME,
         au.PASSWORD,
@@ -35,9 +25,44 @@
         FROM admin_role ar
         INNER JOIN admin_user au ON au.role_id = ar.id
         <if test="keyword != 'null'.toString() and keyword != '' ">
-            AND au.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
+            AND
+            (au.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
+            OR ar.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%'))
         </if>
     </select>
-    <!-- test 一定要正确注释 -->
+    <insert id="insert" parameterType="com.yuanbao.record.mbp.entity.AdminUser">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into admin_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="password!=null">
+                password,
+            </if>
+            <if test="avatar!=null">
+                avatar,
+            </if>
+            <if test="roleId!=null">
+                role_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name!=null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password!=null">
+                #{password,jdbcType=INTEGER},
+            </if>
+            <if test="avatar!=null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId!=null">
+                #{roleId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
 
 </mapper>

@@ -1,4 +1,4 @@
-package com.yuanbao.recordcommon.api;
+package com.yuanbao.record.common.api;
 
 /**
  * 封装API的错误码

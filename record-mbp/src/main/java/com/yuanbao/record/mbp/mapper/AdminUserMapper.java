@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface AdminUserMapper extends BaseMapper<AdminUser> {
-    IPage<AdminUserVo> selectAdminList(Integer pageNum, Integer pageSize, IPage<AdminUser> page);
-    IPage<AdminUserVo> selectAdminListSearch(Integer pageNum, Integer pageSize, IPage<AdminUser> page,String keyword);
+    IPage<AdminUserVo> selectAdminListSearch(Integer pageNum, Integer pageSize, IPage<AdminUserVo> page, String keyword);
+
+    int insert(AdminUser adminUser);
 }

@@ -15,16 +15,15 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
     private AdminUserMapper adminUserMapper;
 
     @Override
-    public IPage<AdminUserVo> selectAdminList(Integer pageNum, Integer pageSize, IPage<AdminUser> page) {
+    public IPage<AdminUserVo> selectAdminListSearch(Integer pageNum, Integer pageSize, IPage<AdminUserVo> page, String keyword) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
-        return adminUserMapper.selectAdminList(pageNum,pageSize,page);
+        return adminUserMapper.selectAdminListSearch(pageNum, pageSize, page, keyword);
     }
 
     @Override
-    public IPage<AdminUserVo> selectAdminListSearch(Integer pageNum, Integer pageSize, IPage<AdminUser> page, String keyword) {
-        page.setCurrent(pageNum);
-        page.setSize(pageSize);
-        return adminUserMapper.selectAdminListSearch(pageNum,pageSize,page,keyword);
+    public int insert(AdminUser adminUser) {
+        int id = adminUserMapper.insert(adminUser);
+        return id;
     }
 }

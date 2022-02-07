@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuanbao.record.mbp.mapper.AdminRoleMapper">
+
+    <select id="selectRoleList" resultType="com.yuanbao.record.mbp.entity.AdminRole">
+        SELECT *
+        FROM admin_role
+        <if test="keyword != 'null'.toString() and keyword != '' ">
+            AND admin_role.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+    <!-- test 一定要正确注释 -->
+
+</mapper>

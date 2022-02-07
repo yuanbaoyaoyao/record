@@ -1,4 +1,4 @@
-package com.yuanbao.recordcommon.api;
+package com.yuanbao.record.common.api;
 
 /**
  * 枚举了一些常用API操作码
