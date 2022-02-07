@@ -31,4 +31,11 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
     public int deleteByPrimaryKey(Long id) {
         return adminUserMapper.deleteById(id);
     }
+
+    @Override
+    public int updateByPrimaryKey(AdminUser adminUser) {
+        return adminUserMapper.updateByPrimaryKey(adminUser);
+    }
+
+
 }

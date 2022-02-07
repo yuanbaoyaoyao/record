@@ -47,4 +47,14 @@ public class AdminUserController {
             return CommonResult.failed();
         }
     }
+
+    @PostMapping(value = "/update")
+    public CommonResult update(@RequestBody AdminUser adminUser){
+        int count = adminUserService.updateByPrimaryKey(adminUser);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
 }

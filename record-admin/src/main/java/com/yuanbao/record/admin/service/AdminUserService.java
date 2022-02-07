@@ -14,4 +14,6 @@ public interface AdminUserService extends IService<AdminUser> {
     int insert(AdminUser adminUser);
 
     int deleteByPrimaryKey(Long id);
+
+    int updateByPrimaryKey(AdminUser adminUser);
 }
