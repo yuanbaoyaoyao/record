@@ -35,4 +35,16 @@ public class AdminUserController {
             return CommonResult.failed();
         }
     }
+
+    @PostMapping(value = "/delete")
+//    public CommonResult delete(@RequestParam("id") Long id){
+    public CommonResult delete(@RequestBody AdminUser adminUser){
+        long tempId = adminUser.getId();
+        int count = adminUserService.deleteByPrimaryKey(tempId);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
 }

@@ -26,4 +26,9 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         int id = adminUserMapper.insert(adminUser);
         return id;
     }
+
+    @Override
+    public int deleteByPrimaryKey(Long id) {
+        return adminUserMapper.deleteById(id);
+    }
 }
