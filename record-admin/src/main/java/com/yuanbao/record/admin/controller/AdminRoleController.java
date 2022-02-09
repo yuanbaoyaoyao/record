@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuanbao.record.admin.service.AdminRoleService;
 import com.yuanbao.record.common.api.CommonResult;
+import com.yuanbao.record.mbp.entity.AdminRole;
 import com.yuanbao.record.mbp.vo.AdminRoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,37 @@ public class AdminRoleController {
             IPage<AdminRoleVo> page = new Page<>();
             IPage<AdminRoleVo> adminRoleVoIPage = adminRoleService.selectRoleList(pageNum, pageSize, page,keyword);
             return CommonResult.success(adminRoleVoIPage);
+    }
+
+    @PostMapping(value = "/create")
+    public CommonResult create(@RequestBody AdminRole adminRole) {
+        int newId = adminRoleService.insert(adminRole);
+        if (newId > 0) {
+            return CommonResult.success(newId);
+        } else {
+            return CommonResult.failed();
+        }
+    }
+
+    @PostMapping(value = "/delete")
+    public CommonResult delete(@RequestBody AdminRole adminRole){
+        long tempId = adminRole.getId();
+        int count = adminRoleService.deleteByPrimaryKey(tempId);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
+
+    @PostMapping(value = "/update")
+    public CommonResult update(@RequestBody AdminRole adminRole){
+        int count = adminRoleService.updateByPrimaryKey(adminRole);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
     }
 
 }

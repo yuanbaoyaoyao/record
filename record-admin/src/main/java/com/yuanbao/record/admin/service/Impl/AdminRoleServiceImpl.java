@@ -18,6 +18,22 @@ public class AdminRoleServiceImpl extends ServiceImpl<AdminRoleMapper, AdminRole
     public IPage<AdminRoleVo> selectRoleList(Integer pageNum, Integer pageSize, IPage<AdminRoleVo> page, String keyword) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
-        return adminRoleMapper.selectRoleList(pageNum,pageSize,page,keyword);
+        return adminRoleMapper.selectRoleList(pageNum, pageSize, page, keyword);
+    }
+
+    @Override
+    public int insert(AdminRole adminRole) {
+        int id = adminRoleMapper.insert(adminRole);
+        return id;
+    }
+
+    @Override
+    public int deleteByPrimaryKey(Long id) {
+        return adminRoleMapper.deleteById(id);
+    }
+
+    @Override
+    public int updateByPrimaryKey(AdminRole adminRole) {
+        return adminRoleMapper.updateByPrimaryKey(adminRole);
     }
 }

@@ -18,7 +18,6 @@ public class AdminRole implements Serializable {
     private Long id;
     private String name;
     private String description;
-    private Integer state;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Boolean deleted;

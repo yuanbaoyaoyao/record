@@ -27,7 +27,7 @@
         FROM admin_role ar
         INNER JOIN admin_user au ON au.role_id = ar.id
         WHERE
-        au.deleted != '1'
+        au.deleted != '1' AND ar.deleted != '1'
         <if test="keyword != 'null'.toString() and keyword != '' ">
             AND
             (au.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%')

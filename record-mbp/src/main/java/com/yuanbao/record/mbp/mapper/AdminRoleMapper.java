@@ -9,4 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AdminRoleMapper extends BaseMapper<AdminRole> {
     IPage<AdminRoleVo> selectRoleList(Integer pageNum, Integer pageSize, IPage<AdminRoleVo> page, String keyword);
+
+    int insert(AdminRole adminRole);
+
+    int updateByPrimaryKey(AdminRole adminRole);
 }
