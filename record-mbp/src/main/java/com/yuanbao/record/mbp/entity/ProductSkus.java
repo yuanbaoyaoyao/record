@@ -9,10 +9,11 @@ import java.sql.Timestamp;
 public class ProductSkus implements Serializable {
     static final Long serialVersionUID = 1L;
     private Long id;
-    private Integer productId;
+    private Long productId;
+    private String productName;
     private String title;
     private String description;
-    private String stock;
+    private Integer stock;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Boolean deleted;
