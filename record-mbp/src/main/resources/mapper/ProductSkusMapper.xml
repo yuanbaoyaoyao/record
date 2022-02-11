@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yuanbao.record.mbp.mapper.ProductSkusMapper">
-    <resultMap id="productSkusMap" type="com.yuanbao.record.mbp.entity.ProductSkus">
+    <resultMap id="productSkusMap" type="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
         <id column="id" property="id"></id>
         <result column="product_id" property="productId"></result>
         <result column="title" property="title"></result>
+        <result column="avatar" property="avatar"></result>
         <result column="description" property="description"></result>
         <result column="stock" property="stock"></result>
         <result column="created_at" property="createdAt"></result>
         <result column="updated_at" property="updatedAt"></result>
         <result column="deleted" property="deleted"></result>
-        <collection property="product" ofType="com.yuanbao.record.mbp.entity.Product" javaType="java.util.List">
+        <collection property="product" ofType="com.yuanbao.record.mbp.mapper.entity.Product" javaType="java.util.List">
             <id column="id" property="id"></id>
             <result column="title" property="title"></result>
         </collection>
     </resultMap>
 
-    <select id="selectProductSkusListSearch" resultType="com.yuanbao.record.mbp.entity.ProductSkus">
+    <select id="selectProductSkusListSearch" resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
         SELECT
         ps.id,
         ps.title,
+        ps.avatar,
         ps.description,
         ps.stock,
         ps.created_at,
@@ -30,11 +32,25 @@
         ps.deleted != '1' AND p.deleted != '1'
         <if test="keyword != 'null'.toString() and keyword != '' ">
             AND
-            (ps.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
-            OR p.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%'))
+            (ps.title like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
+            OR p.title like concat ('%',#{keyword,jdbcType=VARCHAR},'%'))
         </if>
     </select>
-    <insert id="insert" parameterType="com.yuanbao.record.mbp.entity.ProductSkus">
+
+    <select id="selectProductSkusList" resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
+        SELECT ps.id,
+               ps.title,
+               ps.avatar,
+               ps.description,
+               ps.stock,
+               ps.created_at,
+               p.title AS product_name
+        FROM product p
+                 INNER JOIN product_skus ps ON ps.product_id = p.id
+        WHERE ps.deleted != '1' AND p.deleted != '1'
+    </select>
+
+    <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -45,6 +61,9 @@
             </if>
             <if test="title!=null">
                 title,
+            </if>
+            <if test="avatar!=null">
+                avatar,
             </if>
             <if test="description!=null">
                 description,
@@ -60,6 +79,9 @@
             <if test="title!=null">
                 #{title,jdbcType=VARCHAR},
             </if>
+            <if test="avatar!=null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
             <if test="description!=null">
                 #{description,jdbcType=VARCHAR},
             </if>
@@ -69,12 +91,13 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.entity.ProductSkus">
+    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
         update product_skus
-        set product_id     = #{productId,jdbcType=INTEGER},
-            title = #{title,jdbcType=VARCHAR},
-            description   = #{description,jdbcType=VARCHAR},
-            stock  = #{stock,jdbcType=INTEGER}
+        set product_id  = #{productId,jdbcType=INTEGER},
+            title       = #{title,jdbcType=VARCHAR},
+            avatar      = #{avatar,jdbcType=VARCHAR},
+            description = #{description,jdbcType=VARCHAR},
+            stock       = #{stock,jdbcType=INTEGER}
         where id = #{id,jdbcType=BIGINT}
     </update>
 

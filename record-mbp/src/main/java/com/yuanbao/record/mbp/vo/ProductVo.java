@@ -1,6 +1,6 @@
 package com.yuanbao.record.mbp.vo;
 
-import com.yuanbao.record.mbp.entity.Product;
+import com.yuanbao.record.mbp.mapper.entity.Product;
 import lombok.Data;
 
 import java.util.List;

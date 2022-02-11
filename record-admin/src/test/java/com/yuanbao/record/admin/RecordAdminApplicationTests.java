@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuanbao.record.admin.service.AdminUserService;
-import com.yuanbao.record.mbp.entity.AdminUser;
+import com.yuanbao.record.mbp.mapper.entity.AdminUser;
 import com.yuanbao.record.mbp.mapper.AdminUserMapper;
 import com.yuanbao.record.mbp.mapper.UserMapper;
 import org.junit.jupiter.api.Test;

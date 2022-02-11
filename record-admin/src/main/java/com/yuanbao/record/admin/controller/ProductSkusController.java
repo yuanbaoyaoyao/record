@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuanbao.record.admin.service.ProductSkusService;
 import com.yuanbao.record.common.api.CommonResult;
-import com.yuanbao.record.mbp.entity.ProductSkus;
+import com.yuanbao.record.mbp.mapper.entity.ProductSkus;
 import com.yuanbao.record.mbp.vo.ProductSkusVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

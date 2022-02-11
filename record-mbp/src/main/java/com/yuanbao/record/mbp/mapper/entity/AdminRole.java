@@ -1,4 +1,4 @@
-package com.yuanbao.record.mbp.entity;
+package com.yuanbao.record.mbp.mapper.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

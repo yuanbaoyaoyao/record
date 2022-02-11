@@ -1,7 +1,7 @@
 package com.yuanbao.record.mbp.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yuanbao.record.mbp.entity.User;
+import com.yuanbao.record.mbp.mapper.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

@@ -3,7 +3,7 @@ package com.yuanbao.record.admin.service.Impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuanbao.record.admin.service.AdminRoleService;
-import com.yuanbao.record.mbp.entity.AdminRole;
+import com.yuanbao.record.mbp.mapper.entity.AdminRole;
 import com.yuanbao.record.mbp.mapper.AdminRoleMapper;
 import com.yuanbao.record.mbp.vo.AdminRoleVo;
 import org.springframework.beans.factory.annotation.Autowired;

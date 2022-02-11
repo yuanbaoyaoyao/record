@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuanbao.record.admin.service.AdminRoleService;
 import com.yuanbao.record.common.api.CommonResult;
-import com.yuanbao.record.mbp.entity.AdminRole;
+import com.yuanbao.record.mbp.mapper.entity.AdminRole;
 import com.yuanbao.record.mbp.vo.AdminRoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -2,7 +2,7 @@ package com.yuanbao.record.mbp.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.yuanbao.record.mbp.entity.AdminRole;
+import com.yuanbao.record.mbp.mapper.entity.AdminRole;
 import com.yuanbao.record.mbp.vo.AdminRoleVo;
 import org.apache.ibatis.annotations.Mapper;
 

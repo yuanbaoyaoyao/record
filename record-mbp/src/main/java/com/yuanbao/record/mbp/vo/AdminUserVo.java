@@ -1,6 +1,6 @@
 package com.yuanbao.record.mbp.vo;
 
-import com.yuanbao.record.mbp.entity.AdminUser;
+import com.yuanbao.record.mbp.mapper.entity.AdminUser;
 import lombok.Data;
 
 import java.util.List;

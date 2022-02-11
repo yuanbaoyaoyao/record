@@ -1,4 +1,4 @@
-package com.yuanbao.record.mbp.entity;
+package com.yuanbao.record.mbp.mapper.entity;
 
 import lombok.Data;
 
@@ -6,14 +6,11 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
-public class ProductSkus implements Serializable {
+public class UserCollect implements Serializable {
     static final Long serialVersionUID = 1L;
     private Long id;
-    private Long productId;
-    private String productName;
-    private String title;
-    private String description;
-    private Integer stock;
+    private Integer userId;
+    private Integer productId;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Boolean deleted;
