@@ -11,6 +11,10 @@ public class AdminOperationLog implements Serializable {
     private Long id;
     private Integer adminUserId;
     private String ip;
+    private Integer type;
+    private String action;
+    private Boolean status;
+    private String result;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Boolean deleted;

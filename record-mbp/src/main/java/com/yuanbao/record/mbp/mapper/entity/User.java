@@ -13,6 +13,7 @@ public class User implements Serializable {
     private String email;
     private String emailVerifiedAt;
     private String password;
+    private Boolean enable;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Boolean deleted;

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RequestMapping("adminRole")
 public class AdminRoleController {
+
     @Autowired
     private AdminRoleService adminRoleService;
 
@@ -56,5 +57,4 @@ public class AdminRoleController {
             return CommonResult.failed();
         }
     }
-
 }

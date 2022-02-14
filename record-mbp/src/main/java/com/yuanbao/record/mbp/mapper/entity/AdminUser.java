@@ -3,17 +3,15 @@ package com.yuanbao.record.mbp.mapper.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
-@Setter
-@Getter
 @TableName("admin_user")
+@AllArgsConstructor
+@NoArgsConstructor
 public class AdminUser implements Serializable {
     static final Long serialVersionUID = 1L;
     @TableId(type = IdType.AUTO)
@@ -27,4 +25,7 @@ public class AdminUser implements Serializable {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Boolean deleted;
+
+    public AdminUser(String s, String jksdf, String fdsjlk, String fad, String s1, String sdf) {
+    }
 }

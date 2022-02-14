@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuanbao.record.mbp.mapper.UserMapper">
+
+    <select id="selectListSearch" resultType="com.yuanbao.record.mbp.mapper.entity.User">
+        SELECT
+        u.id,
+        u.NAME,
+        u.avatar,
+        u.email,
+        u.email_verified_at,
+        u.enable,
+        u.created_at
+        FROM user u
+        WHERE
+        u.deleted != '1'
+        <if test="keyword != 'null'.toString() and keyword != '' ">
+            AND
+            (u.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%'))
+        </if>
+    </select>
+
+    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.User">
+        update user
+        set enable     = #{enable,jdbcType=BOOLEAN}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

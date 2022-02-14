@@ -1,17 +1,12 @@
-package com.yuanbao.record.mbp.mapper;
+package com.yuanbao.record.admin.service;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuanbao.record.mbp.mapper.entity.AdminOperationLog;
 import com.yuanbao.record.mbp.vo.AdminOperationLogVo;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
-public interface AdminOperationLogMapper extends BaseMapper<AdminOperationLog> {
+public interface AdminOperationLogService extends IService<AdminOperationLog> {
     IPage<AdminOperationLogVo> selectAdminOperationLogListSearch(Integer pageNum, Integer pageSize, IPage<AdminOperationLogVo> page, String keyword);
 
     int insert(AdminOperationLogVo adminOperationLogVo);
-
-    int deleteByPrimaryKey(Long id);
-
 }
