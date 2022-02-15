@@ -18,17 +18,17 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "/list")
-    public CommonResult<IPage<UserVo>> getAllAdminUser(
+    public CommonResult<IPage<UserVo>> getAllUser(
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "keyword", defaultValue = "null") String keyword) {
-        IPage<UserVo> page = new Page<>();
-        IPage<UserVo> userVoIPage = userService.selectListSearch(pageNum, pageSize, page, keyword);
-        return CommonResult.success(userVoIPage);
+        IPage<User> page = new Page<>();
+        IPage<UserVo> voPage = userService.selectListSearch(pageNum, pageSize, page, keyword);
+        return CommonResult.success(voPage);
     }
 
     @PostMapping(value = "/delete")
-    public CommonResult delete(@RequestBody User user){
+    public CommonResult delete(@RequestBody User user) {
         long tempId = user.getId();
         int count = userService.deleteByPrimaryKey(tempId);
         if (count > 0) {
@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/update")
-    public CommonResult update(@RequestBody User user){
+    public CommonResult update(@RequestBody User user) {
         int count = userService.updateByPrimaryKey(user);
         if (count > 0) {
             return CommonResult.success(count);

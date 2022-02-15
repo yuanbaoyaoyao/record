@@ -1,14 +1,16 @@
 package com.yuanbao.record.mbp.vo;
 
-import com.yuanbao.record.mbp.mapper.entity.Product;
 import lombok.Data;
 
-import java.util.List;
+import java.sql.Timestamp;
 
 @Data
 public class ProductVo {
-    private Integer pageSize;
-    private Integer pageNum;
-    private Long pageTotal;
-    private List<Product> productList;
+    //    private Integer pageSize;
+//    private Integer pageNum;
+//    private Long pageTotal;
+//    private List<Product> productList;
+    private String title;
+    private String description;
+    private Timestamp createdAt;
 }

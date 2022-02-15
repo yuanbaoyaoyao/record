@@ -21,9 +21,9 @@ public class ProductSkusController {
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "keyword", defaultValue = "null") String keyword) {
-        IPage<ProductSkusVo> page = new Page<>();
-        IPage<ProductSkusVo> productSkusIPage = productSkusService.selectProductSkusListSearch(pageNum, pageSize, page, keyword);
-        return CommonResult.success(productSkusIPage);
+        IPage<ProductSkus> page = new Page<>();
+        IPage<ProductSkusVo> voPage = productSkusService.selectProductSkusListSearch(pageNum, pageSize, page, keyword);
+        return CommonResult.success(voPage);
     }
 
     @PostMapping(value = "/create")

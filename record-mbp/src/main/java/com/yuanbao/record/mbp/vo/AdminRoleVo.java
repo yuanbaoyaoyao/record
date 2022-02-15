@@ -1,14 +1,16 @@
 package com.yuanbao.record.mbp.vo;
 
-import com.yuanbao.record.mbp.mapper.entity.AdminRole;
 import lombok.Data;
 
-import java.util.List;
+import java.sql.Timestamp;
 
 @Data
 public class AdminRoleVo {
-    private Integer pageSize;
-    private Integer pageNum;
-    private Long pageTotal;
-    private List<AdminRole> adminRoleList;
+    //    private Integer pageSize;
+//    private Integer pageNum;
+//    private Long pageTotal;
+//    private List<AdminRole> adminRoleList;
+    private String name;
+    private String description;
+    private Timestamp createdAt;
 }

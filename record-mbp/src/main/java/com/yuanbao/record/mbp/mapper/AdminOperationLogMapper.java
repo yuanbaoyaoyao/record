@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface AdminOperationLogMapper extends BaseMapper<AdminOperationLog> {
-    IPage<AdminOperationLogVo> selectAdminOperationLogListSearch(Integer pageNum, Integer pageSize, IPage<AdminOperationLogVo> page, String keyword);
+    IPage<AdminOperationLog> selectAdminOperationLogListSearch(Integer pageNum, Integer pageSize, IPage<AdminOperationLog> page, String keyword);
 
     int insert(AdminOperationLogVo adminOperationLogVo);
 

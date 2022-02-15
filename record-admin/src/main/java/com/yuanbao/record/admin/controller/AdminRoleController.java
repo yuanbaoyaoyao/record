@@ -22,9 +22,9 @@ public class AdminRoleController {
         @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
         @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
         @RequestParam(value = "keyword",defaultValue = "null") String keyword) {
-            IPage<AdminRoleVo> page = new Page<>();
-            IPage<AdminRoleVo> adminRoleVoIPage = adminRoleService.selectRoleList(pageNum, pageSize, page,keyword);
-            return CommonResult.success(adminRoleVoIPage);
+        IPage<AdminRole> page = new Page<>();
+        IPage<AdminRoleVo> voPage = adminRoleService.selectRoleList(pageNum, pageSize, page, keyword);
+        return CommonResult.success(voPage);
     }
 
     @PostMapping(value = "/create")

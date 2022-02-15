@@ -6,7 +6,7 @@ import com.yuanbao.record.mbp.mapper.entity.AdminOperationLog;
 import com.yuanbao.record.mbp.vo.AdminOperationLogVo;
 
 public interface AdminOperationLogService extends IService<AdminOperationLog> {
-    IPage<AdminOperationLogVo> selectAdminOperationLogListSearch(Integer pageNum, Integer pageSize, IPage<AdminOperationLogVo> page, String keyword);
+    IPage<AdminOperationLogVo> selectAdminOperationLogListSearch(Integer pageNum, Integer pageSize, IPage<AdminOperationLog> page, String keyword);
 
     int insert(AdminOperationLogVo adminOperationLogVo);
 }

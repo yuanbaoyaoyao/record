@@ -21,9 +21,9 @@ public class ProductController {
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "keyword", defaultValue = "null") String keyword) {
-        IPage<ProductVo> page = new Page<>();
-        IPage<ProductVo> productIPage = productService.selectProductListSearch(pageNum, pageSize, page, keyword);
-        return CommonResult.success(productIPage);
+        IPage<Product> page = new Page<>();
+        IPage<ProductVo> voPage = productService.selectProductListSearch(pageNum, pageSize, page, keyword);
+        return CommonResult.success(voPage);
     }
 
     @PostMapping(value = "/create")
