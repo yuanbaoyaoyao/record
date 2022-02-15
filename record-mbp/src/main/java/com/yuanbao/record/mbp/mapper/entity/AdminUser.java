@@ -26,6 +26,10 @@ public class AdminUser implements Serializable {
     private Timestamp updatedAt;
     private Boolean deleted;
 
-    public AdminUser(String s, String jksdf, String fdsjlk, String fad, String s1, String sdf) {
-    }
+//    public AdminUser( String name, String password, String avatar, String role) {
+//        this.name = name;
+//        this.password = password;
+//        this.avatar = avatar;
+//        this.role = role;
+//    }
 }

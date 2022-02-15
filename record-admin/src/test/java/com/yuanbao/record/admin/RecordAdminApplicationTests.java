@@ -31,9 +31,15 @@ class RecordAdminApplicationTests {
 
 //    @Test
 //    void  Trans(){
-//        AdminUser user=new AdminUser("1","jksdf","fdsjlk","fad","2","sdf");
+//        AdminUser user=new AdminUser("1","jksdf","fdsjlk","fad");
 //        AdminUserVo userVo = AdminUserVoMapper.adminuservomapper.Trans(user);//调用方法
 //        System.out.println(userVo);
+//    }
+//    @Test
+//    void test(){
+//        IPage<AdminUserVo> list = new Page<>();
+//        List<AdminUser> adminUserList = adminUserService.selectAdminListSearch(1,2, list, null);
+//        System.out.println(adminUserList);
 //    }
 
 }
