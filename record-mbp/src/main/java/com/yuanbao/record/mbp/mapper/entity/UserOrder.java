@@ -3,7 +3,7 @@ package com.yuanbao.record.mbp.mapper.entity;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 public class UserOrder implements Serializable {
@@ -15,7 +15,7 @@ public class UserOrder implements Serializable {
     private String orderStatus;
     private String orderRemarks;
     private Float totalCost;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private Boolean deleted;
 }

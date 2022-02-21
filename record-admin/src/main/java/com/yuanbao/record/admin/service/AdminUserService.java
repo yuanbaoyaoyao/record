@@ -12,6 +12,8 @@ public interface AdminUserService extends IService<AdminUser> {
 
 //    List<AdminUser> selectAdminListSearch(List<AdminUser> adminUserList, String keyword);
 
+    AdminUser selectAdminListByName(String adminUserName);
+
     @Transactional
     int insert(AdminUser adminUser);
 

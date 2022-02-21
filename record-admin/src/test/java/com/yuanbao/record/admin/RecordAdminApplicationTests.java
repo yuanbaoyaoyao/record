@@ -37,9 +37,12 @@ class RecordAdminApplicationTests {
 //    }
 //    @Test
 //    void test(){
-//        IPage<AdminUserVo> list = new Page<>();
-//        List<AdminUser> adminUserList = adminUserService.selectAdminListSearch(1,2, list, null);
-//        System.out.println(adminUserList);
+//        System.out.println(datatimeToLocalDateTime(LocalDateTime.now()));
+//        System.out.println(LocalDateTime.valueOf("1645406832614"));
+//    }
+//    public long datatimeToLocalDateTime(LocalDateTime ldt){
+//        long LocalDateTime = ldt.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+//        return LocalDateTime;
 //    }
 
 }

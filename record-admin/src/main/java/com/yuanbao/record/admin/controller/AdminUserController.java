@@ -21,36 +21,17 @@ public class AdminUserController {
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "keyword", defaultValue = "null") String keyword) {
-//        IPage<AdminUserVo> voPage = new Page<>();
-//        List<AdminUserVo> adminUserVoList = new ArrayList<>();
-//        IPage<AdminUser> adminUserIPage = adminUserService.selectAdminListSearch(pageNum, pageSize, page, keyword);
-//        List<AdminUser> adminUserList = adminUserIPage.getRecords();
-//        for (AdminUser adminUser : adminUserList) {
-//            AdminUserVo adminUserVo = AdminUserVoMapper.adminuservomapper.Trans(adminUser);
-//            adminUserVoList.add(adminUserVo);
-//        }
-//        voPage.setRecords(adminUserVoList);
-//        voPage.setCurrent(pageNum);
-//        voPage.setSize(pageSize);
-//        voPage.setTotal(adminUserIPage.getTotal());
         IPage<AdminUser> page = new Page<>();
         IPage<AdminUserVo> voPage = adminUserService.selectAdminListSearch(pageNum, pageSize, page, keyword);
         return CommonResult.success(voPage);
     }
 
-//    @GetMapping(value = "/listNoPage")
-//    public CommonResult<List<AdminUserVo>> getAllAdminUserNoPage(
-//            @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-//            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-//            @RequestParam(value = "keyword", defaultValue = "null") String keyword) {
-//        List<AdminUser> list = new ArrayList<>();
-//        List<AdminUserVo> adminUserVoList = new ArrayList<>();
-//        List<AdminUser> adminUserList = adminUserService.selectAdminListSearch(list, keyword);
-//        for (AdminUser adminUser : adminUserList) {
-//            AdminUserVo adminUserVo = AdminUserVoMapper.adminuservomapper.Trans(adminUser);
-//            adminUserVoList.add(adminUserVo);
-//        }
-//        return CommonResult.success(adminUserVoList);
+//    @GetMapping(value = "/loginList")
+//    public CommonResult<List<AdminUser>> getAllAdminUser(
+//            @RequestParam(value = "adminUserName", defaultValue = "null") String adminUserName) {
+//        List<AdminUser> adminUserList = adminUserService.selectAdminListByName(adminUserName);
+//        System.out.println(adminUserName);
+//        return CommonResult.success(adminUserList);
 //    }
 
     @PostMapping(value = "/create")
@@ -63,7 +44,7 @@ public class AdminUserController {
         }
     }
 
-    @PostMapping(value = "/delete")
+    @DeleteMapping(value = "/delete")
 //    public CommonResult delete(@RequestParam("id") Long id){
     public CommonResult delete(@RequestBody AdminUser adminUser) {
         long tempId = adminUser.getId();
@@ -75,7 +56,7 @@ public class AdminUserController {
         }
     }
 
-    @PostMapping(value = "/update")
+    @PutMapping(value = "/update")
     public CommonResult update(@RequestBody AdminUser adminUser) {
         int count = adminUserService.updateByPrimaryKey(adminUser);
         if (count > 0) {

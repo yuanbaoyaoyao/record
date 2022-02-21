@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @TableName("admin_user")
@@ -22,8 +22,8 @@ public class AdminUser implements Serializable {
     private Integer roleId;
     private String role;
 //    List<AdminRole> adminRoleList;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private Boolean deleted;
 
 //    public AdminUser( String name, String password, String avatar, String role) {

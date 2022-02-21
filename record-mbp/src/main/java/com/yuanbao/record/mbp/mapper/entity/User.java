@@ -3,7 +3,7 @@ package com.yuanbao.record.mbp.mapper.entity;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 public class User implements Serializable {
@@ -12,10 +12,10 @@ public class User implements Serializable {
     private String name;
     private String avatar;
     private String email;
-    private Timestamp emailVerifiedAt;
+    private LocalDateTime emailVerifiedAt;
     private String password;
     private Boolean enable;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private Boolean deleted;
 }

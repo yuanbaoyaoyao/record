@@ -2,7 +2,7 @@ package com.yuanbao.record.mbp.vo;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 public class AdminUserVo {
@@ -14,5 +14,5 @@ public class AdminUserVo {
     private String password;
     private String avatar;
     private String role;
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 }

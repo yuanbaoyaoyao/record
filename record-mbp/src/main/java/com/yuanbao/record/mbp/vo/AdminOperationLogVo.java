@@ -2,7 +2,7 @@ package com.yuanbao.record.mbp.vo;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 public class AdminOperationLogVo {
@@ -15,5 +15,5 @@ public class AdminOperationLogVo {
     private String action;
     private Boolean status;
     private String result;
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 }

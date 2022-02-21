@@ -11,6 +11,8 @@ public interface AdminUserMapper extends BaseMapper<AdminUser> {
 
 //    List<AdminUser> selectAdminListSearch(List<AdminUser> adminUserList, String keyword);
 
+    AdminUser selectAdminListByName(String adminUserName);
+
     int insert(AdminUser adminUser);
 
     int updateByPrimaryKey(AdminUser adminUser);

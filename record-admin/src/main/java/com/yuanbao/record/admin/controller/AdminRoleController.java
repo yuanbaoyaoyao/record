@@ -37,7 +37,7 @@ public class AdminRoleController {
         }
     }
 
-    @PostMapping(value = "/delete")
+    @DeleteMapping(value = "/delete")
     public CommonResult delete(@RequestBody AdminRole adminRole){
         long tempId = adminRole.getId();
         int count = adminRoleService.deleteByPrimaryKey(tempId);
@@ -48,7 +48,7 @@ public class AdminRoleController {
         }
     }
 
-    @PostMapping(value = "/update")
+    @PutMapping(value = "/update")
     public CommonResult update(@RequestBody AdminRole adminRole){
         int count = adminRoleService.updateByPrimaryKey(adminRole);
         if (count > 0) {

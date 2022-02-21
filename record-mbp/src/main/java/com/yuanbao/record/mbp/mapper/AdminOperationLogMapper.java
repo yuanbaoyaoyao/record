@@ -12,6 +12,6 @@ public interface AdminOperationLogMapper extends BaseMapper<AdminOperationLog> {
 
     int insert(AdminOperationLogVo adminOperationLogVo);
 
-    int deleteByPrimaryKey(Long id);
+//    int deleteByPrimaryKey(Long id);
 
 }

@@ -8,7 +8,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-
     <modules>
         <module>record-search</module>
         <module>record-mbp</module>
@@ -38,6 +37,7 @@
         <poi.version>4.1.1</poi.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.version>1.18.20</lombok.version>
+        <shiro.version>1.7.1</shiro.version>
 
     </properties>
 
@@ -156,11 +156,18 @@
                 <version>${lombok.version}</version>
             </dependency>
             <!-- mapstruct-->
-<!--            <dependency>-->
-<!--                <groupId>org.mapstruct</groupId>-->
-<!--                <artifactId>mapstruct</artifactId>-->
-<!--                <version>${mapstruct.version}</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.mapstruct</groupId>-->
+            <!--                <artifactId>mapstruct</artifactId>-->
+            <!--                <version>${mapstruct.version}</version>-->
+            <!--            </dependency>-->
+
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
@@ -181,7 +188,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-
         </plugins>
 
         <resources>

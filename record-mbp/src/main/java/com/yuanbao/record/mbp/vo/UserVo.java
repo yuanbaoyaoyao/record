@@ -2,7 +2,7 @@ package com.yuanbao.record.mbp.vo;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 public class UserVo {
@@ -13,8 +13,8 @@ public class UserVo {
     private String name;
     private String avatar;
     private String email;
-    private Timestamp emailVerifiedAt;
+    private LocalDateTime emailVerifiedAt;
     private Boolean enable;
     private String password;
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 }

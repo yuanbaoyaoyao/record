@@ -2,7 +2,7 @@ package com.yuanbao.record.mbp.vo;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 public class ProductVo {
@@ -12,5 +12,5 @@ public class ProductVo {
 //    private List<Product> productList;
     private String title;
     private String description;
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 }

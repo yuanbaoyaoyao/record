@@ -34,6 +34,21 @@
             OR ar.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%'))
         </if>
     </select>
+    <select id="selectAdminListByName" resultType="com.yuanbao.record.mbp.mapper.entity.AdminUser">
+        SELECT
+        au.id,
+        au.NAME,
+        au.PASSWORD,
+        au.avatar,
+        au.created_at,
+        ar.NAME AS role
+        FROM admin_role ar
+        INNER JOIN admin_user au ON au.role_id = ar.id
+        WHERE
+        au.deleted != '1' AND ar.deleted != '1'
+        AND
+        au.NAME = #{au.name ,jdbcType=VARCHAR}
+    </select>
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.AdminUser">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()

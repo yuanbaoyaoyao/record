@@ -38,6 +38,11 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         return voPage;
     }
 
+    @Override
+    public AdminUser selectAdminListByName(String adminUserName) {
+        return adminUserMapper.selectAdminListByName(adminUserName);
+    }
+
 //    @Override
 //    public List<AdminUser> selectAdminListSearch(List<AdminUser> adminUserList, String keyword) {
 //        return adminUserMapper.selectAdminListSearch(adminUserList, keyword);

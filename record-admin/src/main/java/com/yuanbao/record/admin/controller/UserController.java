@@ -27,7 +27,7 @@ public class UserController {
         return CommonResult.success(voPage);
     }
 
-    @PostMapping(value = "/delete")
+    @DeleteMapping(value = "/delete")
     public CommonResult delete(@RequestBody User user) {
         long tempId = user.getId();
         int count = userService.deleteByPrimaryKey(tempId);
@@ -38,7 +38,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "/update")
+    @PutMapping(value = "/update")
     public CommonResult update(@RequestBody User user) {
         int count = userService.updateByPrimaryKey(user);
         if (count > 0) {
