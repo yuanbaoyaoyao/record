@@ -19,7 +19,7 @@ public class AdminUser implements Serializable {
     private String name;
     private String password;
     private String avatar;
-    private Integer roleId;
+    private Long roleId;
     private String role;
 //    List<AdminRole> adminRoleList;
     private LocalDateTime createdAt;

@@ -3,20 +3,35 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <artifactId>record</artifactId>
+        <groupId>com.yuanbao.record</groupId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <groupId>com.yuanbao</groupId>
     <artifactId>record-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>record-web</name>
-    <description>record-web</description>
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+    <description>record-web project for record</description>
+    <packaging>jar</packaging>
+
     <dependencies>
+        <dependency>
+            <groupId>com.yuanbao.record</groupId>
+            <artifactId>record-mbp</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yuanbao</groupId>
+            <artifactId>record-search</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yuanbao.record</groupId>
+            <artifactId>record-mbp</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -30,12 +45,18 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
     </build>
 
 </project>

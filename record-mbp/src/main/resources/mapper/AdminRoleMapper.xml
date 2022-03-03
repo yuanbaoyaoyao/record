@@ -10,6 +10,13 @@
             AND ar.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
         </if>
     </select>
+    <select id="selectById" resultType="com.yuanbao.record.mbp.mapper.entity.AdminRole">
+        SELECT *
+        FROM admin_role ar
+        WHERE ar.deleted != 1
+          AND
+            ar.id = #{ar.id ,jdbcType=VARCHAR}
+    </select>
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.AdminRole">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()

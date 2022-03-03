@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -25,6 +25,16 @@ public class UserController {
         IPage<User> page = new Page<>();
         IPage<UserVo> voPage = userService.selectListSearch(pageNum, pageSize, page, keyword);
         return CommonResult.success(voPage);
+    }
+
+    @PostMapping(value = "/create")
+    public CommonResult create(@RequestBody User user) {
+        int newId = userService.insert(user);
+        if (newId > 0) {
+            return CommonResult.success(newId);
+        } else {
+            return CommonResult.failed();
+        }
     }
 
     @DeleteMapping(value = "/delete")

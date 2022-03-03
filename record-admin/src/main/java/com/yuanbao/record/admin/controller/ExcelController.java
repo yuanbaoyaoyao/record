@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "excel")
+@RequestMapping(value = "/excel")
 public class ExcelController {
     @Autowired
     private ProductSkusService productSkusService;

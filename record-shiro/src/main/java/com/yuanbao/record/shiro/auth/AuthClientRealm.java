@@ -1,8 +1,7 @@
 package com.yuanbao.record.shiro.auth;
 
-import com.yuanbao.record.admin.service.AdminRoleService;
-import com.yuanbao.record.admin.service.AdminUserService;
-import com.yuanbao.record.mbp.mapper.entity.AdminUser;
+import com.yuanbao.record.mbp.mapper.entity.User;
+import com.yuanbao.record.web.service.UserClientService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -12,25 +11,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
 
-public class AuthRealm extends AuthorizingRealm {
+public class AuthClientRealm extends AuthorizingRealm {
 
     @Autowired
     @Lazy
-    private AdminUserService adminUserService;
+    private UserClientService userClientService;
 
-    @Autowired
-    @Lazy
-    private AdminRoleService adminRoleService;
+//    @Autowired
+//    @Lazy
+//    private AdminRoleService adminRoleService;
 
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        AdminUser adminUser = (AdminUser) getAvailablePrincipal(principalCollection);
+        User user = (User) getAvailablePrincipal(principalCollection);
 
-        Long roleId = adminUser.getRoleId();
-        String role = adminRoleService.getById(roleId).getName();
+//        Long roleId = user.getRoleId();
+//        String role = adminRoleService.getById(roleId).getName();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.addRole(role);
+//        info.addRole(role);
         return info;
     }
 
@@ -41,15 +40,15 @@ public class AuthRealm extends AuthorizingRealm {
         String username = usernamePasswordToken.getUsername();
         String password = new String(usernamePasswordToken.getPassword());
 
-        AdminUser adminUser = adminUserService.selectAdminListByName(username);
+        User user = userClientService.selectUserListByName(username);
 
-        if (adminUser == null) {
+        if (user == null) {
             throw new UnknownAccountException("用户名或密码错误!");
         }
-        if (!password.equals(adminUser.getPassword())) {
+        if (!password.equals(user.getPassword())) {
             throw new IncorrectCredentialsException("用户名或密码错误");
         }
 
-        return new SimpleAuthenticationInfo(adminUser, password, getName());
+        return new SimpleAuthenticationInfo(user, password, getName());
     }
 }

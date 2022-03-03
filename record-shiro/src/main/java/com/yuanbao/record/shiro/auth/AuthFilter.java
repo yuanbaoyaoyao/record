@@ -44,7 +44,7 @@ public class AuthFilter extends AuthenticatingFilter {
             httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
             httpServletResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin());
             httpServletResponse.setCharacterEncoding("UTF-8");
-            String json = MAPPER.writeValueAsString(CommonResult.unauthorized(403));
+            String json = MAPPER.writeValueAsString(CommonResult.unauthorized(401));
             httpServletResponse.getWriter().print(json);
             return false;
         }

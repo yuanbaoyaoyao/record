@@ -9,5 +9,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper extends BaseMapper<User> {
     IPage<User> selectListSearch(Integer pageNum, Integer pageSize, IPage<User> page, String keyword);
 
+    User selectUserListByName(String userName);
+
+    int insert(User user);
+
     int updateByPrimaryKey(User user);
 }

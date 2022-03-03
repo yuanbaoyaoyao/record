@@ -1,4 +1,4 @@
-package com.example.record.web;
+package com.yuanbao.record.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

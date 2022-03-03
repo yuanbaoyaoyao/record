@@ -40,6 +40,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    public int insert(User user) {
+        int id = userMapper.insert(user);
+        return id;
+    }
+
+    @Override
     public int deleteByPrimaryKey(Long id) {
         return userMapper.deleteById(id);
     }

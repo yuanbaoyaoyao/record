@@ -35,17 +35,16 @@
         </if>
     </select>
     <select id="selectAdminListByName" resultType="com.yuanbao.record.mbp.mapper.entity.AdminUser">
-        SELECT
-        au.id,
-        au.NAME,
-        au.PASSWORD,
-        au.avatar,
-        au.created_at,
-        ar.NAME AS role
+        SELECT au.id,
+               au.NAME,
+               au.PASSWORD,
+               au.avatar,
+               au.created_at,
+               au.role_id,
+               ar.NAME AS role
         FROM admin_role ar
-        INNER JOIN admin_user au ON au.role_id = ar.id
-        WHERE
-        au.deleted != '1' AND ar.deleted != '1'
+                 INNER JOIN admin_user au ON au.role_id = ar.id
+        WHERE au.deleted != '1' AND ar.deleted != '1'
         AND
         au.NAME = #{au.name ,jdbcType=VARCHAR}
     </select>

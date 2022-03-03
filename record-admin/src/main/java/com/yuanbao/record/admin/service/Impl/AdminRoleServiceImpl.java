@@ -39,6 +39,14 @@ public class AdminRoleServiceImpl extends ServiceImpl<AdminRoleMapper, AdminRole
     }
 
     @Override
+    public String selectNameById(Long id) {
+        System.out.println("正在使用selectNameById");
+        System.out.println("id" + id);
+        System.out.println("adminRoleMapper.selectById(id):" + adminRoleMapper.selectById(id));
+        return adminRoleMapper.selectById(id).getName();
+    }
+
+    @Override
     public int insert(AdminRole adminRole) {
         int id = adminRoleMapper.insert(adminRole);
         return id;

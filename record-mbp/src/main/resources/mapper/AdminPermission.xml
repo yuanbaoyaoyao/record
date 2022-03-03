@@ -14,81 +14,50 @@
         </collection>
     </resultMap>
 
-    <select id="selectAdminListSearch" resultType="com.yuanbao.record.mbp.mapper.entity.AdminPermission">
+    <select id="selectRoleList" resultType="com.yuanbao.record.mbp.mapper.entity.AdminPermission">
         SELECT
-        au.id,
-        au.NAME,
-        au.PASSWORD,
-        au.avatar,
-        au.created_at,
+        ap.permission,
         ar.NAME AS role
         FROM admin_role ar
         INNER JOIN admin_user au ON au.role_id = ar.id
         WHERE
-        au.deleted != '1' AND ar.deleted != '1'
-        <if test="keyword != 'null'.toString() and keyword != '' ">
-            AND
-            (au.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
-            OR ar.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%'))
-        </if>
+        ap.deleted != '1' AND ar.deleted != '1'
     </select>
-    <select id="selectAdminListByName" resultType="com.yuanbao.record.mbp.mapper.entity.AdminPermission">
-        SELECT
-            au.id,
-            au.NAME,
-            au.PASSWORD,
-            au.avatar,
-            au.created_at,
-            ar.NAME AS role
-        FROM admin_role ar
-                 INNER JOIN admin_user au ON au.role_id = ar.id
-        WHERE
-            au.deleted != '1' AND ar.deleted != '1'
-        AND
-        au.NAME = #{au.name ,jdbcType=VARCHAR}
+    <select id="selectById" resultType="com.yuanbao.record.mbp.mapper.entity.AdminPermission">
+        SELECT *
+        FROM admin_permission ap
+        WHERE ap.deleted != '1'
+          AND
+            ap.id = #{au.id ,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByRoleId" resultType="com.yuanbao.record.mbp.mapper.entity.AdminPermission">
+        SELECT *
+        FROM admin_permission ap
+        WHERE ap.deleted != '1'
+          AND
+            ap.role_id = #{au.roleId ,jdbcType=VARCHAR}
     </select>
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.AdminPermission">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into admin_user
+        insert into admin_permission
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="name!=null">
-                name,
-            </if>
-            <if test="password!=null">
-                password,
-            </if>
-            <if test="avatar!=null">
-                avatar,
+            <if test="permission!=null">
+                permission,
             </if>
             <if test="roleId!=null">
                 role_id,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="name!=null">
-                #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="password!=null">
-                #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="avatar!=null">
-                #{avatar,jdbcType=VARCHAR},
+            <if test="permission!=null">
+                #{permission,jdbcType=VARCHAR},
             </if>
             <if test="roleId!=null">
                 #{roleId,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
-
-    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.AdminPermission">
-        update admin_user
-        set name     = #{name,jdbcType=VARCHAR},
-            password = #{password,jdbcType=VARCHAR},
-            avatar   = #{avatar,jdbcType=VARCHAR},
-            role_id  = #{roleId,jdbcType=INTEGER}
-        where id = #{id,jdbcType=BIGINT}
-    </update>
 
 </mapper>

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("productSkus")
+@RequestMapping("/productSkus")
 public class ProductSkusController {
     @Autowired
     private ProductSkusService productSkusService;

@@ -1,55 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yuanbao.record.mbp.mapper.AdminTokenMapper">
-    <resultMap id="adminPermissionMap" type="com.yuanbao.record.mbp.mapper.entity.AdminToken">
+<mapper namespace="com.yuanbao.record.mbp.mapper.UserTokenMapper">
+    <resultMap id="userMap" type="com.yuanbao.record.mbp.mapper.entity.UserToken">
         <id column="id" property="id"></id>
         <result column="expiration_time" property="expirationTime"></result>
-        <result column="admin_user_id" property="adminUserId"></result>
+        <result column="user_id" property="userId"></result>
         <result column="token" property="token"></result>
         <result column="created_at" property="createdAt"></result>
         <result column="updated_at" property="updatedAt"></result>
         <result column="deleted" property="deleted"></result>
-        <collection property="role" ofType="com.yuanbao.record.mbp.mapper.entity.AdminUser" javaType="java.util.List">
+        <collection property="userList" ofType="com.yuanbao.record.mbp.mapper.entity.User" javaType="java.util.List">
             <id column="id" property="id"></id>
             <result column="name" property="name"></result>
             <result column="password" property="password"></result>
             <result column="avatar" property="avatar"></result>
         </collection>
     </resultMap>
-    
+
     <select id="selectByToken" resultType="com.yuanbao.record.mbp.mapper.entity.AdminToken">
-        SELECT
-            au.id,
-            au.NAME,
-            au.PASSWORD,
-            au.avatar,
-            au.created_at,
-            at.NAME AS role
-        FROM admin_token at
-                 INNER JOIN admin_user au ON au.role_id = at.id
-        WHERE
-            au.deleted != '1' AND at.deleted != '1'
-        AND
-        au.NAME = #{au.name ,jdbcType=VARCHAR}
+        SELECT u.id,
+               u.NAME,
+               u.PASSWORD,
+               u.avatar,
+               u.email,
+               u.email_verified_at,
+               u.created_at,
+        FROM user_token ut
+                 INNER JOIN user u
+                            ON u.id = ut.user_id
+        WHERE u.deleted != '1'
+          AND ut.deleted != '1'
+            AND u.enable!='0'
     </select>
 
-    <select id="selectByUserId" resultType="com.yuanbao.record.mbp.mapper.entity.AdminToken">
-        SELECT
-        *
-        FROM admin_token AS at
+    <select id="selectByUserId" resultType="com.yuanbao.record.mbp.mapper.entity.UserToken">
+        SELECT *
+        FROM user_token AS ut
         WHERE
-            at.deleted != '1'
+            ut.deleted != '1'
           AND
-            at.admin_user_id = #{au.adminUserId ,jdbcType=VARCHAR}
+            ut.user_id = #{ut.userId ,jdbcType=VARCHAR}
     </select>
-    <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.AdminToken">
+    <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.UserToken">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into admin_token
+        insert into user_token
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="adminUserId!=null">
-                admin_user_id,
+            <if test="userId!=null">
+                user_id,
             </if>
             <if test="expirationTime!=null">
                 expiration_time,
@@ -59,8 +58,8 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="adminUserId!=null">
-                #{adminUserId,jdbcType=VARCHAR},
+            <if test="userId!=null">
+                #{userId,jdbcType=VARCHAR},
             </if>
             <if test="expirationTime!=null">
                 #{expirationTime,jdbcType=VARCHAR},
@@ -71,12 +70,12 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.AdminToken">
-        update admin_token
-        set admin_user_id     = #{adminUserId,jdbcType=VARCHAR},
+    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.UserToken">
+        update user_token
+        set user_id   = #{userId,jdbcType=VARCHAR},
             expiration_time = #{expirationTime,jdbcType=VARCHAR},
-            token   = #{token,jdbcType=VARCHAR},
-        where id = #{id,jdbcType=BIGINT}
+            token           = #{token,jdbcType=VARCHAR},
+            where id = #{id,jdbcType=BIGINT}
     </update>
 
 </mapper>

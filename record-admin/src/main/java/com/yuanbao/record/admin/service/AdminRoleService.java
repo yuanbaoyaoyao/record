@@ -8,6 +8,8 @@ import com.yuanbao.record.mbp.vo.AdminRoleVo;
 public interface AdminRoleService extends IService<AdminRole> {
     IPage<AdminRoleVo> selectRoleList(Integer pageNum, Integer pageSize, IPage<AdminRole> page, String keyword);
 
+    String selectNameById(Long id);
+
     int insert(AdminRole adminRole);
 
     int deleteByPrimaryKey(Long id);

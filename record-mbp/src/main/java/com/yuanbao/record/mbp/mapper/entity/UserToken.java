@@ -6,10 +6,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class AdminToken implements Serializable {
+public class UserToken implements Serializable {
     static final Long serialVersionUID = 1L;
     private Long id;
-    private Long adminUserId;
+    private Long userId;
     private String token;
     private LocalDateTime expirationTime;
     private LocalDateTime createdAt;

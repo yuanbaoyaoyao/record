@@ -20,9 +20,60 @@
         </if>
     </select>
 
+    <select id="selectUserListByName" resultType="com.yuanbao.record.mbp.mapper.entity.User">
+        SELECT u.id,
+               u.NAME,
+               u.PASSWORD,
+               u.avatar,
+               u.created_at
+        FROM user u
+        WHERE u.deleted != '1' and u.enable !='0'
+        AND
+        u.NAME = #{u.name ,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.User">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="password!=null">
+                password,
+            </if>
+            <if test="avatar!=null">
+                avatar,
+            </if>
+            <if test="email!=null">
+                email,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name!=null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password!=null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar!=null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="email!=null">
+                #{email,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
     <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.User">
         update user
-        set enable     = #{enable,jdbcType=BOOLEAN}
+        set enable   = #{enable,jdbcType=BOOLEAN},
+            name     = #{name,jdbcType=VARCHAR},
+            password = #{password,jdbcType=VARCHAR},
+            avatar   = #{avatar,jdbcType=VARCHAR},
+            email    = #{email,jdbcType=VARCHAR}
         where id = #{id,jdbcType=BIGINT}
     </update>
 
