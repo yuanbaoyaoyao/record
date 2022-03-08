@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuanbao.record.mbp.mapper.UserOrderMapper">
+
+    <select id="selectOrderListSearch" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
+        SELECT *
+        FROM user_order uo
+        WHERE uo.deleted != '1'
+        <if test="userId != 'null'.toString() and userId != '' ">
+            AND uo.user_id like concat ('%',#{uo.userID,jdbcType=VARCHAR},'%'))
+        </if>
+        <if test="productTitle != 'null'.toString() and productTitle != '' ">
+            AND uo.product_title like concat ('%',#{uo.productTitle,jdbcType=VARCHAR},'%'))
+        </if>
+        <if test="productSkusTitle != 'null'.toString() and productSkusTitle != '' ">
+            AND uo.product_skus_title like concat ('%',#{productSkusTitle,jdbcType=VARCHAR},'%'))
+        </if>
+        <if test="orderSn != 'null'.toString() and orderSn != '' ">
+            AND uo.order_sn like concat ('%',#{ordersn,jdbcType=VARCHAR},'%'))
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId!=null">
+                user_id,
+            </if>
+            <if test="userAddressId!=null">
+                user_address_id,
+            </if>
+            <if test="productTitle!=null">
+                product_title,
+            </if>
+            <if test="productSkusTitle!=null">
+                product_skus_title,
+            </if>
+            <if test="productNumber!=null">
+                product_number,
+            </if>
+            <if test="orderSn!=null">
+                order_sn,
+            </if>
+            <if test="orderStatus!=null">
+                order_status,
+            </if>
+            <if test="orderRemarks!=null">
+                order_remarks,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId!=null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userAddressId!=null">
+                #{userAddressId,jdbcType=INTEGER},
+            </if>
+            <if test="productTitle!=null">
+                #{productTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="productSkusTitle!=null">
+                #{productSkusTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="productNumber!=null">
+                #{productNumber,jdbcType=INTEGER},
+            </if>
+            <if test="orderSn!=null">
+                #{orderSn,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus!=null">
+                #{orderStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="orderRemarks!=null">
+                #{orderRemarks,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.Product">-->
+    <!--        update product-->
+    <!--        set title       = #{title,jdbcType=VARCHAR},-->
+    <!--            description = #{description,jdbcType=VARCHAR}-->
+    <!--        where id = #{id,jdbcType=BIGINT}-->
+    <!--    </update>-->
+
+</mapper>

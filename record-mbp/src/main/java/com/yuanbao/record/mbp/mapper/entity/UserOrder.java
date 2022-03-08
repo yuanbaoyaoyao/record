@@ -11,10 +11,14 @@ public class UserOrder implements Serializable {
     private Long id;
     private Integer userId;
     private Integer userAddressId;
-    private String orderSn;
-    private String orderStatus;
+    private String productTitle;
+    private String productSkusTitle;
+    private Integer productNumber;
+//    private String productDetail;
+    private Long orderSn;
+    private Integer orderStatus;
     private String orderRemarks;
-    private Float totalCost;
+    //    private Float totalCost;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean deleted;

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class UserAddress implements Serializable {
     static final Long serialVersionUID = 1L;
     private Long id;
-    private Integer userId;
+    private Long userId;
     private String addressDetail;
     private String name;
     private String phone;

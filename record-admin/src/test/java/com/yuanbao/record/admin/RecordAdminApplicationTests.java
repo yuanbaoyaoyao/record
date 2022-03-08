@@ -1,8 +1,10 @@
 package com.yuanbao.record.admin;
 
 import com.yuanbao.record.admin.service.AdminUserService;
+import com.yuanbao.record.common.api.util.IdGenerator;
 import com.yuanbao.record.mbp.mapper.AdminUserMapper;
 import com.yuanbao.record.mbp.mapper.UserMapper;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,15 +21,12 @@ class RecordAdminApplicationTests {
     private AdminUserService adminUserService;
 
 //    单表
-//    @Test
-//    public void testPage(){
-//        Page<AdminUser> adminUserPage = new Page<>(1,5);
-//        QueryWrapper<AdminUser> wrapper = new QueryWrapper<>();
-//        IPage<AdminUser> page = adminUserMapper.se(adminUserPage,wrapper);
-//        System.out.println(page.getRecords());
-//        System.out.println(page.getPages());
-//        System.out.println(page.getTotal());
-//    }
+    @Test
+    public void testPage(){
+        IdGenerator idGenerator = new IdGenerator(0,0);
+        Long uuid = idGenerator.nextId();
+        System.out.println(uuid);
+    }
 
 //    @Test
 //    void  Trans(){

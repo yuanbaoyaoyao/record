@@ -20,12 +20,12 @@ public class ProductSkusServiceImpl extends ServiceImpl<ProductSkusMapper, Produ
     private ProductSkusMapper productSkusMapper;
 
     @Override
-    public IPage<ProductSkusVo> selectProductSkusListSearch(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String keyword) {
+    public IPage<ProductSkusVo> selectProductSkusListSearch(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String keyword1,String keyword2) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<ProductSkusVo> voPage = new Page<>();
         List<ProductSkusVo> productSkusVoList = new ArrayList<>();
-        IPage<ProductSkus> productSkusIPage = productSkusMapper.selectProductSkusListSearch(pageNum, pageSize, page, keyword);
+        IPage<ProductSkus> productSkusIPage = productSkusMapper.selectProductSkusListSearch(pageNum, pageSize, page, keyword1,keyword2);
         List<ProductSkus> productSkusList = productSkusIPage.getRecords();
         for (ProductSkus productSkus : productSkusList) {
             ProductSkusVo productSkusVo = ProductSkusVoMapper.productskusvomapper.Trans(productSkus);

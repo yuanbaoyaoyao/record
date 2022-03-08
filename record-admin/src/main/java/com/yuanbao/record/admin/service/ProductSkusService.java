@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface ProductSkusService extends IService<ProductSkus> {
-    IPage<ProductSkusVo> selectProductSkusListSearch(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String keyword);
+    IPage<ProductSkusVo> selectProductSkusListSearch(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String keyword1,String keyword2);
 
     List<ProductSkusVo> selectProductSkusList();
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface ProductSkusMapper extends BaseMapper<ProductSkus> {
-    IPage<ProductSkus> selectProductSkusListSearch(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String keyword);
+    IPage<ProductSkus> selectProductSkusListSearch(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String keyword1,String keyword2);
 
     List<ProductSkusVo> selectProductSkusList();
 

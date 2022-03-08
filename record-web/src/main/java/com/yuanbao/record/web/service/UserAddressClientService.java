@@ -1,16 +1,16 @@
-package com.yuanbao.record.mbp.mapper;
+package com.yuanbao.record.web.service;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuanbao.record.mbp.mapper.entity.UserAddress;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
-public interface UserAddressMapper extends BaseMapper<UserAddress> {
+public interface UserAddressClientService extends IService<UserAddress> {
     List<UserAddress> selectByUserId(Long userId);
 
     int insert(UserAddress userAddress);
 
     int updateByPrimaryKey(UserAddress userAddress);
+
+    int deleteByPrimaryKey(long tempId);
 }

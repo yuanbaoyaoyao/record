@@ -22,9 +22,9 @@ public class ProductController {
     public CommonResult<IPage<ProductVo>> getAllProduct(
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-            @RequestParam(value = "keyword", defaultValue = "null") String keyword) {
+            @RequestParam(value = "keyword1", defaultValue = "null") String keyword1) {
         IPage<Product> page = new Page<>();
-        IPage<ProductVo> voPage = productService.selectProductListSearch(pageNum, pageSize, page, keyword);
+        IPage<ProductVo> voPage = productService.selectProductListSearch(pageNum, pageSize, page, keyword1);
         return CommonResult.success(voPage);
     }
 

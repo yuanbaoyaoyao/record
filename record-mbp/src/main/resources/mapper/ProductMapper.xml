@@ -6,8 +6,8 @@
         SELECT *
         FROM product p
         WHERE p.deleted != '1'
-        <if test="keyword != 'null'.toString() and keyword != '' ">
-            p.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%'))
+        <if test="keyword1 != 'null'.toString() and keyword1 != '' ">
+            p.NAME like concat ('%',#{keyword1,jdbcType=VARCHAR},'%'))
         </if>
     </select>
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.Product">

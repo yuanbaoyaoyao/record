@@ -22,9 +22,12 @@ public class ProductSkusController {
     public CommonResult<IPage<ProductSkusVo>> getAllProductSkus(
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-            @RequestParam(value = "keyword", defaultValue = "null") String keyword) {
+            @RequestParam(value = "keyword1", defaultValue = "null") String keyword1,
+            @RequestParam(value = "keyword2", defaultValue = "null") String keyword2) {
+        System.out.println("keyword1"+keyword1);
+        System.out.println("keyword2"+keyword2);
         IPage<ProductSkus> page = new Page<>();
-        IPage<ProductSkusVo> voPage = productSkusService.selectProductSkusListSearch(pageNum, pageSize, page, keyword);
+        IPage<ProductSkusVo> voPage = productSkusService.selectProductSkusListSearch(pageNum, pageSize, page, keyword1, keyword2);
         return CommonResult.success(voPage);
     }
 
@@ -41,7 +44,7 @@ public class ProductSkusController {
 
     @RequiresPermissions("productSkus:delete")
     @DeleteMapping(value = "/delete")
-    public CommonResult delete(@RequestBody ProductSkus productSkus){
+    public CommonResult delete(@RequestBody ProductSkus productSkus) {
         long tempId = productSkus.getId();
         int count = productSkusService.deleteByPrimaryKey(tempId);
         if (count > 0) {
@@ -53,7 +56,7 @@ public class ProductSkusController {
 
     @RequiresPermissions("productSkus:update")
     @PutMapping(value = "/update")
-    public CommonResult update(@RequestBody ProductSkus productSkus){
+    public CommonResult update(@RequestBody ProductSkus productSkus) {
         int count = productSkusService.updateByPrimaryKey(productSkus);
         if (count > 0) {
             return CommonResult.success(count);

@@ -26,14 +26,14 @@
         ps.stock,
         ps.created_at,
         p.title AS product_name
-        FROM product p
-        INNER JOIN product_skus ps ON ps.product_id = p.id
+        FROM product as p
+        INNER JOIN product_skus as ps ON ps.product_id = p.id
         WHERE
         ps.deleted != '1' AND p.deleted != '1'
-        <if test="keyword != 'null'.toString() and keyword != '' ">
+        and p.title like concat ('%',#{keyword1,jdbcType=VARCHAR},'%')
+        <if test="keyword2 != 'null'.toString() and keyword2 != '' ">
             AND
-            (ps.title like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
-            OR p.title like concat ('%',#{keyword,jdbcType=VARCHAR},'%'))
+            ps.title like concat ('%',#{keyword2,jdbcType=VARCHAR},'%')
         </if>
     </select>
 

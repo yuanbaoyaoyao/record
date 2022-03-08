@@ -124,6 +124,7 @@ public class ShiroController {
         Map<String, Object> userInfo = new HashMap<String, Object>();
         userInfo.put("nickName", user.getName());
         userInfo.put("avatar", user.getAvatar());
+        userInfo.put(("userId"),user.getId());
 
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", currentUser.getSession().getId());

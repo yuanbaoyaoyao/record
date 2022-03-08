@@ -48,6 +48,7 @@
         AND
         au.NAME = #{au.name ,jdbcType=VARCHAR}
     </select>
+
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.AdminUser">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()
