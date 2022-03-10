@@ -9,8 +9,11 @@ import java.time.LocalDateTime;
 public class UserOrder implements Serializable {
     static final Long serialVersionUID = 1L;
     private Long id;
-    private Integer userId;
-    private Integer userAddressId;
+    private Long userId;
+    private Long userAddressId;
+    private String receiver;
+    private String user;
+    private String addressDetail;
     private String productTitle;
     private String productSkusTitle;
     private Integer productNumber;

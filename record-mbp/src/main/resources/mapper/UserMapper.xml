@@ -17,6 +17,8 @@
         <if test="keyword != 'null'.toString() and keyword != '' ">
             AND
             (u.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%'))
+            OR
+            (u.id like concat (#{keyword,jdbcType=VARCHAR}))
         </if>
     </select>
 

@@ -7,7 +7,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserOrderMapper extends BaseMapper<UserOrder> {
-    IPage<UserOrder> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle,Long orderSn);
+    IPage<UserOrder> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle,Long orderSn,Integer orderStatus);
 
     int insert(UserOrder userOrder);
+
+//    int updateByPrimaryKey(UserOrder userOrder);
+
+    int updateByOrderSn(UserOrder userOrder);
 }

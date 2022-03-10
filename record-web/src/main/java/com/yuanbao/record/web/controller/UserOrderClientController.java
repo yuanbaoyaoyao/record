@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/client/userOrder")
-public class UserOrderController {
+public class UserOrderClientController {
     @Autowired
     private UserOrderClientService userOrderClientService;
 
     @PostMapping(value = "/create")
     public CommonResult create(@RequestBody UserOrder userOrder) {
-        System.out.println("userOrder"+ userOrder);
+        System.out.println("userOrder" + userOrder);
 
         int newId = userOrderClientService.insert(userOrder);
         if (newId > 0) {
@@ -34,12 +34,19 @@ public class UserOrderController {
                                                         @RequestParam(value = "userId") Long userId,
                                                         @RequestParam(value = "productTitle", defaultValue = "null") String productTitle,
                                                         @RequestParam(value = "productSkusTitle", defaultValue = "null") String productSkusTitle,
-                                                        @RequestParam(value = "orderSn", defaultValue = "null") Long orderSn) {
+                                                        @RequestParam(value = "orderSn", required = false) Long orderSn,
+                                                        @RequestParam(value = "orderStatus", required = false) Integer orderStatus) {
         IPage<UserOrder> page = new Page<>();
-        IPage<UserOrderVo> userOrderVoIPage = userOrderClientService.selectOrderListSearch(pageNum, pageSize, page, userId, productTitle, productSkusTitle, orderSn);
+        System.out.println("orderStatus" + orderStatus);
+        IPage<UserOrderVo> userOrderVoIPage = userOrderClientService.selectOrderListSearch(pageNum, pageSize, page, userId, productTitle, productSkusTitle, orderSn, orderStatus);
         return CommonResult.success(userOrderVoIPage);
     }
 
+    @PutMapping(value = "/update")
+    public CommonResult update(@RequestBody UserOrder userOrder) {
+        int count = userOrderClientService.updateByOrderSn(userOrder);
+        return CommonResult.success(count);
+    }
 
     @DeleteMapping(value = "/delete")
     public CommonResult delete(@RequestBody UserOrder userOrder) {

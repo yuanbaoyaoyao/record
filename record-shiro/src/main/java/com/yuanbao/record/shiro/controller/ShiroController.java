@@ -176,6 +176,22 @@ public class ShiroController {
         return CommonResult.success(data);
     }
 
+    @RequiresAuthentication
+    @GetMapping("/client/info")
+    public CommonResult clientInfo() {
+        Subject currentUser = SecurityUtils.getSubject();
+        System.out.println("currentUser:" + currentUser);
+        User user = (User) currentUser.getPrincipal();
+        System.out.println("user:" + user);
+        Map<String, Object> data = new HashMap<>();
+        Long id = user.getId();
+        System.out.println("id:" + id);
+        data.put("name", user.getName());
+        data.put("avatar", user.getAvatar());
+        data.put("id",user.getId());
+        return CommonResult.success(data);
+    }
+
 //    @RequiresAuthentication
 //    @GetMapping("/client/info")
 //    public CommonResult clientInfo() {

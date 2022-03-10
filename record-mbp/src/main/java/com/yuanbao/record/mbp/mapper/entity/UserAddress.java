@@ -11,7 +11,8 @@ public class UserAddress implements Serializable {
     private Long id;
     private Long userId;
     private String addressDetail;
-    private String name;
+    private String receiver;
+    private String user;
     private String phone;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

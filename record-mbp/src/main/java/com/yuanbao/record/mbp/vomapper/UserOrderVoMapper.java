@@ -14,11 +14,14 @@ public interface UserOrderVoMapper {
     @Mappings({
             @Mapping(target = "userId", source = "userOrder.userId"),
             @Mapping(target = "userAddressId", source = "userOrder.userAddressId"),
-            @Mapping(target = "productTitle", source = "userOrder.productTitle"),
+            @Mapping(target = "receiver", source = "userOrder.receiver"),
+            @Mapping(target = "user", source = "userOrder.user"),
+            @Mapping(target = "addressDetail", source = "userOrder.addressDetail"),
             @Mapping(target = "productSkusTitle", source = "userOrder.productSkusTitle"),
             @Mapping(target = "productNumber", source = "userOrder.productNumber"),
             @Mapping(target = "orderSn", source = "userOrder.orderSn"),
             @Mapping(target = "orderRemarks", source = "userOrder.orderRemarks"),
+            @Mapping(target = "createdAt", source = "userOrder.createdAt"),
     })
     UserOrderVo Trans(UserOrder userOrder);
 }

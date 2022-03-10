@@ -5,7 +5,8 @@
         <id column="id" property="id"></id>
         <result column="user_id" property="userId"></result>
         <result column="address_detail" property="addressDetail"></result>
-        <result column="name" property="name"></result>
+        <result column="receiver" property="receiver"></result>
+        <result column="user" property="user"></result>
         <result column="phone" property="phone"></result>
         <result column="created_at" property="createdAt"></result>
         <result column="updated_at" property="updatedAt"></result>
@@ -22,11 +23,9 @@
     </resultMap>
 
     <select id="selectByUserId" resultType="com.yuanbao.record.mbp.mapper.entity.UserAddress">
-        SELECT
-            *
+        SELECT *
         FROM user_address AS ua
-        WHERE
-            ua.deleted != '1'
+        WHERE ua.deleted != '1'
           AND
             ua.user_id = #{ua.user_id ,jdbcType=VARCHAR}
     </select>
@@ -42,8 +41,11 @@
             <if test="addressDetail!=null">
                 address_detail,
             </if>
-            <if test="name!=null">
-                name,
+            <if test="receiver!=null">
+                receiver,
+            </if>
+            <if test="user!=null">
+                user,
             </if>
             <if test="phone!=null">
                 phone,
@@ -67,11 +69,13 @@
 
     <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.UserAddress">
         update user_address
-        set user_id     = #{userId,jdbcType=INTEGER},
+        set user_id        = #{userId,jdbcType=INTEGER},
             address_detail = #{addressDetail,jdbcType=VARCHAR},
-            name   = #{name,jdbcType=VARCHAR},
-            phone   = #{phone,jdbcType=VARCHAR}
-            where id = #{id}
+            receiver       = #{receiver,jdbcType=VARCHAR},
+            user           = #{user,jdbcType=VARCHAR},
+            name           = #{name,jdbcType=VARCHAR},
+            phone          = #{phone,jdbcType=VARCHAR}
+        where id = #{id}
     </update>
 
 </mapper>
