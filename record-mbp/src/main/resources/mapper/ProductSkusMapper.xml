@@ -30,7 +30,9 @@
         INNER JOIN product_skus as ps ON ps.product_id = p.id
         WHERE
         ps.deleted != '1' AND p.deleted != '1'
-        and p.title like concat ('%',#{keyword1,jdbcType=VARCHAR},'%')
+        <if test="keyword2 != 'null'.toString() and keyword2 != '' ">
+            and p.title like concat ('%',#{keyword1,jdbcType=VARCHAR},'%')
+        </if>
         <if test="keyword2 != 'null'.toString() and keyword2 != '' ">
             AND
             ps.title like concat ('%',#{keyword2,jdbcType=VARCHAR},'%')

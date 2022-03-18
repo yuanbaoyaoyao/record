@@ -1,9 +1,11 @@
 package com.yuanbao.record.mbp.mapper.entity;
 
+import com.yuanbao.record.mbp.vo.OrderProductVo;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class UserOrder implements Serializable {
@@ -14,14 +16,12 @@ public class UserOrder implements Serializable {
     private String receiver;
     private String user;
     private String addressDetail;
-    private String productTitle;
-    private String productSkusTitle;
-    private Integer productNumber;
-//    private String productDetail;
+    //    private Integer countOrderNumber;
+//    private Integer sumProductNumber;
     private Long orderSn;
     private Integer orderStatus;
     private String orderRemarks;
-    //    private Float totalCost;
+    private List<OrderProductVo> orderProductVoList;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean deleted;

@@ -9,18 +9,33 @@
         <if test="userId != '' and userId != null">
             AND (uo.user_id like concat (#{userId,jdbcType=BIGINT}))
         </if>
-        <if test="productTitle != 'null'.toString() and productTitle != '' ">
-            AND (uo.product_title like concat ('%',#{productTitle,jdbcType=VARCHAR},'%'))
-        </if>
-        <if test="productSkusTitle != 'null'.toString() and productSkusTitle != '' ">
-            AND (uo.product_skus_title like concat ('%',#{productSkusTitle,jdbcType=VARCHAR},'%'))
-        </if>
         <if test="orderSn != 'null'.toString() and orderSn != null and orderSn != '' ">
             AND (uo.order_sn like concat (#{orderSn,jdbcType=BIGINT}))
         </if>
         <if test="orderStatus != '' and orderStatus != null">
             AND (uo.order_status like concat (#{orderStatus,jdbcType=BIGINT}))
         </if>
+    </select>
+
+    <select id="selectOrderListDateSearch" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
+        SELECT receiver,COUNT(*) as count_order_number,sum(product_number) as sum_product_number
+        FROM user_order uo
+        WHERE uo.deleted != '1'
+        <if test="userId != '' and userId != null">
+            AND (uo.user_id = #{userId,jdbcType=BIGINT}))
+        </if>
+        <choose>
+            <when test="dateState == 2">
+                and YEAR ( uo.created_at )= YEAR (NOW())
+            </when>
+            <when test="dateState == 3 and specifiedTime1 != '' and specifiedTime2 != ''">
+                and uo.created_at between #{specifiedTime1} and #{specifiedTime2}
+            </when>
+            <otherwise>
+                and DATE_FORMAT( uo.created_at, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+            </otherwise>
+        </choose>
+        GROUP BY uo.receiver
     </select>
 
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
@@ -43,15 +58,6 @@
             </if>
             <if test="addressDetail!=null">
                 address_detail,
-            </if>
-            <if test="productTitle!=null">
-                product_title,
-            </if>
-            <if test="productSkusTitle!=null">
-                product_skus_title,
-            </if>
-            <if test="productNumber!=null">
-                product_number,
             </if>
             <if test="orderSn!=null">
                 order_sn,
@@ -78,15 +84,6 @@
             </if>
             <if test="address_detail!=null">
                 #{addressDetail,jdbcType=VARCHAR},
-            </if>
-            <if test="productTitle!=null">
-                #{productTitle,jdbcType=VARCHAR},
-            </if>
-            <if test="productSkusTitle!=null">
-                #{productSkusTitle,jdbcType=VARCHAR},
-            </if>
-            <if test="productNumber!=null">
-                #{productNumber,jdbcType=INTEGER},
             </if>
             <if test="orderSn!=null">
                 #{orderSn,jdbcType=VARCHAR},

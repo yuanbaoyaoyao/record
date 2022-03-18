@@ -9,6 +9,8 @@ import com.yuanbao.record.mbp.vo.UserOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/userOrder")
@@ -26,8 +28,19 @@ public class UserOrderController {
                                                         @RequestParam(value = "orderSn", required = false) Long orderSn,
                                                         @RequestParam(value = "orderStatus", required = false) Integer orderStatus) {
         IPage<UserOrder> page = new Page<>();
-        System.out.println("调用list");
         IPage<UserOrderVo> userOrderVoIPage = userOrderService.selectOrderListSearch(pageNum, pageSize, page, userId, productTitle, productSkusTitle, orderSn, orderStatus);
+        return CommonResult.success(userOrderVoIPage);
+    }
+
+    @GetMapping(value = "/dateList")
+    public CommonResult<IPage<UserOrderVo>> getAllDateOrder(@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                        @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                            @RequestParam(value = "userId", required = false) Long userId,
+                                                            @RequestParam(value = "dateState",defaultValue = "1", required = false) Integer dateState,
+                                                            @RequestParam(value = "specifiedTime1", required = false) LocalDateTime specifiedTime1,
+                                                            @RequestParam(value = "specifiedTime2", required = false) LocalDateTime specifiedTime2) {
+        IPage<UserOrder> page = new Page<>();
+        IPage<UserOrderVo> userOrderVoIPage = userOrderService.selectOrderListDateSearch(pageNum, pageSize, page, userId, dateState, specifiedTime1, specifiedTime2);
         return CommonResult.success(userOrderVoIPage);
     }
 

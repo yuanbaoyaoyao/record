@@ -5,9 +5,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yuanbao.record.mbp.mapper.entity.UserOrder;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.time.LocalDateTime;
+
 @Mapper
 public interface UserOrderMapper extends BaseMapper<UserOrder> {
-    IPage<UserOrder> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle,Long orderSn,Integer orderStatus);
+    IPage<UserOrder> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle, Long orderSn, Integer orderStatus);
+
+    IPage<UserOrder> selectOrderListDateSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, LocalDateTime specifiedTime1, LocalDateTime specifiedTime2);
 
     int insert(UserOrder userOrder);
 
