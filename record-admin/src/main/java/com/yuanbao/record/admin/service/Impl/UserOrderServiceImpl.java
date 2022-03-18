@@ -32,12 +32,11 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<UserOrderVo> voPage = new Page<>();
-        List<OrderProductVo> orderProductVoList = new ArrayList<>();
 //        List<Collection<UserOrderVo>> userOrderVoList1 = new ArrayList<>();
         List<UserOrderVo> userOrderVoList = new ArrayList<>();
         IPage<UserOrder> userOrderIPage = userOrderMapper.selectOrderListSearch(pageNum, pageSize, page, userId, productTitle, productSkusTitle, orderSn, orderStatus);
 
-        return getUserOrderVoIPage(pageNum, pageSize, voPage, orderProductVoList, userOrderVoList, userOrderIPage);
+        return getUserOrderVoIPage(pageNum, pageSize, voPage, userOrderVoList, userOrderIPage);
     }
 
     @Override
@@ -45,18 +44,19 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<UserOrderVo> voPage = new Page<>();
-        List<OrderProductVo> orderProductVoList = new ArrayList<>();
 //        List<Collection<UserOrderVo>> userOrderVoList1 = new ArrayList<>();
         List<UserOrderVo> userOrderVoList = new ArrayList<>();
         IPage<UserOrder> userOrderIPage = userOrderMapper.selectOrderListDateSearch(pageNum, pageSize, page, userId, dateState, specifiedTime1, specifiedTime2);
-        return getUserOrderVoIPage(pageNum, pageSize, voPage, orderProductVoList, userOrderVoList, userOrderIPage);
+        return getUserOrderVoIPage(pageNum, pageSize, voPage, userOrderVoList, userOrderIPage);
     }
 
-    private IPage<UserOrderVo> getUserOrderVoIPage(Integer pageNum, Integer pageSize, IPage<UserOrderVo> voPage, List<OrderProductVo> orderProductVoList, List<UserOrderVo> userOrderVoList, IPage<UserOrder> userOrderIPage) {
+    private IPage<UserOrderVo> getUserOrderVoIPage(Integer pageNum, Integer pageSize, IPage<UserOrderVo> voPage , List<UserOrderVo> userOrderVoList, IPage<UserOrder> userOrderIPage) {
         List<UserOrder> userOrderList = userOrderIPage.getRecords();
         System.out.println("userOrderList" + userOrderList);
         for (UserOrder userOrder : userOrderList) {
             UserOrderVo userOrderVo = UserOrderVoMapper.userordervomapper.Trans(userOrder);
+            List<OrderProductVo> orderProductVoList = new ArrayList<>();
+
             List<OrderProduct> orderProductList = orderProductMapper.selectOrderProductList(userOrder.getId(), "", "");
             for (OrderProduct orderProduct : orderProductList) {
                 OrderProductVo orderProductVo = OrderProductVoMapper.orderproductvomapper.Trans(orderProduct);
@@ -64,6 +64,9 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
             }
             userOrderVo.setOrderProductVoList(orderProductVoList);
             userOrderVoList.add(userOrderVo);
+//            System.out.println("userOrderVoList1:" + userOrderVoList);
+//            orderProductVoList.clear();
+//            System.out.println("userOrderVoList2:" + userOrderVoList);
         }
 
         voPage.setRecords(userOrderVoList);
