@@ -12,6 +12,7 @@ public interface AdminUserVoMapper {
     AdminUserVoMapper adminuservomapper = Mappers.getMapper(AdminUserVoMapper.class);
 
     @Mappings({
+            @Mapping(target = "id", source = "adminUser.id"),
             @Mapping(target = "name", source = "adminUser.name"),
             @Mapping(target = "password", source = "adminUser.password"),
             @Mapping(target = "avatar", source = "adminUser.avatar"),

@@ -16,8 +16,8 @@ public class UserOrder implements Serializable {
     private String receiver;
     private String user;
     private String addressDetail;
-    //    private Integer countOrderNumber;
-//    private Integer sumProductNumber;
+    private Integer countOrderNumber;
+    private Integer sumProductNumber;
     private Long orderSn;
     private Integer orderStatus;
     private String orderRemarks;

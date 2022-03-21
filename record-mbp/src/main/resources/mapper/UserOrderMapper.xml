@@ -18,11 +18,15 @@
     </select>
 
     <select id="selectOrderListDateSearch" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
-        SELECT receiver,COUNT(*) as count_order_number,sum(product_number) as sum_product_number
+        SELECT receiver,COUNT(*) as count_order_number,sum(op.number) as sum_product_number
         FROM user_order uo
+        INNER JOIN order_product op ON op.user_order_id = uo.id
         WHERE uo.deleted != '1'
         <if test="userId != '' and userId != null">
-            AND (uo.user_id = #{userId,jdbcType=BIGINT}))
+            AND (uo.user_id = #{userId,jdbcType=BIGINT})
+        </if>
+        <if test="receiver != '' and receiver != null">
+            AND (uo.receiver like concat ('%',#{receiver,jdbcType=VARCHAR},'%'))
         </if>
         <choose>
             <when test="dateState == 2">
@@ -36,6 +40,12 @@
             </otherwise>
         </choose>
         GROUP BY uo.receiver
+    </select>
+
+    <select id="selectIdOrderByReceiver" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
+        SELECT id
+        FROM user_order uo
+        WHERE uo.deleted != '1' and uo.receiver = #{receiver,jdbcType=VARCHAR}
     </select>
 
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.UserOrder">

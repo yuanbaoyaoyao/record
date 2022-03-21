@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @CrossOrigin
@@ -34,13 +35,22 @@ public class UserOrderController {
 
     @GetMapping(value = "/dateList")
     public CommonResult<IPage<UserOrderVo>> getAllDateOrder(@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-                                                        @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                             @RequestParam(value = "userId", required = false) Long userId,
-                                                            @RequestParam(value = "dateState",defaultValue = "1", required = false) Integer dateState,
-                                                            @RequestParam(value = "specifiedTime1", required = false) LocalDateTime specifiedTime1,
-                                                            @RequestParam(value = "specifiedTime2", required = false) LocalDateTime specifiedTime2) {
+                                                            @RequestParam(value = "receiver", required = false) String receiver,
+                                                            @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
+                                                            @RequestParam(value = "specifiedTime1", required = false) String specifiedTime1,
+                                                            @RequestParam(value = "specifiedTime2", required = false) String specifiedTime2) {
         IPage<UserOrder> page = new Page<>();
-        IPage<UserOrderVo> userOrderVoIPage = userOrderService.selectOrderListDateSearch(pageNum, pageSize, page, userId, dateState, specifiedTime1, specifiedTime2);
+        System.out.println("dataState:" + dateState);
+        if(specifiedTime1!=""&&specifiedTime2!=""){
+            System.out.println("specifiedTime1" + specifiedTime1);
+            System.out.println("specifiedTime2" + specifiedTime2);
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime ldt1 = LocalDateTime.parse(specifiedTime1);
+            LocalDateTime ldt2 = LocalDateTime.parse(specifiedTime2);
+        }
+        IPage<UserOrderVo> userOrderVoIPage = userOrderService.selectOrderListDateSearch(pageNum, pageSize, page, userId, dateState, receiver, ldt1, ldt2);
         return CommonResult.success(userOrderVoIPage);
     }
 

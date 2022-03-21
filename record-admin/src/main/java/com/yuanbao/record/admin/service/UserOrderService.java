@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public interface UserOrderService extends IService<UserOrder> {
     IPage<UserOrderVo> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle, Long orderSn, Integer orderStatus);
 
-    IPage<UserOrderVo> selectOrderListDateSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, LocalDateTime specifiedTime1, LocalDateTime specifiedTime2);
+    IPage<UserOrderVo> selectOrderListDateSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, String receiver, LocalDateTime specifiedTime1, LocalDateTime specifiedTime2);
 
     //    int updateByPrimaryKey(UserOrder userOrder);
 

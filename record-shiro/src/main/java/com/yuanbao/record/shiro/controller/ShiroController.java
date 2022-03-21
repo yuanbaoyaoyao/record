@@ -85,13 +85,11 @@ public class ShiroController {
         Map<String, Object> adminInfo = new HashMap<String, Object>();
         adminInfo.put("nickName", adminUser.getName());
         adminInfo.put("avatar", adminUser.getAvatar());
+        adminInfo.put("adminUserId", adminUser.getId());
 
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", currentUser.getSession().getId());
         result.put("adminInfo", adminInfo);
-        System.out.println("yes");
-        System.out.println(currentUser.getSession().getId());
-        System.out.println(currentUser.getSession());
         return CommonResult.success(result);
     }
 
@@ -124,14 +122,11 @@ public class ShiroController {
         Map<String, Object> userInfo = new HashMap<String, Object>();
         userInfo.put("nickName", user.getName());
         userInfo.put("avatar", user.getAvatar());
-        userInfo.put(("userId"),user.getId());
+        userInfo.put(("userId"), user.getId());
 
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", currentUser.getSession().getId());
         result.put("userInfo", userInfo);
-        System.out.println("yes");
-        System.out.println(currentUser.getSession().getId());
-        System.out.println(currentUser.getSession());
         return CommonResult.success(result);
     }
 
@@ -159,9 +154,7 @@ public class ShiroController {
     @GetMapping("/info")
     public CommonResult info() {
         Subject currentUser = SecurityUtils.getSubject();
-        System.out.println("currentUser:" + currentUser);
         AdminUser adminUser = (AdminUser) currentUser.getPrincipal();
-        System.out.println("adminUser:" + adminUser);
         Map<String, Object> data = new HashMap<>();
         Long roleId = adminUser.getRoleId();
         System.out.println("roleId:" + roleId);
@@ -170,6 +163,7 @@ public class ShiroController {
         System.out.println("permissions:" + permissions);
         data.put("name", adminUser.getName());
         data.put("avatar", adminUser.getAvatar());
+        data.put("adminUserId", adminUser.getId());
         data.put("role", role);
         data.put("perms", toApi(permissions));
         System.out.println("toApi(permissions):" + toApi(permissions));
@@ -188,7 +182,7 @@ public class ShiroController {
         System.out.println("id:" + id);
         data.put("name", user.getName());
         data.put("avatar", user.getAvatar());
-        data.put("id",user.getId());
+        data.put("id", user.getId());
         return CommonResult.success(data);
     }
 

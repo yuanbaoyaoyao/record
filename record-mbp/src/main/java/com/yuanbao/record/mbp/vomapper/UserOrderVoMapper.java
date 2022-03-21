@@ -12,6 +12,7 @@ public interface UserOrderVoMapper {
     UserOrderVoMapper userordervomapper = Mappers.getMapper(UserOrderVoMapper.class);
 
     @Mappings({
+            @Mapping(target = "id", source = "userOrder.id"),
             @Mapping(target = "userId", source = "userOrder.userId"),
             @Mapping(target = "userAddressId", source = "userOrder.userAddressId"),
             @Mapping(target = "receiver", source = "userOrder.receiver"),
@@ -21,8 +22,8 @@ public interface UserOrderVoMapper {
             @Mapping(target = "orderRemarks", source = "userOrder.orderRemarks"),
             @Mapping(target = "orderProductVoList", source = "userOrder.orderProductVoList"),
 
-//            @Mapping(target = "countOrderNumber", source = "userOrder.countOrderNumber"),
-//            @Mapping(target = "sumProductNumber", source = "userOrder.sumProductNumber"),
+            @Mapping(target = "countOrderNumber", source = "userOrder.countOrderNumber"),
+            @Mapping(target = "sumProductNumber", source = "userOrder.sumProductNumber"),
 //            @Mapping(target = "specifiedTime1", source = "userOrder.specifiedTime1"),
 //            @Mapping(target = "specifiedTime2", source = "userOrder.specifiedTime2"),
             @Mapping(target = "createdAt", source = "userOrder.createdAt"),
