@@ -15,7 +15,6 @@ import com.yuanbao.record.mbp.vomapper.UserOrderVoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -38,7 +37,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     }
 
     @Override
-    public IPage<UserOrderVo> selectOrderListDateSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, String receiver, LocalDateTime specifiedTime1, LocalDateTime specifiedTime2) {
+    public IPage<UserOrderVo> selectOrderListDateSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, String receiver, String specifiedTime1, String specifiedTime2) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<UserOrderVo> voPage = new Page<>();
@@ -47,9 +46,26 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         return getUserOrderVoIPage(pageNum, pageSize, voPage, userOrderVoList, userOrderIPage);
     }
 
-    private IPage<UserOrderVo> getUserOrderVoIPage(Integer pageNum, Integer pageSize, IPage<UserOrderVo> voPage, List<UserOrderVo> userOrderVoList, IPage<UserOrder> userOrderIPage) {
-        List<UserOrder> userOrderList = userOrderIPage.getRecords();
+    @Override
+    public IPage<UserOrderVo> selectOrderListDateSearchNoGroup(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String receiver, Integer dateState, String specifiedTime1, String specifiedTime2) {
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        IPage<UserOrderVo> voPage = new Page<>();
+        List<UserOrderVo> userOrderVoList = new ArrayList<>();
+        IPage<UserOrder> userOrderIPage = userOrderMapper.selectOrderListDateSearchNoGroup(pageNum, pageSize, page, userId, receiver, dateState, specifiedTime1, specifiedTime2);
+        return getUserOrderVoIPage(pageNum, pageSize, voPage, userOrderVoList, userOrderIPage);
+    }
 
+    @Override
+    public List<UserOrderVo> selectOrderListDateSearchAllList(Long userId, String receiver, Integer dateState, String specifiedTime1, String specifiedTime2) {
+        List<UserOrder> userOrderList= userOrderMapper.selectOrderListDateSearchAllList(userId, receiver, dateState, specifiedTime1, specifiedTime2);
+        List<UserOrderVo> userOrderVoList = new ArrayList<>();
+        userOrderToUserOrderVo(userOrderList, userOrderVoList);
+        System.out.println();
+        return userOrderVoList;
+    }
+
+    private void userOrderToUserOrderVo(List<UserOrder> userOrderList, List<UserOrderVo> userOrderVoList) {
         for (UserOrder userOrder : userOrderList) {
             UserOrderVo userOrderVo = UserOrderVoMapper.userordervomapper.Trans(userOrder);
             Map<String, Integer> data = new TreeMap<>(
@@ -64,8 +80,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
             List<OrderProductVo> orderProductVoList = new ArrayList<>();
             List<UserOrder> userOrderList1 = userOrderMapper.selectIdOrderByReceiver(userOrder.getReceiver());
             for (UserOrder userOrder1 : userOrderList1) {
-                System.out.println("userOrder1:" + userOrder1.getId());
-                List<OrderProduct> orderProductList = orderProductMapper.selectOrderProductList(userOrder1.getId(), "", "");
+                List<OrderProduct> orderProductList = orderProductMapper.selectOrderProductList(userOrder1.getId(),null, "", "");
                 int temp = 0;
                 for (OrderProduct orderProduct : orderProductList) {
                     OrderProductVo orderProductVo = OrderProductVoMapper.orderproductvomapper.Trans(orderProduct);
@@ -79,17 +94,22 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
             userOrderVo.setOrderProductVoList(orderProductVoList);
             userOrderVo.setMaxNumSkuName(getKeyOrNull(data));
             userOrderVoList.add(userOrderVo);
-            System.out.println("data:" + getKeyOrNull(data));
         }
+    }
+
+    private IPage<UserOrderVo> getUserOrderVoIPage(Integer pageNum, Integer pageSize, IPage<UserOrderVo> voPage, List<UserOrderVo> userOrderVoList, IPage<UserOrder> userOrderIPage) {
+        List<UserOrder> userOrderList = userOrderIPage.getRecords();
+
+        userOrderToUserOrderVo(userOrderList, userOrderVoList);
 
         voPage.setRecords(userOrderVoList);
-        System.out.println("voPage.getRecords" + voPage.getRecords());
         voPage.setCurrent(pageNum);
         voPage.setSize(pageSize);
         voPage.setTotal(userOrderIPage.getTotal());
         return voPage;
     }
 
+//    获取map中的key
     private static String getKeyOrNull(Map<String, Integer> map) {
         String keyName = null;
         for (Map.Entry<String, Integer> entry :

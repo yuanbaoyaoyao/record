@@ -9,7 +9,7 @@
         <if test="userId != '' and userId != null">
             AND (uo.user_id like concat (#{userId,jdbcType=BIGINT}))
         </if>
-        <if test="orderSn != 'null'.toString() and orderSn != null and orderSn != '' ">
+        <if test="orderSn != null and orderSn != '' ">
             AND (uo.order_sn like concat (#{orderSn,jdbcType=BIGINT}))
         </if>
         <if test="orderStatus != '' and orderStatus != null">
@@ -18,6 +18,55 @@
     </select>
 
     <select id="selectOrderListDateSearch" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
+        SELECT receiver,COUNT(*) as count_order_number,sum(op.number) as sum_product_number
+        FROM user_order uo
+        INNER JOIN order_product op ON op.user_order_id = uo.id
+        WHERE uo.deleted != '1'
+        <if test="userId != '' and userId != null">
+            AND (uo.user_id = #{userId,jdbcType=BIGINT})
+        </if>
+        <if test="receiver != '' and receiver != null">
+            AND (uo.receiver like concat ('%',#{receiver,jdbcType=VARCHAR},'%'))
+        </if>
+        <choose>
+            <when test="dateState == 2">
+                and YEAR ( uo.created_at )= YEAR (NOW())
+            </when>
+            <when test="dateState == 3 and specifiedTime1 != '' and specifiedTime2 != ''">
+                and uo.created_at between #{specifiedTime1} and #{specifiedTime2}
+            </when>
+            <otherwise>
+                and DATE_FORMAT( uo.created_at, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+            </otherwise>
+        </choose>
+        GROUP BY uo.receiver
+    </select>
+
+    <select id="selectOrderListDateSearchNoGroup" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
+        SELECT receiver,user,uo.order_status,order_remarks,order_sn,product_title,product_skus_title,number,uo.created_at
+        FROM user_order uo
+        INNER JOIN order_product op ON op.user_order_id = uo.id
+        WHERE uo.deleted != '1'
+        <if test="userId != '' and userId != null">
+            AND (uo.user_id = #{userId,jdbcType=BIGINT})
+        </if>
+        <if test="receiver != '' and receiver != null">
+            AND (uo.receiver like concat ('%',#{receiver,jdbcType=VARCHAR},'%'))
+        </if>
+        <choose>
+            <when test="dateState == 2">
+                and YEAR ( uo.created_at )= YEAR (NOW())
+            </when>
+            <when test="dateState == 3 and specifiedTime1 != '' and specifiedTime2 != ''">
+                and uo.created_at between #{specifiedTime1} and #{specifiedTime2}
+            </when>
+            <otherwise>
+                and DATE_FORMAT( uo.created_at, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="selectOrderListDateSearchAllList" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
         SELECT receiver,COUNT(*) as count_order_number,sum(op.number) as sum_product_number
         FROM user_order uo
         INNER JOIN order_product op ON op.user_order_id = uo.id

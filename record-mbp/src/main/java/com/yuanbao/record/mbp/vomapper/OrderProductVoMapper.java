@@ -13,12 +13,16 @@ public interface OrderProductVoMapper {
 
     @Mappings({
             @Mapping(target = "userOrderId", source = "orderProduct.userOrderId"),
+            @Mapping(target = "orderSn", source = "orderProduct.orderSn"),
             @Mapping(target = "productId", source = "orderProduct.productId"),
+            @Mapping(target = "orderStatus", source = "orderProduct.orderStatus"),
             @Mapping(target = "productSkusId", source = "orderProduct.productSkusId"),
+            @Mapping(target = "receiver", source = "orderProduct.receiver"),
             @Mapping(target = "productTitle", source = "orderProduct.productTitle"),
             @Mapping(target = "productSkusTitle", source = "orderProduct.productSkusTitle"),
             @Mapping(target = "number", source = "orderProduct.number"),
             @Mapping(target = "createdAt", source = "orderProduct.createdAt"),
+            @Mapping(target = "updatedAt", source = "orderProduct.updatedAt"),
     })
     OrderProductVo Trans(OrderProduct orderProduct);
 }

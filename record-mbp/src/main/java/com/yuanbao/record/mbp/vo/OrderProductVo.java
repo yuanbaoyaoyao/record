@@ -8,10 +8,14 @@ import java.time.LocalDateTime;
 public class OrderProductVo {
     private Long id;
     private Long userOrderId;
+    private String receiver;
+    private Long orderSn;
+    private Integer orderStatus;
     private Long productId;
     private Long productSkusId;
     private String productTitle;
     private String productSkusTitle;
     private Integer number;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

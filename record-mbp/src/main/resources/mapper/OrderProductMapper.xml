@@ -9,33 +9,59 @@
         <if test="userOrderId != '' and userOrderId != null">
             AND (op.user_order_id = (#{userOrderId,jdbcType=BIGINT}))
         </if>
-        <if test="productTitle != 'null'.toString() and productTitle != '' ">
+        <if test="orderSn != '' and orderSn != null">
+            AND (op.order_sn = (#{orderSn,jdbcType=BIGINT}))
+        </if>
+        <if test="productTitle != null and productTitle != '' ">
             AND (op.product_title = (#{productTitle,jdbcType=VARCHAR}))
         </if>
-        <if test="productSkusTitle != 'null'.toString() and productSkusTitle != '' ">
+        <if test="productSkusTitle != null and productSkusTitle != '' ">
             AND (op.product_skus_title = (#{productSkusTitle,jdbcType=VARCHAR}))
         </if>
     </select>
 
-    <select id="selectOrderListDateSearch" resultType="com.yuanbao.record.mbp.mapper.entity.OrderProduct">
-        SELECT receiver,COUNT(*) as count_order_number,sum(number) as sum_product_number
-        FROM user_order up
-        WHERE up.deleted != '1'
+    <select id="selectOrderProductListDateSearchStatus" resultType="com.yuanbao.record.mbp.mapper.entity.OrderProduct">
+        SELECT
+        uo.receiver,
+        uo.USER,
+        uo.order_sn,
+        uo.order_status,
+        product_title,
+        product_skus_title,
+        number,
+        op.created_at,
+        op.updated_at
+        FROM
+        order_product op
+        INNER JOIN user_order uo ON op.user_order_id = uo.id
+        WHERE
+        uo.deleted != '1' and uo.order_status >= 3
         <if test="userOrderId != '' and userOrderId != null">
-            AND (up.user_order_id = #{userOrderId,jdbcType=BIGINT}))
+            AND (uo.id = #{userOrderId,jdbcType=BIGINT})
+        </if>
+        <if test="orderSn != '' and orderSn != null">
+            AND (op.order_sn = #{orderSn,jdbcType=BIGINT})
+        </if>
+        <if test="receiver != '' and receiver != null">
+            AND (uo.receiver like concat ('%',#{receiver,jdbcType=VARCHAR},'%'))
+        </if>
+        <if test="productTitle != '' and productTitle != null">
+            AND (uo.product_title like concat ('%',#{productTitle,jdbcType=VARCHAR},'%'))
+        </if>
+        <if test="productSkusTitle != '' and productSkusTitle != null">
+            AND (uo.product_skus_title like concat ('%',#{productSkusTitle,jdbcType=VARCHAR},'%'))
         </if>
         <choose>
             <when test="dateState == 2">
-                and YEAR ( up.created_at )= YEAR (NOW())
+                and YEAR ( uo.updated_at )= YEAR (NOW())
             </when>
             <when test="dateState == 3 and specifiedTime1 != '' and specifiedTime2 != ''">
-                and up.created_at between #{specifiedTime1} and #{specifiedTime2}
+                and uo.updated_at between #{specifiedTime1} and #{specifiedTime2}
             </when>
             <otherwise>
-                and DATE_FORMAT( up.created_at, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+                and DATE_FORMAT( uo.updated_at, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
             </otherwise>
         </choose>
-        GROUP BY up.receiver
     </select>
 
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.OrderProduct">
@@ -46,6 +72,9 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userOrderId!=null">
                 user_order_id,
+            </if>
+            <if test="orderSn!=null">
+                order_sn,
             </if>
             <if test="productId!=null">
                 product_id,
@@ -66,6 +95,9 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userOrderId!=null">
                 #{userOrderId,jdbcType=INTEGER},
+            </if>
+            <if test="orderSn!=null">
+                #{orderSn,jdbcType=INTEGER},
             </if>
             <if test="productId!=null">
                 #{productId,jdbcType=INTEGER},

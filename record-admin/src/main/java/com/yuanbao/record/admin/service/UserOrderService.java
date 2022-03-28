@@ -5,12 +5,16 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuanbao.record.mbp.mapper.entity.UserOrder;
 import com.yuanbao.record.mbp.vo.UserOrderVo;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 public interface UserOrderService extends IService<UserOrder> {
     IPage<UserOrderVo> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle, Long orderSn, Integer orderStatus);
 
-    IPage<UserOrderVo> selectOrderListDateSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, String receiver, LocalDateTime specifiedTime1, LocalDateTime specifiedTime2);
+    IPage<UserOrderVo> selectOrderListDateSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, String receiver, String specifiedTime1, String specifiedTime2);
+
+    IPage<UserOrderVo> selectOrderListDateSearchNoGroup(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String receiver, Integer dateState, String specifiedTime1, String specifiedTime2);
+
+    List<UserOrderVo> selectOrderListDateSearchAllList(Long userId, String receiver, Integer dateState, String specifiedTime1, String specifiedTime2);
 
     //    int updateByPrimaryKey(UserOrder userOrder);
 
