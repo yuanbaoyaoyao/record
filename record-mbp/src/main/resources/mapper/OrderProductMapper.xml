@@ -64,6 +64,70 @@
         </choose>
     </select>
 
+    <select id="selectProductListDateCountSearch" resultType="com.yuanbao.record.mbp.mapper.entity.OrderProduct">
+        SELECT
+        op.product_title,
+        op.product_skus_title,
+        COUNT(*) AS count_order_number,
+        sum( op.number ) AS sum_product_number
+        FROM
+        user_order uo
+        INNER JOIN order_product op ON op.user_order_id = uo.id
+        WHERE
+        uo.deleted != '1'
+        <if test="productTitle != '' and productTitle != null">
+            AND (uo.product_title = #{productTitle,jdbcType=BIGINT})
+        </if>
+        <if test="productSkusTitle != '' and productSkusTitle != null">
+            AND (uo.product_skus_title like concat ('%',#{productSkusTitle,jdbcType=VARCHAR},'%'))
+        </if>
+        <choose>
+            <when test="dateState == 2">
+                and YEAR ( uo.created_at )= YEAR (NOW())
+            </when>
+            <when test="dateState == 3 and specifiedTime1 != '' and specifiedTime2 != ''">
+                and uo.created_at between #{specifiedTime1} and #{specifiedTime2}
+            </when>
+            <otherwise>
+                and DATE_FORMAT( uo.created_at, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+            </otherwise>
+        </choose>
+        GROUP BY
+        product_title,product_skus_title
+    </select>
+
+    <select id="selectProductListDateCountSearchAllList" resultType="com.yuanbao.record.mbp.mapper.entity.OrderProduct">
+        SELECT
+        op.product_title,
+        op.product_skus_title,
+        COUNT(*) AS count_order_number,
+        sum( op.number ) AS sum_product_number
+        FROM
+        user_order uo
+        INNER JOIN order_product op ON op.user_order_id = uo.id
+        WHERE
+        uo.deleted != '1'
+        <if test="productTitle != '' and productTitle != null">
+            AND (uo.product_title = #{productTitle,jdbcType=BIGINT})
+        </if>
+        <if test="productSkusTitle != '' and productSkusTitle != null">
+            AND (uo.product_skus_title like concat ('%',#{productSkusTitle,jdbcType=VARCHAR},'%'))
+        </if>
+        <choose>
+            <when test="dateState == 2">
+                and YEAR ( uo.created_at )= YEAR (NOW())
+            </when>
+            <when test="dateState == 3 and specifiedTime1 != '' and specifiedTime2 != ''">
+                and uo.created_at between #{specifiedTime1} and #{specifiedTime2}
+            </when>
+            <otherwise>
+                and DATE_FORMAT( uo.created_at, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+            </otherwise>
+        </choose>
+        GROUP BY
+        product_title,product_skus_title
+    </select>
+
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.OrderProduct">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()

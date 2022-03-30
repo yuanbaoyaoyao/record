@@ -11,6 +11,8 @@ public class OrderProductVo {
     private String receiver;
     private Long orderSn;
     private Integer orderStatus;
+    private Integer countOrderNumber;
+    private Integer sumProductNumber;
     private Long productId;
     private Long productSkusId;
     private String productTitle;

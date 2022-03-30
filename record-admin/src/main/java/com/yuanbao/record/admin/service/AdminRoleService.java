@@ -6,7 +6,7 @@ import com.yuanbao.record.mbp.mapper.entity.AdminRole;
 import com.yuanbao.record.mbp.vo.AdminRoleVo;
 
 public interface AdminRoleService extends IService<AdminRole> {
-    IPage<AdminRoleVo> selectRoleList(Integer pageNum, Integer pageSize, IPage<AdminRole> page, String keyword);
+    IPage<AdminRoleVo> selectRoleList(Integer pageNum, Integer pageSize, IPage<AdminRole> page, String name,Long id);
 
     String selectNameById(Long id);
 

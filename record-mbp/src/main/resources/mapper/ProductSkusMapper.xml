@@ -37,6 +37,7 @@
             AND
             ps.title like concat ('%',#{keyword2,jdbcType=VARCHAR},'%')
         </if>
+        ORDER BY ps.stock
     </select>
 
     <select id="selectProductSkusList" resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
@@ -50,6 +51,7 @@
         FROM product p
                  INNER JOIN product_skus ps ON ps.product_id = p.id
         WHERE ps.deleted != '1' AND p.deleted != '1'
+        ORDER BY ps.stock
     </select>
 
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">

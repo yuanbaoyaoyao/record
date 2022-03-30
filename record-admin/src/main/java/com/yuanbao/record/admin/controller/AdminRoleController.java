@@ -21,9 +21,10 @@ public class AdminRoleController {
     public CommonResult<IPage<AdminRoleVo>> getAllAdminRole(
         @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
         @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-        @RequestParam(value = "keyword",defaultValue = "null") String keyword) {
+        @RequestParam(value = "id", defaultValue = "") Long id,
+        @RequestParam(value = "name",defaultValue = "null") String name) {
         IPage<AdminRole> page = new Page<>();
-        IPage<AdminRoleVo> voPage = adminRoleService.selectRoleList(pageNum, pageSize, page, keyword);
+        IPage<AdminRoleVo> voPage = adminRoleService.selectRoleList(pageNum, pageSize, page, name,id);
         return CommonResult.success(voPage);
     }
 

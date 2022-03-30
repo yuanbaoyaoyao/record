@@ -15,9 +15,39 @@
         <if test="orderStatus != '' and orderStatus != null">
             AND (uo.order_status like concat (#{orderStatus,jdbcType=BIGINT}))
         </if>
+        ORDER BY uo.created_At
+        DESC
     </select>
 
     <select id="selectOrderListDateSearch" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
+        SELECT *
+        FROM user_order uo
+        WHERE uo.deleted != '1'
+        <if test="userId != '' and userId != null">
+            AND (uo.user_id = #{userId,jdbcType=BIGINT})
+        </if>
+        <if test="orderSn != '' and orderSn != null">
+            AND (uo.order_sn = #{orderSn,jdbcType=BIGINT})
+        </if>
+        <if test="receiver != '' and receiver != null">
+            AND (uo.receiver like concat ('%',#{receiver,jdbcType=VARCHAR},'%'))
+        </if>
+        <choose>
+            <when test="dateState == 2">
+                and YEAR ( uo.created_at )= YEAR (NOW())
+            </when>
+            <when test="dateState == 3 and specifiedTime1 != '' and specifiedTime2 != ''">
+                and uo.created_at between #{specifiedTime1} and #{specifiedTime2}
+            </when>
+            <otherwise>
+                and DATE_FORMAT( uo.created_at, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+            </otherwise>
+        </choose>
+        ORDER BY uo.created_At
+        DESC
+    </select>
+
+    <select id="selectOrderListDateCountSearch" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
         SELECT receiver,COUNT(*) as count_order_number,sum(op.number) as sum_product_number
         FROM user_order uo
         INNER JOIN order_product op ON op.user_order_id = uo.id
@@ -42,8 +72,9 @@
         GROUP BY uo.receiver
     </select>
 
-    <select id="selectOrderListDateSearchNoGroup" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
-        SELECT receiver,user,uo.order_status,order_remarks,order_sn,product_title,product_skus_title,number,uo.created_at
+    <select id="selectOrderListDateCountSearchNoGroup" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
+        SELECT
+        receiver,user,uo.order_status,uo.order_remarks,uo.order_sn,product_title,product_skus_title,number,uo.created_at
         FROM user_order uo
         INNER JOIN order_product op ON op.user_order_id = uo.id
         WHERE uo.deleted != '1'
@@ -66,7 +97,7 @@
         </choose>
     </select>
 
-    <select id="selectOrderListDateSearchAllList" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
+    <select id="selectOrderListDateCountSearchAllList" resultType="com.yuanbao.record.mbp.mapper.entity.UserOrder">
         SELECT receiver,COUNT(*) as count_order_number,sum(op.number) as sum_product_number
         FROM user_order uo
         INNER JOIN order_product op ON op.user_order_id = uo.id

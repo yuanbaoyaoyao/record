@@ -21,15 +21,11 @@ public class AdminUser implements Serializable {
     private String avatar;
     private Long roleId;
     private String role;
-//    List<AdminRole> adminRoleList;
+    private String lastLoginIp;
+    private LocalDateTime lastLoginTime;
+    private String nowLoginIp;
+    private LocalDateTime nowLoginTime;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean deleted;
-
-//    public AdminUser( String name, String password, String avatar, String role) {
-//        this.name = name;
-//        this.password = password;
-//        this.avatar = avatar;
-//        this.role = role;
-//    }
 }

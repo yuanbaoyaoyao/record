@@ -20,6 +20,8 @@ public interface OrderProductVoMapper {
             @Mapping(target = "receiver", source = "orderProduct.receiver"),
             @Mapping(target = "productTitle", source = "orderProduct.productTitle"),
             @Mapping(target = "productSkusTitle", source = "orderProduct.productSkusTitle"),
+            @Mapping(target = "countOrderNumber", source = "orderProduct.countOrderNumber"),
+            @Mapping(target = "sumProductNumber", source = "orderProduct.sumProductNumber"),
             @Mapping(target = "number", source = "orderProduct.number"),
             @Mapping(target = "createdAt", source = "orderProduct.createdAt"),
             @Mapping(target = "updatedAt", source = "orderProduct.updatedAt"),

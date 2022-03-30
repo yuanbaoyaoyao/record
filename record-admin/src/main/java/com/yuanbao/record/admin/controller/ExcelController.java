@@ -45,7 +45,7 @@ public class ExcelController {
 
     @GetMapping(value = "/userStatistics")
     public void ExportUserStatisticsListInfo(HttpServletResponse response) {
-        List<UserOrderVo> userOrderVoList = userOrderService.selectOrderListDateSearchAllList(null,null,null,"","");
+        List<UserOrderVo> userOrderVoList = userOrderService.selectOrderListDateCountSearchAllList(null,null,null,"","");
         System.out.println(userOrderVoList);
         String excelName = "用户统计表";
 

@@ -13,6 +13,10 @@ public interface OrderProductMapper extends BaseMapper<OrderProduct> {
 
     IPage<OrderProduct> selectOrderProductListDateSearchStatus(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, Long userOrderId,Long orderSn,String receiver,String productTitle,String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);
 
+    IPage<OrderProduct> selectProductListDateCountSearch(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);
+
+    List<OrderProduct> selectProductListDateCountSearchAllList( String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);
+
     int insert(OrderProduct orderProduct);
 
     int updateByOrderSn(OrderProduct orderProduct);

@@ -13,6 +13,8 @@ public class OrderProduct implements Serializable {
     private Long orderSn;
     private Long productId;
     private Long productSkusId;
+    private Integer countOrderNumber;
+    private Integer sumProductNumber;
     private String receiver;
     private Integer orderStatus;
     private String productTitle;

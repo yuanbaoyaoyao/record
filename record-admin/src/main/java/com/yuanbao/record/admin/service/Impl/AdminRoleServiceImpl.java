@@ -20,12 +20,12 @@ public class AdminRoleServiceImpl extends ServiceImpl<AdminRoleMapper, AdminRole
     private AdminRoleMapper adminRoleMapper;
 
     @Override
-    public IPage<AdminRoleVo> selectRoleList(Integer pageNum, Integer pageSize, IPage<AdminRole> page, String keyword) {
+    public IPage<AdminRoleVo> selectRoleList(Integer pageNum, Integer pageSize, IPage<AdminRole> page, String keyword,Long id) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<AdminRoleVo> voPage = new Page<>();
         List<AdminRoleVo> adminRoleVoList = new ArrayList<>();
-        IPage<AdminRole> adminRoleIPage = adminRoleMapper.selectRoleList(pageNum, pageSize, page, keyword);
+        IPage<AdminRole> adminRoleIPage = adminRoleMapper.selectRoleList(pageNum, pageSize, page, keyword,id);
         List<AdminRole> adminRoleList = adminRoleIPage.getRecords();
         for (AdminRole adminRole : adminRoleList) {
             AdminRoleVo adminRoleVo = AdminRoleVoMapper.adminrolevomapper.Trans(adminRole);

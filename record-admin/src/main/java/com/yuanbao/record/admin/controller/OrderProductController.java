@@ -48,4 +48,36 @@ public class OrderProductController {
         IPage<OrderProductVo> orderProductVoIPage = orderProductService.selectOrderProductListDateSearchStatus(pageNum, pageSize, page, userOrderId, orderSn, receiver,productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
         return CommonResult.success(orderProductVoIPage);
     }
+
+    @GetMapping(value = "/dateProductCountList")
+    public CommonResult<IPage<OrderProductVo>> getAllDateOrderProductCountIPage(@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                                           @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                                           @RequestParam(value = "productTitle", required = false) String productTitle,
+                                                                           @RequestParam(value = "productSkusTitle", required = false) String productSkusTitle,
+                                                                           @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
+                                                                           @RequestParam(value = "specifiedTime1", required = false)
+                                                                           @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                                   String specifiedTime1,
+                                                                           @RequestParam(value = "specifiedTime2", required = false)
+                                                                           @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                                   String specifiedTime2) {
+        IPage<OrderProduct> page = new Page<>();
+        IPage<OrderProductVo> orderProductVoIPage = orderProductService.selectProductListDateCountSearch(pageNum, pageSize, page,productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
+        return CommonResult.success(orderProductVoIPage);
+    }
+
+    @GetMapping(value = "/dateProductCountAllList")
+    public CommonResult<List<OrderProductVo>> getAllDateOrderProductCountAllList(
+                                                                                @RequestParam(value = "productTitle", required = false) String productTitle,
+                                                                                @RequestParam(value = "productSkusTitle", required = false) String productSkusTitle,
+                                                                                @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
+                                                                                @RequestParam(value = "specifiedTime1", required = false)
+                                                                                @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                                        String specifiedTime1,
+                                                                                @RequestParam(value = "specifiedTime2", required = false)
+                                                                                @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                                        String specifiedTime2) {
+        List<OrderProductVo> orderProductVoList = orderProductService.selectProductListDateCountSearchAllList(productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
+        return CommonResult.success(orderProductVoList);
+    }
 }

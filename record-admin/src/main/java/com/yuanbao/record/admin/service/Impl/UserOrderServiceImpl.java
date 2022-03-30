@@ -37,28 +37,38 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     }
 
     @Override
-    public IPage<UserOrderVo> selectOrderListDateSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, String receiver, String specifiedTime1, String specifiedTime2) {
+    public IPage<UserOrderVo> selectOrderListDateCountSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, String receiver, String specifiedTime1, String specifiedTime2) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<UserOrderVo> voPage = new Page<>();
         List<UserOrderVo> userOrderVoList = new ArrayList<>();
-        IPage<UserOrder> userOrderIPage = userOrderMapper.selectOrderListDateSearch(pageNum, pageSize, page, userId, receiver, dateState, specifiedTime1, specifiedTime2);
+        IPage<UserOrder> userOrderIPage = userOrderMapper.selectOrderListDateCountSearch(pageNum, pageSize, page, userId, receiver, dateState, specifiedTime1, specifiedTime2);
         return getUserOrderVoIPage(pageNum, pageSize, voPage, userOrderVoList, userOrderIPage);
     }
 
+//    @Override
+//    public IPage<UserOrderVo> selectProductListDateCountSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2) {
+//        page.setCurrent(pageNum);
+//        page.setSize(pageSize);
+//        IPage<UserOrderVo> voPage = new Page<>();
+//        List<UserOrderVo> userOrderVoList = new ArrayList<>();
+//        IPage<UserOrder> userOrderIPage = userOrderMapper.selectProductListDateCountSearch(pageNum, pageSize, page, productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
+//        return getUserOrderVoIPage(pageNum, pageSize, voPage, userOrderVoList, userOrderIPage);
+//    }
+
     @Override
-    public IPage<UserOrderVo> selectOrderListDateSearchNoGroup(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String receiver, Integer dateState, String specifiedTime1, String specifiedTime2) {
+    public IPage<UserOrderVo> selectOrderListDateCountSearchNoGroup(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String receiver, Integer dateState, String specifiedTime1, String specifiedTime2) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<UserOrderVo> voPage = new Page<>();
         List<UserOrderVo> userOrderVoList = new ArrayList<>();
-        IPage<UserOrder> userOrderIPage = userOrderMapper.selectOrderListDateSearchNoGroup(pageNum, pageSize, page, userId, receiver, dateState, specifiedTime1, specifiedTime2);
+        IPage<UserOrder> userOrderIPage = userOrderMapper.selectOrderListDateCountSearchNoGroup(pageNum, pageSize, page, userId, receiver, dateState, specifiedTime1, specifiedTime2);
         return getUserOrderVoIPage(pageNum, pageSize, voPage, userOrderVoList, userOrderIPage);
     }
 
     @Override
-    public List<UserOrderVo> selectOrderListDateSearchAllList(Long userId, String receiver, Integer dateState, String specifiedTime1, String specifiedTime2) {
-        List<UserOrder> userOrderList= userOrderMapper.selectOrderListDateSearchAllList(userId, receiver, dateState, specifiedTime1, specifiedTime2);
+    public List<UserOrderVo> selectOrderListDateCountSearchAllList(Long userId, String receiver, Integer dateState, String specifiedTime1, String specifiedTime2) {
+        List<UserOrder> userOrderList= userOrderMapper.selectOrderListDateCountSearchAllList(userId, receiver, dateState, specifiedTime1, specifiedTime2);
         List<UserOrderVo> userOrderVoList = new ArrayList<>();
         userOrderToUserOrderVo(userOrderList, userOrderVoList);
         System.out.println();

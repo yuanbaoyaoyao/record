@@ -31,17 +31,44 @@ public class OrderProductServiceImpl extends ServiceImpl<OrderProductMapper, Ord
     }
 
     @Override
-    public IPage<OrderProductVo> selectOrderProductListDateSearchStatus(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, Long userOrderId, Long orderSn,String receiver ,String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2) {
+    public IPage<OrderProductVo> selectOrderProductListDateSearchStatus(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, Long userOrderId, Long orderSn, String receiver, String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<OrderProductVo> voPage = new Page<>();
         List<OrderProductVo> orderProductVoList = new ArrayList<>();
-        IPage<OrderProduct> orderProductIPage = orderProductMapper.selectOrderProductListDateSearchStatus(pageNum, pageSize, page, userOrderId, orderSn,receiver, productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
-        List<OrderProduct> orderProductList = orderProductIPage.getRecords();
+        IPage<OrderProduct> orderProductIPage = orderProductMapper.selectOrderProductListDateSearchStatus(pageNum, pageSize, page, userOrderId, orderSn, receiver, productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
+        return getOrderProductVoIPage(pageNum, pageSize, voPage, orderProductVoList, orderProductIPage);
+    }
+
+    @Override
+    public IPage<OrderProductVo> selectProductListDateCountSearch(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2) {
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        IPage<OrderProductVo> voPage = new Page<>();
+        List<OrderProductVo> orderProductVoList = new ArrayList<>();
+        IPage<OrderProduct> orderProductIPage = orderProductMapper.selectProductListDateCountSearch(pageNum, pageSize, page, productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
+        return getOrderProductVoIPage(pageNum, pageSize, voPage, orderProductVoList, orderProductIPage);
+    }
+
+    @Override
+    public List<OrderProductVo> selectProductListDateCountSearchAllList(String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2) {
+        List<OrderProductVo> orderProductVoList = new ArrayList<>();
+        List<OrderProduct> orderProductList = orderProductMapper.selectProductListDateCountSearchAllList(productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
         for (OrderProduct orderProduct : orderProductList) {
             OrderProductVo orderProductVo = OrderProductVoMapper.orderproductvomapper.Trans(orderProduct);
             orderProductVoList.add(orderProductVo);
         }
+        return orderProductVoList;
+    }
+
+    private IPage<OrderProductVo> getOrderProductVoIPage(Integer pageNum, Integer pageSize, IPage<OrderProductVo> voPage, List<OrderProductVo> orderProductVoList, IPage<OrderProduct> orderProductIPage) {
+        List<OrderProduct> orderProductList = orderProductIPage.getRecords();
+
+        for (OrderProduct orderProduct : orderProductList) {
+            OrderProductVo orderProductVo = OrderProductVoMapper.orderproductvomapper.Trans(orderProduct);
+            orderProductVoList.add(orderProductVo);
+        }
+
         voPage.setRecords(orderProductVoList);
         voPage.setCurrent(pageNum);
         voPage.setSize(pageSize);

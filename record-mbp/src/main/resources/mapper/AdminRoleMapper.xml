@@ -6,10 +6,14 @@
         SELECT *
         FROM admin_role ar
         WHERE ar.deleted != 1
-        <if test="keyword != 'null'.toString() and keyword != '' ">
-            AND ar.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
+        <if test="name != 'null'.toString() and name != '' ">
+            AND ar.NAME like concat ('%',#{name,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="id != '' and id != null ">
+            AND ar.id = #{id,jdbcType=INTEGER}
         </if>
     </select>
+
     <select id="selectById" resultType="com.yuanbao.record.mbp.mapper.entity.AdminRole">
         SELECT *
         FROM admin_role ar

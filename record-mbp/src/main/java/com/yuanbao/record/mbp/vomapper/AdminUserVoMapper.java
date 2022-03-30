@@ -17,6 +17,10 @@ public interface AdminUserVoMapper {
             @Mapping(target = "password", source = "adminUser.password"),
             @Mapping(target = "avatar", source = "adminUser.avatar"),
             @Mapping(target = "role", source = "adminUser.role"),
+            @Mapping(target = "lastLoginIp", source = "adminUser.lastLoginIp"),
+            @Mapping(target = "lastLoginTime", source = "adminUser.lastLoginTime"),
+            @Mapping(target = "nowLoginIp", source = "adminUser.nowLoginIp"),
+            @Mapping(target = "nowLoginTime", source = "adminUser.nowLoginTime"),
             @Mapping(target = "createdAt", source = "adminUser.createdAt"),
     })
     AdminUserVo Trans(AdminUser adminUser);

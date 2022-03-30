@@ -12,6 +12,10 @@ public interface OrderProductService extends IService<OrderProduct> {
 
     IPage<OrderProductVo> selectOrderProductListDateSearchStatus(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, Long userOrderId, Long orderSn,String receiver ,String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);
 
+    IPage<OrderProductVo> selectProductListDateCountSearch(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);
+
+    List<OrderProductVo> selectProductListDateCountSearchAllList( String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);
+
     int insert(OrderProduct orderProduct);
 
     int deleteByPrimaryKey(Long id);

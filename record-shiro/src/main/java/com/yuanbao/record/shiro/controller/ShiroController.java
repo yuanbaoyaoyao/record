@@ -2,7 +2,9 @@ package com.yuanbao.record.shiro.controller;
 
 import com.yuanbao.record.admin.service.AdminPermissionService;
 import com.yuanbao.record.admin.service.AdminRoleService;
+import com.yuanbao.record.admin.service.AdminUserService;
 import com.yuanbao.record.common.api.CommonResult;
+import com.yuanbao.record.common.api.util.IpUtil;
 import com.yuanbao.record.common.api.util.JacksonUtil;
 import com.yuanbao.record.mbp.mapper.entity.AdminUser;
 import com.yuanbao.record.mbp.mapper.entity.User;
@@ -21,6 +23,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -29,34 +32,14 @@ import java.util.*;
 @RequestMapping("/auth")
 public class ShiroController {
 
-//    @Autowired
-//    private ShiroService shiroService;
-//
-//    @Autowired
-//    private AdminUserService adminUserService;
+    @Autowired
+    private AdminUserService adminUserService;
 
     @Autowired
     private AdminRoleService adminRoleService;
 
     @Autowired
     private AdminPermissionService adminPermissionService;
-
-//    @PostMapping("/login")
-//    public CommonResult login(@RequestBody @Validated AdminLoginDto adminLoginDto, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return CommonResult.validateFailed(bindingResult.getFieldError().getDefaultMessage());
-//        }
-//        String username = adminLoginDto.getUsername();
-//        String password = adminLoginDto.getPassword();
-//
-//        AdminUser adminUser = adminUserService.selectAdminListByName(username);
-//
-//        if (adminUser == null || !adminUser.getPassword().equals(password)) {
-//            return CommonResult.validateFailed("账号或密码错误");
-//        } else {
-//            return shiroService.createToken(adminUser.getId());
-//        }
-//    }
 
     @PostMapping(value = "/login")
     public CommonResult login(@RequestBody String body, HttpServletRequest request) {
@@ -81,12 +64,26 @@ public class ShiroController {
         currentUser = SecurityUtils.getSubject();
         AdminUser adminUser = (AdminUser) currentUser.getPrincipal();
 
+        System.out.println("adminUser.getNowLoginIp()"+adminUser.getNowLoginIp());
+        System.out.println("adminUser.getNowLoginTime()"+adminUser.getNowLoginTime());
+        System.out.println("adminUserrrrrrrrr:"+adminUser);
+        System.out.println("adminUserrrrrrrrr:"+currentUser);
+        adminUser.setLastLoginIp(adminUser.getNowLoginIp());
+        adminUser.setLastLoginTime(adminUser.getNowLoginTime());
+        adminUser.setNowLoginIp(IpUtil.getIpAddr(request));
+        adminUser.setNowLoginTime(LocalDateTime.now());
+        adminUserService.updateByPrimaryKey(adminUser);
+
         //userInfo
         Map<String, Object> adminInfo = new HashMap<String, Object>();
         adminInfo.put("nickName", adminUser.getName());
         adminInfo.put("avatar", adminUser.getAvatar());
         adminInfo.put("adminUserId", adminUser.getId());
+        adminInfo.put("adminRoleId", adminUser.getRoleId());
+        adminInfo.put("lastLoginIp", adminUser.getLastLoginIp());
+        adminInfo.put("lastLoginTime", adminUser.getLastLoginTime());
 
+        System.out.println("adminInfooooo:" + adminInfo);
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", currentUser.getSession().getId());
         result.put("adminInfo", adminInfo);
@@ -123,6 +120,7 @@ public class ShiroController {
         userInfo.put("nickName", user.getName());
         userInfo.put("avatar", user.getAvatar());
         userInfo.put(("userId"), user.getId());
+
 
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", currentUser.getSession().getId());
@@ -164,6 +162,9 @@ public class ShiroController {
         data.put("name", adminUser.getName());
         data.put("avatar", adminUser.getAvatar());
         data.put("adminUserId", adminUser.getId());
+        data.put("lastLoginIp", adminUser.getLastLoginIp());
+        data.put("lastLoginTime", adminUser.getLastLoginTime());
+//        data.put("adminRoleId",adminUser.getRoleId());
         data.put("role", role);
         data.put("perms", toApi(permissions));
         System.out.println("toApi(permissions):" + toApi(permissions));

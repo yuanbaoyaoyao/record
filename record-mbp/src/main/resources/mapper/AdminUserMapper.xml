@@ -22,6 +22,10 @@
         au.NAME,
         au.PASSWORD,
         au.avatar,
+        au.now_login_ip,
+        au.now_login_time,
+        au.last_login_ip,
+        au.last_login_time,
         au.created_at,
         ar.NAME AS role
         FROM admin_role ar
@@ -39,6 +43,10 @@
                au.NAME,
                au.PASSWORD,
                au.avatar,
+               au.now_login_ip,
+               au.now_login_time,
+               au.last_login_ip,
+               au.last_login_time,
                au.created_at,
                au.role_id,
                ar.NAME AS role
@@ -64,8 +72,17 @@
             <if test="avatar!=null">
                 avatar,
             </if>
-            <if test="roleId!=null">
-                role_id,
+            <if test="lastLoginIp!=null">
+                last_login_ip,
+            </if>
+            <if test="lastLoginTime!=null">
+                last_login_time,
+            </if>
+            <if test="nowLoginIp!=null">
+                now_login_ip,
+            </if>
+            <if test="nowLoginTime!=null">
+                now_login_time,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -81,15 +98,31 @@
             <if test="roleId!=null">
                 #{roleId,jdbcType=INTEGER},
             </if>
+            <if test="lastLoginIp!=null">
+                #{lastLoginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime!=null">
+                #{lastLoginTime,jdbcType=VARCHAR},
+            </if>
+            <if test="nowLoginIp!=null">
+                #{nowLoginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="nowLoginTime!=null">
+                #{nowLoginTime,jdbcType=INTEGER},
+            </if>
         </trim>
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.AdminUser">
         update admin_user
-        set name     = #{name,jdbcType=VARCHAR},
-            password = #{password,jdbcType=VARCHAR},
-            avatar   = #{avatar,jdbcType=VARCHAR},
-            role_id  = #{roleId,jdbcType=INTEGER}
+        set name          = #{name,jdbcType=VARCHAR},
+            password      = #{password,jdbcType=VARCHAR},
+            avatar        = #{avatar,jdbcType=VARCHAR},
+            role_id       = #{roleId,jdbcType=INTEGER},
+            last_login_ip   = #{lastLoginIp,jdbcType=VARCHAR},
+            last_login_time = #{lastLoginTime,jdbcType=VARCHAR},
+            now_login_ip    = #{nowLoginIp,jdbcType=VARCHAR},
+            now_login_time  = #{nowLoginTime,jdbcType=VARCHAR}
         where id = #{id,jdbcType=BIGINT}
     </update>
 
