@@ -64,10 +64,6 @@ public class ShiroController {
         currentUser = SecurityUtils.getSubject();
         AdminUser adminUser = (AdminUser) currentUser.getPrincipal();
 
-        System.out.println("adminUser.getNowLoginIp()"+adminUser.getNowLoginIp());
-        System.out.println("adminUser.getNowLoginTime()"+adminUser.getNowLoginTime());
-        System.out.println("adminUserrrrrrrrr:"+adminUser);
-        System.out.println("adminUserrrrrrrrr:"+currentUser);
         adminUser.setLastLoginIp(adminUser.getNowLoginIp());
         adminUser.setLastLoginTime(adminUser.getNowLoginTime());
         adminUser.setNowLoginIp(IpUtil.getIpAddr(request));

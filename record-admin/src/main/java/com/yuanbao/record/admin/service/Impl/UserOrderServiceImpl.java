@@ -37,6 +37,16 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     }
 
     @Override
+    public IPage<UserOrderVo> selectOrderListDateSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, String receiver,Long orderSn, String specifiedTime1, String specifiedTime2) {
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        IPage<UserOrderVo> voPage = new Page<>();
+        List<UserOrderVo> userOrderVoList = new ArrayList<>();
+        IPage<UserOrder> userOrderIPage = userOrderMapper.selectOrderListDateSearch(pageNum, pageSize, page, userId, receiver,orderSn, dateState, specifiedTime1, specifiedTime2);
+        return getUserOrderVoIPage(pageNum, pageSize, voPage, userOrderVoList, userOrderIPage);
+    }
+
+    @Override
     public IPage<UserOrderVo> selectOrderListDateCountSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, String receiver, String specifiedTime1, String specifiedTime2) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
@@ -71,7 +81,22 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         List<UserOrder> userOrderList= userOrderMapper.selectOrderListDateCountSearchAllList(userId, receiver, dateState, specifiedTime1, specifiedTime2);
         List<UserOrderVo> userOrderVoList = new ArrayList<>();
         userOrderToUserOrderVo(userOrderList, userOrderVoList);
-        System.out.println();
+        return userOrderVoList;
+    }
+
+    @Override
+    public List<UserOrderVo> selectOrderListDateCountSearchAllListDay(Long userId, String receiver, Integer dateState, String specifiedTime1, String specifiedTime2) {
+        List<UserOrder> userOrderList= userOrderMapper.selectOrderListDateCountSearchAllListDay(userId, receiver, dateState, specifiedTime1, specifiedTime2);
+        List<UserOrderVo> userOrderVoList = new ArrayList<>();
+        userOrderToUserOrderVo(userOrderList, userOrderVoList);
+        return userOrderVoList;
+    }
+
+    @Override
+    public List<UserOrderVo> selectOrderListDateCountSearchAllListMonth(Long userId, String receiver, Integer dateState, String specifiedTime1, String specifiedTime2) {
+        List<UserOrder> userOrderList= userOrderMapper.selectOrderListDateCountSearchAllListMonth(userId, receiver, dateState, specifiedTime1, specifiedTime2);
+        List<UserOrderVo> userOrderVoList = new ArrayList<>();
+        userOrderToUserOrderVo(userOrderList, userOrderVoList);
         return userOrderVoList;
     }
 
@@ -103,6 +128,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
             }
             userOrderVo.setOrderProductVoList(orderProductVoList);
             userOrderVo.setMaxNumSkuName(getKeyOrNull(data));
+            System.out.println("userOrderVo.getMaxNumSkuName:"+userOrderVo.getMaxNumSkuName());
             userOrderVoList.add(userOrderVo);
         }
     }

@@ -34,38 +34,40 @@ public class UserOrderController {
     }
 
     @GetMapping(value = "/dateList")
-    public CommonResult<IPage<UserOrderVo>> getAllDateOrderIPage(@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-                                                                 @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                                                 @RequestParam(value = "userId", required = false) Long userId,
-                                                                 @RequestParam(value = "receiver", required = false) String receiver,
-                                                                 @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
-                                                                 @RequestParam(value = "specifiedTime1", required = false)
-                                                                 @DateTimeFormat(pattern = "yyyy-MM-dd")
-                                                                         String specifiedTime1,
-                                                                 @RequestParam(value = "specifiedTime2", required = false)
-                                                                 @DateTimeFormat(pattern = "yyyy-MM-dd")
-                                                                         String specifiedTime2) {
+    public CommonResult<IPage<UserOrderVo>> getDateOrderIPage(@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                              @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                              @RequestParam(value = "userId", required = false) Long userId,
+                                                              @RequestParam(value = "receiver", required = false) String receiver,
+                                                              @RequestParam(value = "orderSn", required = false) Long orderSn,
+                                                              @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
+                                                              @RequestParam(value = "specifiedTime1", required = false)
+                                                              @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                      String specifiedTime1,
+                                                              @RequestParam(value = "specifiedTime2", required = false)
+                                                              @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                      String specifiedTime2) {
+        IPage<UserOrder> page = new Page<>();
+        IPage<UserOrderVo> userOrderVoIPage = userOrderService.selectOrderListDateSearch(pageNum, pageSize, page, userId, dateState, receiver, orderSn, specifiedTime1, specifiedTime2);
+        return CommonResult.success(userOrderVoIPage);
+    }
+
+
+    @GetMapping(value = "/dateListCount")
+    public CommonResult<IPage<UserOrderVo>> getAllDateProductIPage(@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                                                   @RequestParam(value = "userId", required = false) Long userId,
+                                                                   @RequestParam(value = "receiver", required = false) String receiver,
+                                                                   @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
+                                                                   @RequestParam(value = "specifiedTime1", required = false)
+                                                                   @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                           String specifiedTime1,
+                                                                   @RequestParam(value = "specifiedTime2", required = false)
+                                                                   @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                                           String specifiedTime2) {
         IPage<UserOrder> page = new Page<>();
         IPage<UserOrderVo> userOrderVoIPage = userOrderService.selectOrderListDateCountSearch(pageNum, pageSize, page, userId, dateState, receiver, specifiedTime1, specifiedTime2);
         return CommonResult.success(userOrderVoIPage);
     }
-
-//    @GetMapping(value = "/dateProductList")
-//    public CommonResult<IPage<UserOrderVo>> getAllDateProductIPage(@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-//                                                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-//                                                                   @RequestParam(value = "productTitle", required = false) String productTitle,
-//                                                                   @RequestParam(value = "productSkusTitle", required = false) String productSkusTitle,
-//                                                                   @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
-//                                                                   @RequestParam(value = "specifiedTime1", required = false)
-//                                                                   @DateTimeFormat(pattern = "yyyy-MM-dd")
-//                                                                           String specifiedTime1,
-//                                                                   @RequestParam(value = "specifiedTime2", required = false)
-//                                                                   @DateTimeFormat(pattern = "yyyy-MM-dd")
-//                                                                           String specifiedTime2) {
-//        IPage<UserOrder> page = new Page<>();
-//        IPage<UserOrderVo> userOrderVoIPage = userOrderService.selectProductListDateCountSearch(pageNum, pageSize, page, productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
-//        return CommonResult.success(userOrderVoIPage);
-//    }
 
     @GetMapping(value = "/dateListNoGroup")
     public CommonResult<IPage<UserOrderVo>> getAllDateOrderIPageNoGroup(@RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
@@ -95,8 +97,37 @@ public class UserOrderController {
             @RequestParam(value = "specifiedTime2", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd")
                     String specifiedTime2) {
-        System.out.println("getAllDateOrderAllList");
         List<UserOrderVo> userOrderList = userOrderService.selectOrderListDateCountSearchAllList(userId, receiver, dateState, specifiedTime1, specifiedTime2);
+        return CommonResult.success(userOrderList);
+    }
+
+    @GetMapping(value = "/dateListAllDay")
+    public CommonResult<List<UserOrderVo>> getAllDateOrderAllListDay(
+            @RequestParam(value = "userId", required = false) Long userId,
+            @RequestParam(value = "receiver", required = false) String receiver,
+            @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
+            @RequestParam(value = "specifiedTime1", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+                    String specifiedTime1,
+            @RequestParam(value = "specifiedTime2", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+                    String specifiedTime2) {
+        List<UserOrderVo> userOrderList = userOrderService.selectOrderListDateCountSearchAllListDay(userId, receiver, dateState, specifiedTime1, specifiedTime2);
+        return CommonResult.success(userOrderList);
+    }
+
+    @GetMapping(value = "/dateListAllMonth")
+    public CommonResult<List<UserOrderVo>> getAllDateOrderAllListMonth(
+            @RequestParam(value = "userId", required = false) Long userId,
+            @RequestParam(value = "receiver", required = false) String receiver,
+            @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
+            @RequestParam(value = "specifiedTime1", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+                    String specifiedTime1,
+            @RequestParam(value = "specifiedTime2", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+                    String specifiedTime2) {
+        List<UserOrderVo> userOrderList = userOrderService.selectOrderListDateCountSearchAllListMonth(userId, receiver, dateState, specifiedTime1, specifiedTime2);
         return CommonResult.success(userOrderList);
     }
 

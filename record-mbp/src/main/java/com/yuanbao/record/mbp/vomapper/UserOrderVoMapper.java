@@ -21,7 +21,9 @@ public interface UserOrderVoMapper {
             @Mapping(target = "orderSn", source = "userOrder.orderSn"),
             @Mapping(target = "orderRemarks", source = "userOrder.orderRemarks"),
             @Mapping(target = "orderProductVoList", source = "userOrder.orderProductVoList"),
-
+//            @Mapping(target = "month", source = "userOrder.month"),
+//            @Mapping(target = "day", source = "userOrder.day"),
+            @Mapping(target = "timeUnit", source = "userOrder.timeUnit"),
             @Mapping(target = "countOrderNumber", source = "userOrder.countOrderNumber"),
             @Mapping(target = "sumProductNumber", source = "userOrder.sumProductNumber"),
 //            @Mapping(target = "specifiedTime1", source = "userOrder.specifiedTime1"),

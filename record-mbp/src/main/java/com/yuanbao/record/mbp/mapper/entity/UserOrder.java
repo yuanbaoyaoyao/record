@@ -22,6 +22,9 @@ public class UserOrder implements Serializable {
     private Integer orderStatus;
     private String orderRemarks;
     private List<OrderProductVo> orderProductVoList;
+//    private String day;
+//    private String month;
+    private String timeUnit;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean deleted;

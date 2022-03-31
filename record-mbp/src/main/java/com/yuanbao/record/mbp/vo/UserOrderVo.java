@@ -20,6 +20,9 @@ public class UserOrderVo {
     private Integer sumProductNumber;
     private String maxNumSkuName;
     private String timeFrame;
+    //    private String day;
+//    private String month;
+    private String timeUnit;
     private LocalDateTime createdAt;
     private List<OrderProductVo> orderProductVoList;
 }
