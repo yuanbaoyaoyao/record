@@ -12,7 +12,8 @@ public interface ProductSkusVoMapper {
     ProductSkusVoMapper productskusvomapper = Mappers.getMapper(ProductSkusVoMapper.class);
 
     @Mappings({
-            @Mapping(target = "productName", source = "productSkus.productName"),
+            @Mapping(target = "id", source = "productSkus.id"),
+            @Mapping(target = "productId", source = "productSkus.productId"),
             @Mapping(target = "title", source = "productSkus.title"),
             @Mapping(target = "avatar", source = "productSkus.avatar"),
             @Mapping(target = "description", source = "productSkus.description"),

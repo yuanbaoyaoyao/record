@@ -22,12 +22,10 @@ public class ProductSkusController {
     public CommonResult<IPage<ProductSkusVo>> getAllProductSkus(
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-            @RequestParam(value = "keyword1", defaultValue = "null") String keyword1,
-            @RequestParam(value = "keyword2", defaultValue = "null") String keyword2) {
-        System.out.println("keyword1"+keyword1);
-        System.out.println("keyword2"+keyword2);
+            @RequestParam(value = "id", defaultValue = "") Long id,
+            @RequestParam(value = "title", defaultValue = "null") String title) {
         IPage<ProductSkus> page = new Page<>();
-        IPage<ProductSkusVo> voPage = productSkusService.selectProductSkusListSearch(pageNum, pageSize, page, keyword1, keyword2);
+        IPage<ProductSkusVo> voPage = productSkusService.selectProductSkusListSearchIPage(pageNum, pageSize, page, title, id);
         return CommonResult.success(voPage);
     }
 

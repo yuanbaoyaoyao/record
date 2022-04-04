@@ -22,10 +22,6 @@ public class UserOrderClientServiceImpl extends ServiceImpl<UserOrderMapper, Use
 
     @Override
     public IPage<UserOrderVo> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle, Long orderSn,Integer orderStatus) {
-        System.out.println("serviceImpl:userId:" + userId);
-        System.out.println("serviceImpl:productTitle:" + productTitle);
-        System.out.println("serviceImpl:productSkusTitle:" + productSkusTitle);
-        System.out.println("serviceImpl:orderSn:" + orderSn);
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<UserOrderVo> voPage = new Page<>();

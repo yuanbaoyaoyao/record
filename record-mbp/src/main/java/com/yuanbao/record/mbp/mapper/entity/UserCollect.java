@@ -10,7 +10,7 @@ public class UserCollect implements Serializable {
     static final Long serialVersionUID = 1L;
     private Long id;
     private Integer userId;
-    private Integer productId;
+    private Integer productSkusId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean deleted;

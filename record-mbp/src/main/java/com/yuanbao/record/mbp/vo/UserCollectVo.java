@@ -5,9 +5,9 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ProductVo {
+public class UserCollectVo {
     private Long id;
-    private String title;
-    private String description;
+    private Long userId;
+    private Long productSkusId;
     private LocalDateTime createdAt;
 }

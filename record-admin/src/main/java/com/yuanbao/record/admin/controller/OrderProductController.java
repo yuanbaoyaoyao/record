@@ -77,6 +77,11 @@ public class OrderProductController {
                                                                                 @RequestParam(value = "specifiedTime2", required = false)
                                                                                 @DateTimeFormat(pattern = "yyyy-MM-dd")
                                                                                         String specifiedTime2) {
+        System.out.println("productTitle"+productTitle);
+        System.out.println("productSkusTitle"+productSkusTitle);
+        System.out.println("dateState"+dateState);
+        System.out.println("specifiedTime1"+specifiedTime1);
+        System.out.println("specifiedTime2"+specifiedTime2);
         List<OrderProductVo> orderProductVoList = orderProductService.selectProductListDateCountSearchAllList(productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
         return CommonResult.success(orderProductVoList);
     }

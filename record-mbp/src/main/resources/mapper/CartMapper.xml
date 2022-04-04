@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuanbao.record.mbp.mapper.CartMapper">
+
+    <select id="selectById" resultType="com.yuanbao.record.mbp.mapper.entity.Cart">
+        SELECT c.id,
+               c.user_id,
+               c.product_skus_id,
+               c.product_skus_number
+        FROM cart c
+        WHERE c.deleted != 1 and c.id = #{id}
+    </select>
+
+    <select id="selectByUserId" resultType="com.yuanbao.record.mbp.mapper.entity.Cart">
+        SELECT c.id,
+               c.user_id,
+               c.product_skus_id,
+               c.product_skus_number
+        FROM cart c
+        WHERE c.deleted != 1 and c.user_id = #{UserId}
+    </select>
+
+    <select id="selectByUserIdAndProductSkusId" resultType="com.yuanbao.record.mbp.mapper.entity.Cart">
+        SELECT c.id,
+               c.user_id,
+               c.product_skus_id,
+               c.product_skus_number
+        FROM cart c
+        WHERE c.deleted != 1 and c.user_id = #{userId}
+          and c.product_skus_id =#{productSkusId}
+    </select>
+
+    <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.Cart">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId!=null">
+                user_id,
+            </if>
+            <if test="productSkusId!=null">
+                product_skus_id,
+            </if>
+            <if test="productSkusNumber!=null">
+                product_skus_number,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId!=null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="productSkusId!=null">
+                #{productSkusId,jdbcType=INTEGER},
+            </if>
+            <if test="productSkusNumber!=null">
+                #{productSkusNumber,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByUserIdAndProductSkusId" parameterType="com.yuanbao.record.mbp.mapper.entity.Cart">
+        update cart c
+        set product_skus_number = #{productSkusNumber,jdbcType=VARCHAR}
+        where user_id = #{userId,jdbcType=BIGINT}
+          and product_skus_id = #{productSkusId,jdbcType=BIGINT}
+          and c.deleted != 1
+    </update>
+
+</mapper>

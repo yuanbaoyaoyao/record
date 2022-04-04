@@ -12,6 +12,7 @@ public interface ProductVoMapper {
     ProductVoMapper productvomapper = Mappers.getMapper(ProductVoMapper.class);
 
     @Mappings({
+            @Mapping(target = "id", source = "product.id"),
             @Mapping(target = "title", source = "product.title"),
             @Mapping(target = "description", source = "product.description"),
             @Mapping(target = "createdAt", source = "product.createdAt"),

@@ -10,7 +10,9 @@ public class ProductSkusVo {
 //    private Integer pageNum;
 //    private Long pageTotal;
 //    private List<ProductSkus> productSkusList;
+    private Long id;
     private String productName;
+    private Long productId;
     private String title;
     private String avatar;
     private String description;

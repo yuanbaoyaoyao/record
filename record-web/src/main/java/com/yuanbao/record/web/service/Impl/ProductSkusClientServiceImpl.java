@@ -1,13 +1,13 @@
-package com.yuanbao.record.admin.service.Impl;
+package com.yuanbao.record.web.service.Impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yuanbao.record.admin.service.ProductSkusService;
 import com.yuanbao.record.mbp.mapper.ProductSkusMapper;
 import com.yuanbao.record.mbp.mapper.entity.ProductSkus;
 import com.yuanbao.record.mbp.vo.ProductSkusVo;
 import com.yuanbao.record.mbp.vomapper.ProductSkusVoMapper;
+import com.yuanbao.record.web.service.ProductSkusClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ProductSkusServiceImpl extends ServiceImpl<ProductSkusMapper, ProductSkus> implements ProductSkusService {
+public class ProductSkusClientServiceImpl extends ServiceImpl<ProductSkusMapper, ProductSkus> implements ProductSkusClientService {
+
     @Autowired
     private ProductSkusMapper productSkusMapper;
 
@@ -39,19 +40,19 @@ public class ProductSkusServiceImpl extends ServiceImpl<ProductSkusMapper, Produ
     }
 
     @Override
+    public List<ProductSkusVo> selectProductSkusListSearch(String title, Long id,Long productId) {
+        List<ProductSkusVo> productSkusVoList = productSkusMapper.selectProductSkusListSearch(title, id,productId);
+        return productSkusVoList;
+    }
+
+    @Override
     public List<ProductSkusVo> selectProductSkusList() {
         return productSkusMapper.selectProductSkusList();
     }
 
     @Override
-    public int insert(ProductSkus productSkus) {
-        int id = productSkusMapper.insert(productSkus);
-        return id;
-    }
-
-    @Override
-    public int deleteByPrimaryKey(Long id) {
-        return productSkusMapper.deleteById(id);
+    public List<ProductSkusVo> selectProductSkusListLimit() {
+        return productSkusMapper.selectProductSkusListLimit();
     }
 
     @Override

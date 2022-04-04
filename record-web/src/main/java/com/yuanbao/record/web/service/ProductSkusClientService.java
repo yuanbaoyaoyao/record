@@ -1,22 +1,20 @@
-package com.yuanbao.record.admin.service;
+package com.yuanbao.record.web.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuanbao.record.mbp.mapper.entity.ProductSkus;
 import com.yuanbao.record.mbp.vo.ProductSkusVo;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface ProductSkusService extends IService<ProductSkus> {
+public interface ProductSkusClientService extends IService<ProductSkus> {
     IPage<ProductSkusVo> selectProductSkusListSearchIPage(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String title,Long id);
+
+    List<ProductSkusVo> selectProductSkusListSearch(String title,Long id,Long productId);
 
     List<ProductSkusVo> selectProductSkusList();
 
-    @Transactional
-    int insert(ProductSkus productSkus);
-
-    int deleteByPrimaryKey(Long id);
+    List<ProductSkusVo> selectProductSkusListLimit();
 
     int updateByPrimaryKey(ProductSkus productSkus);
 }

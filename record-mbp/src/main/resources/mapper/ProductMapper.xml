@@ -6,10 +6,20 @@
         SELECT *
         FROM product p
         WHERE p.deleted != '1'
-        <if test="keyword1 != 'null'.toString() and keyword1 != '' ">
-            p.NAME like concat ('%',#{keyword1,jdbcType=VARCHAR},'%'))
+        <if test="title != 'null'.toString() and title != '' ">
+            and p.title like concat ('%',#{title,jdbcType=VARCHAR},'%'))
         </if>
     </select>
+
+    <select id="selectProductListSearchAll" resultType="com.yuanbao.record.mbp.mapper.entity.Product">
+        SELECT *
+        FROM product p
+        WHERE p.deleted != '1'
+        <if test="title != 'null'.toString() and title != '' ">
+            and p.title like concat ('%',#{title,jdbcType=VARCHAR},'%'))
+        </if>
+    </select>
+
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.Product">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()

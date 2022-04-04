@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuanbao.record.mbp.mapper.UserCollectMapper">
+    <resultMap id="productSkusMap" type="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
+        <id column="id" property="id"></id>
+        <result column="product_id" property="productId"></result>
+        <result column="title" property="title"></result>
+        <result column="avatar" property="avatar"></result>
+        <result column="description" property="description"></result>
+        <result column="stock" property="stock"></result>
+        <result column="created_at" property="createdAt"></result>
+        <result column="updated_at" property="updatedAt"></result>
+        <result column="deleted" property="deleted"></result>
+        <collection property="user" ofType="com.yuanbao.record.mbp.mapper.entity.User" javaType="java.util.List">
+            <id column="id" property="id"></id>
+            <result column="name" property="name"></result>
+            <result column="password" property="password"></result>
+            <result column="email" property="email"></result>
+            <result column="email_verified_at" property="emailVerifiedAt"></result>
+            <result column="avatar" property="avatar"></result>
+            <result column="enable" property="enable"></result>
+        </collection>
+    </resultMap>
+
+    <select id="selectProductSkusByUserId" resultType="com.yuanbao.record.mbp.mapper.entity.UserCollect">
+        SELECT id, product_skus_id
+        FROM user_collect uc
+        WHERE uc.deleted != '1' and uc.user_id = #{userId}
+    </select>
+
+    <select id="selectIDByUserIdAndProuductSkusId" resultType="com.yuanbao.record.mbp.mapper.entity.UserCollect">
+        SELECT id
+        FROM user_collect uc
+        WHERE uc.deleted != '1' and uc.user_id = #{userId}
+          and uc.product_skus_id = #{productSkusId}
+    </select>
+
+    <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.UserCollect">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user_collect
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId!=null">
+                user_id,
+            </if>
+            <if test="productSkusId!=null">
+                product_skus_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId!=null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="productSkusId!=null">
+                #{productSkusId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.UserCollect">-->
+    <!--        update user_address-->
+    <!--        set user_id         = #{userId,jdbcType=INTEGER},-->
+    <!--            product_skus_id = #{productSkusId,jdbcType=VARCHAR}-->
+    <!--        where id = #{id}-->
+    <!--    </update>-->
+
+</mapper>

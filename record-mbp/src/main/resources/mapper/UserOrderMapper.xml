@@ -162,7 +162,7 @@
         timeUnit,
         receiver,
         sum( order_number ) AS count_order_number,
-        sum( sum_product_number ) AS count_product_number
+        sum( sum_product_number ) AS sum_product_number
         FROM
         (
         SELECT
@@ -208,11 +208,11 @@
         timeUnit,
         receiver,
         sum( order_number ) AS count_order_number,
-        sum( sum_product_number ) AS count_product_number
+        sum( sum_product_number ) AS sum_product_number
         FROM
         (
         SELECT
-        substr( uo.created_at, 1, 10 ) AS 'timeUnit',
+        substr(date_format(sysdate(),uo.created_at),1,7) AS 'timeUnit',
         receiver,
         COUNT( DISTINCT uo.id ) AS order_number,
         sum_product_number
@@ -240,7 +240,7 @@
             </otherwise>
         </choose>
         GROUP BY
-        substr( uo.created_at, 1, 10 ),
+        timeUnit,
         receiver,
         sum_product_number
         ) B
