@@ -42,7 +42,34 @@ public class CartClientController {
 
     @PutMapping(value = "/update")
     public CommonResult update(@RequestBody Cart cart) {
+        System.out.println("cart" + cart);
         int count = cartClientService.updateByUserIdAndProductSkusId(cart);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
+
+    @PutMapping(value = "/updateList")
+    public CommonResult updateList(@RequestBody List<Cart> cartList) {
+//        System.out.println("cartList" + cartList);
+        int count = 0;
+        for (Cart cart : cartList) {
+            System.out.println("cart" + cart);
+            count = cartClientService.updateByUserIdAndProductSkusId(cart);
+        }
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
+
+    @PutMapping(value = "/updateCheckedDefault")
+    public CommonResult updateCheckedDefault(@RequestBody Cart cart) {
+//        System.out.println("cart"+cart);
+        int count = cartClientService.updateAllCheckedDefaultByUserId(cart);
         if (count > 0) {
             return CommonResult.success(count);
         } else {

@@ -16,4 +16,6 @@ public interface CartMapper extends BaseMapper<Cart> {
      int insert (Cart cart);
 
      int updateByUserIdAndProductSkusId(Cart cart);
+
+     int updateAllCheckedDefaultByUserId(Cart cart);
 }

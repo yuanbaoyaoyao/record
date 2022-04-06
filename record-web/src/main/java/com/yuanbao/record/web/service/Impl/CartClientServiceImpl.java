@@ -37,6 +37,11 @@ public class CartClientServiceImpl extends ServiceImpl<CartMapper, Cart> impleme
     }
 
     @Override
+    public int updateAllCheckedDefaultByUserId(Cart cart) {
+        return cartMapper.updateAllCheckedDefaultByUserId(cart);
+    }
+
+    @Override
     public int deleteByPrimaryKey(long tempId) {
         return cartMapper.deleteById(tempId);
     }

@@ -12,6 +12,7 @@ public class Cart implements Serializable {
     private Long userId;
     private Long productSkusId;
     private Integer productSkusNumber;
+    private Boolean checked;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean deleted;

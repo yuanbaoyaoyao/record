@@ -61,9 +61,25 @@
 
     <update id="updateByUserIdAndProductSkusId" parameterType="com.yuanbao.record.mbp.mapper.entity.Cart">
         update cart c
-        set product_skus_number = #{productSkusNumber,jdbcType=VARCHAR}
+        -- set
+        <set>
+            <if test="productSkusNumber!=null">
+                product_skus_number = #{productSkusNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="checked!=null">
+                checked = #{checked,jdbcType=INTEGER}
+            </if>
+        </set>
+
         where user_id = #{userId,jdbcType=BIGINT}
-          and product_skus_id = #{productSkusId,jdbcType=BIGINT}
+        and product_skus_id = #{productSkusId,jdbcType=BIGINT}
+        and c.deleted != 1
+    </update>
+
+    <update id="updateAllCheckedDefaultByUserId" parameterType="com.yuanbao.record.mbp.mapper.entity.Cart">
+        update cart c
+        set checked = 0
+        where user_id = #{userId,jdbcType=BIGINT}
           and c.deleted != 1
     </update>
 

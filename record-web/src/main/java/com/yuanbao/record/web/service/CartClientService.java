@@ -15,5 +15,7 @@ public interface CartClientService extends IService<Cart> {
 
     int updateByUserIdAndProductSkusId(Cart cart);
 
+    int updateAllCheckedDefaultByUserId(Cart cart);
+
     int deleteByPrimaryKey(long tempId);
 }
