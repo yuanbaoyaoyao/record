@@ -11,6 +11,8 @@ import java.util.List;
 public interface CartMapper extends BaseMapper<Cart> {
      List<CartVo> selectByUserId (Long userId);
 
+     List<CartVo> selectCheckedByUserId (Long userId);
+
      Cart selectByUserIdAndProductSkusId(Long userId,Long productSkusId);
 
      int insert (Cart cart);

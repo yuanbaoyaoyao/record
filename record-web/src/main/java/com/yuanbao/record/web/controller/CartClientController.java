@@ -33,6 +33,12 @@ public class CartClientController {
         return CommonResult.success(cartVoList);
     }
 
+    @GetMapping(value = "/listChecked")
+    public CommonResult<List<CartVo>> getListChecked(@RequestParam(value = "userId") Long userId) {
+        List<CartVo> cartVoList = cartClientService.selectCheckedByUserId(userId);
+        return CommonResult.success(cartVoList);
+    }
+
     @GetMapping(value = "/listOne")
     public CommonResult getListOne(@RequestParam(value = "userId") Long userId,
                                    @RequestParam(value = "productSkusId") Long productSkusId) {

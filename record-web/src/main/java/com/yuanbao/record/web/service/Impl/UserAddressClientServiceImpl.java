@@ -21,6 +21,11 @@ public class UserAddressClientServiceImpl extends ServiceImpl<UserAddressMapper,
     }
 
     @Override
+    public UserAddress selectById(Long id) {
+        return userAddressMapper.selectById(id);
+    }
+
+    @Override
     public int insert(UserAddress userAddress) {
         int id = userAddressMapper.insert(userAddress);
         return id;

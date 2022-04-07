@@ -33,8 +33,9 @@ public class ProductSkusClientController {
     public CommonResult<List<ProductSkusVo>> getAllProductSkus(
             @RequestParam(value = "id", defaultValue = "") Long id,
             @RequestParam(value = "productId", defaultValue = "") Long productId,
-            @RequestParam(value = "title", defaultValue = "null") String title) {
-        List<ProductSkusVo> productSkusVoList = productSkusClientService.selectProductSkusListSearch(title, id, productId);
+            @RequestParam(value = "title", defaultValue = "null") String title,
+            @RequestParam(value = "productSkusName", defaultValue = "null") String productSkusName) {
+        List<ProductSkusVo> productSkusVoList = productSkusClientService.selectProductSkusListSearch(title, id, productId,productSkusName);
         return CommonResult.success(productSkusVoList);
     }
 

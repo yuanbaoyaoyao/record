@@ -299,7 +299,7 @@
             <if test="user!=null">
                 #{user,jdbcType=VARCHAR},
             </if>
-            <if test="address_detail!=null">
+            <if test="addressDetail!=null">
                 #{addressDetail,jdbcType=VARCHAR},
             </if>
             <if test="orderSn!=null">

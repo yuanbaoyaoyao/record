@@ -155,6 +155,9 @@
             <if test="number!=null">
                 number
             </if>
+            <if test="productPicUrl!=null">
+                product_pic_url
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userOrderId!=null">
@@ -175,14 +178,11 @@
             <if test="productSkusTitle!=null">
                 #{productSkusTitle,jdbcType=VARCHAR},
             </if>
-            <if test="productTitle!=null">
-                #{productTitle,jdbcType=VARCHAR},
-            </if>
-            <if test="productSkusTitle!=null">
-                #{productSkusTitle,jdbcType=VARCHAR},
-            </if>
             <if test="number!=null">
                 #{number,jdbcType=INTEGER},
+            </if>
+            <if test="productPicUrl!=null">
+                #{productPicUrl,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>

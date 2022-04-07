@@ -9,6 +9,8 @@ import java.util.List;
 public interface CartClientService extends IService<Cart> {
     List<CartVo> selectByUserId (Long userId);
 
+    List<CartVo> selectCheckedByUserId(Long userId);
+
     Cart selectByUserIdAndProductSkusId(Long userId,Long productSkusId);
 
     int insert (Cart cart);

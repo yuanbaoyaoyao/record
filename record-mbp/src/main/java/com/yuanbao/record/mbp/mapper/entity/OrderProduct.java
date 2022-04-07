@@ -20,6 +20,7 @@ public class OrderProduct implements Serializable {
     private String productTitle;
     private String productSkusTitle;
     private Integer number;
+    private String productPicUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean deleted;

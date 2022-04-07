@@ -21,6 +21,11 @@ public class CartClientServiceImpl extends ServiceImpl<CartMapper, Cart> impleme
     }
 
     @Override
+    public List<CartVo> selectCheckedByUserId(Long userId) {
+        return cartMapper.selectCheckedByUserId(userId);
+    }
+
+    @Override
     public Cart selectByUserIdAndProductSkusId(Long userId, Long productSkusId) {
          return  cartMapper.selectByUserIdAndProductSkusId(userId,productSkusId);
     }

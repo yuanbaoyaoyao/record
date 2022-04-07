@@ -8,6 +8,8 @@ import java.util.List;
 public interface UserAddressClientService extends IService<UserAddress> {
     List<UserAddress> selectByUserId(Long userId);
 
+    UserAddress selectById(Long id);
+
     int insert(UserAddress userAddress);
 
     int updateByPrimaryKey(UserAddress userAddress);

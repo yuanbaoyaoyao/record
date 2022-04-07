@@ -20,6 +20,16 @@
         WHERE c.deleted != 1 and c.user_id = #{UserId}
     </select>
 
+    <select id="selectCheckedByUserId" resultType="com.yuanbao.record.mbp.mapper.entity.Cart">
+        SELECT c.id,
+               c.user_id,
+               c.product_skus_id,
+               c.product_skus_number
+        FROM cart c
+        WHERE c.deleted != 1 and c.user_id = #{UserId}
+          and c.checked = 1
+    </select>
+
     <select id="selectByUserIdAndProductSkusId" resultType="com.yuanbao.record.mbp.mapper.entity.Cart">
         SELECT c.id,
                c.user_id,

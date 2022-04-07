@@ -40,6 +40,12 @@ public class UserAddressClientController {
         return CommonResult.success(userAddressList);
     }
 
+    @GetMapping(value="/listOne")
+    public CommonResult  getAddress (@RequestParam(value = "id") Long id) {
+        UserAddress userAddress = userAddressClientService.selectById(id);
+        return CommonResult.success(userAddress);
+    }
+
     @PutMapping(value = "/update")
     public CommonResult update(@RequestBody UserAddress userAddress) {
         System.out.println("执行update");

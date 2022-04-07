@@ -10,7 +10,7 @@ import java.util.List;
 public interface ProductSkusClientService extends IService<ProductSkus> {
     IPage<ProductSkusVo> selectProductSkusListSearchIPage(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String title,Long id);
 
-    List<ProductSkusVo> selectProductSkusListSearch(String title,Long id,Long productId);
+    List<ProductSkusVo> selectProductSkusListSearch(String title,Long id,Long productId,String productSkusName);
 
     List<ProductSkusVo> selectProductSkusList();
 

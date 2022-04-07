@@ -9,20 +9,28 @@ import com.yuanbao.record.web.service.UserOrderClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @CrossOrigin
-@RequestMapping("/client/userOrder")
+@RequestMapping("/userOrderClient")
 public class UserOrderClientController {
     @Autowired
     private UserOrderClientService userOrderClientService;
 
     @PostMapping(value = "/create")
     public CommonResult create(@RequestBody UserOrder userOrder) {
-        System.out.println("userOrder" + userOrder);
 
-        int newId = userOrderClientService.insert(userOrder);
+        userOrderClientService.insert(userOrder);
+        Long newId = userOrder.getId();
+        Long newOrderSn = userOrder.getOrderSn();
+        Map<String, Long> data = new HashMap<>();
+        data.put("id", newId);
+        data.put("orderSn", newOrderSn);
+        System.out.println("newId:" + newId);
         if (newId > 0) {
-            return CommonResult.success(newId);
+            return CommonResult.success(data);
         } else {
             return CommonResult.failed();
         }

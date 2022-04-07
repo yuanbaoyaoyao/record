@@ -40,8 +40,8 @@ public class ProductSkusClientServiceImpl extends ServiceImpl<ProductSkusMapper,
     }
 
     @Override
-    public List<ProductSkusVo> selectProductSkusListSearch(String title, Long id,Long productId) {
-        List<ProductSkusVo> productSkusVoList = productSkusMapper.selectProductSkusListSearch(title, id,productId);
+    public List<ProductSkusVo> selectProductSkusListSearch(String title, Long id,Long productId,String productSkusName) {
+        List<ProductSkusVo> productSkusVoList = productSkusMapper.selectProductSkusListSearch(title, id,productId,productSkusName);
         return productSkusVoList;
     }
 
