@@ -1,3 +1,22 @@
+spring:
+  data:
+    redis:
+      repositories:
+        enabled: false
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+
+  mail:
+    email: yuanbaotest2022@163.com
+    host: smtp.163.com
+    port: 465
+    username: yuanbaotest2022
+    # 授权密码， 非邮箱密码，授权码是用于登录第三方邮件客户端的专用密码。
+    password: DHUXCMZOLIBXDIHW
+
 servlet:
   multipart:
     enabled: true
