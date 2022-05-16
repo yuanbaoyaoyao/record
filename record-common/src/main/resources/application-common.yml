@@ -17,6 +17,9 @@ spring:
     # 授权密码， 非邮箱密码，授权码是用于登录第三方邮件客户端的专用密码。
     password: DHUXCMZOLIBXDIHW
 
+code:
+  expiration: 300
+
 servlet:
   multipart:
     enabled: true

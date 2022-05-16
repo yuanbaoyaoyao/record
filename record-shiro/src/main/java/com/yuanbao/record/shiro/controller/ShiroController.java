@@ -8,6 +8,7 @@ import com.yuanbao.record.common.api.util.IpUtil;
 import com.yuanbao.record.common.api.util.JacksonUtil;
 import com.yuanbao.record.mbp.mapper.entity.AdminUser;
 import com.yuanbao.record.mbp.mapper.entity.User;
+import com.yuanbao.record.shiro.service.ShiroService;
 import com.yuanbao.record.shiro.util.Permission;
 import com.yuanbao.record.shiro.util.PermissionUtil;
 import org.apache.commons.lang.StringUtils;
@@ -40,6 +41,9 @@ public class ShiroController {
 
     @Autowired
     private AdminPermissionService adminPermissionService;
+
+    @Autowired
+    private ShiroService shiroService;
 
     @PostMapping(value = "/login")
     public CommonResult login(@RequestBody String body, HttpServletRequest request) {
@@ -124,6 +128,13 @@ public class ShiroController {
         return CommonResult.success(result);
     }
 
+    @PostMapping("/client/sendEmailCode")
+        public CommonResult sendEmailCode(@RequestParam String email){
+        System.out.println("email:"+email);
+        shiroService.sendMailCode(email);
+        return CommonResult.success("已发送");
+    }
+
     @RequiresAuthentication
     @PostMapping("/logout")
     public CommonResult logout() {
@@ -137,6 +148,7 @@ public class ShiroController {
     @RequiresAuthentication
     @PostMapping("/client/logout")
     public CommonResult clientLogout() {
+        System.out.println("已退出");
         Subject currentUser = SecurityUtils.getSubject();
 
 //        logHelper.logAuthSucceed("退出");

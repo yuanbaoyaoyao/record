@@ -1,16 +1,27 @@
 package com.yuanbao.record.shiro.service.impl;
 
-import com.yuanbao.record.web.service.UserClientTokenService;
+import cn.hutool.core.lang.Dict;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.extra.template.Template;
+import cn.hutool.extra.template.TemplateConfig;
+import cn.hutool.extra.template.TemplateEngine;
+import cn.hutool.extra.template.TemplateUtil;
 import com.yuanbao.record.admin.service.AdminTokenService;
 import com.yuanbao.record.common.api.CommonResult;
+import com.yuanbao.record.common.api.service.EmailService;
+import com.yuanbao.record.common.api.util.RedisUtils;
+import com.yuanbao.record.mbp.dto.EmailDto;
 import com.yuanbao.record.mbp.mapper.entity.AdminToken;
 import com.yuanbao.record.mbp.mapper.entity.UserToken;
 import com.yuanbao.record.shiro.auth.TokenGenerator;
 import com.yuanbao.record.shiro.service.ShiroService;
+import com.yuanbao.record.web.service.UserClientTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 @Service
 public class ShiroServiceImpl implements ShiroService {
@@ -21,7 +32,16 @@ public class ShiroServiceImpl implements ShiroService {
     @Autowired
     private UserClientTokenService userTokenService;
 
+    @Autowired
+    private RedisUtils redisUtils;
+
+    @Autowired
+    private EmailService emailService;
+
     private final static int EXPIRE = 12;
+
+    @Value("${code.expiration}")
+    private Long expiration;
 
     @Override
     public CommonResult createToken(Long userId) {
@@ -87,6 +107,22 @@ public class ShiroServiceImpl implements ShiroService {
     @Override
     public UserToken selectByUserToken(String accessToken) {
         return userTokenService.selectByToken(accessToken);
+    }
+
+    @Override
+    public void sendMailCode(String email) {
+        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig("template", TemplateConfig.ResourceMode.CLASSPATH));
+        Template template = engine.getTemplate("email-code.ftl");
+
+        Object code = redisUtils.get(email);
+        if (code == null) {
+            code = RandomUtil.randomNumbers(6);
+            if (!redisUtils.set(email, code, expiration)) {
+                throw new RuntimeException("后台服务器错误");
+            }
+        }
+        emailService.send(new EmailDto(Collections.singletonList(email),
+                "邮箱验证码", template.render(Dict.create().set("code", code))));
     }
 
 
