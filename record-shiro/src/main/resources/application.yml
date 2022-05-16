@@ -2,28 +2,10 @@ server:
   port: 8082
 
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/record?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    userName: root
-    passWord:
+  profiles:
+    active: common,mbp
 
 ## 显示dao 执⾏sql语句
 logging:
   level:
     com.yuanbao.record.mbp.mapper: debug # 改成你的dao接口文件所在包路径可以打印出sql语句
-mybatis:
-  mapper-locations: classpath*:mapper/*.xml
-mybatis-plus:
-  global-config:
-    db-config:
-      logic-delete-field: deleted
-      logic-delete-value: 1
-      logic-not-delete-value: 0
-
-qiniu:
-  accessKey: e68GRobk3q3O7HzqHWV6RpNh8f7ZG_-7iyM2FaTA
-  secretKey: KDBqTVEvDiASX_Xh0WT_ck3hyZ2swu5HVh8TE7-_
-  bucket: testupload3
-  domain: r6ctg8uno.hd-bkt.clouddn.com
-  expireSeconds: 1800
