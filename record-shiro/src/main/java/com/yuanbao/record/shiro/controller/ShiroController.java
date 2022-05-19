@@ -4,29 +4,24 @@ import com.yuanbao.record.admin.service.AdminPermissionService;
 import com.yuanbao.record.admin.service.AdminRoleService;
 import com.yuanbao.record.admin.service.AdminUserService;
 import com.yuanbao.record.common.api.CommonResult;
-import com.yuanbao.record.common.api.util.IpUtil;
 import com.yuanbao.record.common.api.util.JacksonUtil;
+import com.yuanbao.record.common.api.util.JwtUtil;
 import com.yuanbao.record.mbp.mapper.entity.AdminUser;
+import com.yuanbao.record.mbp.mapper.entity.JwtUser;
 import com.yuanbao.record.mbp.mapper.entity.User;
 import com.yuanbao.record.shiro.service.ShiroService;
 import com.yuanbao.record.shiro.util.Permission;
 import com.yuanbao.record.shiro.util.PermissionUtil;
+import com.yuanbao.record.web.service.UserClientService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.*;
-
 
 @RestController
 @CrossOrigin
@@ -37,131 +32,126 @@ public class ShiroController {
     private AdminUserService adminUserService;
 
     @Autowired
+    private UserClientService userClientService;
+
+    @Autowired
+    private ShiroService shiroService;
+
+    @Autowired
     private AdminRoleService adminRoleService;
 
     @Autowired
     private AdminPermissionService adminPermissionService;
 
-    @Autowired
-    private ShiroService shiroService;
-
-    @PostMapping(value = "/login")
-    public CommonResult login(@RequestBody String body, HttpServletRequest request) {
-        String username = JacksonUtil.parseString(body, "username");
-        String password = JacksonUtil.parseString(body, "password");
-
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+    @PostMapping(value = "/client/login")
+    public CommonResult clientLogin(@RequestBody String body) {
+        System.out.println("loginuser");
+        String usernameInput = JacksonUtil.parseString(body, "username");
+        String passwordInput = JacksonUtil.parseString(body, "password");
+        System.out.println("username:" + usernameInput);
+        System.out.println("password:" + passwordInput);
+        if (StringUtils.isEmpty(usernameInput) || StringUtils.isEmpty(passwordInput)) {
             return CommonResult.validateFailed();
         }
-
-        Subject currentUser = SecurityUtils.getSubject();
-        try {
-            currentUser.login(new UsernamePasswordToken(username, password));
-        } catch (UnknownAccountException uae) {
-            return CommonResult.failed("用户账号或密码不正确");
-        } catch (LockedAccountException lae) {
-            return CommonResult.failed("用户已锁定");
-        } catch (AuthenticationException ae) {
-            return CommonResult.failed("认证失败");
+        User user = userClientService.selectUserListByName(usernameInput);
+        if (user == null) {
+            return CommonResult.failed("用户不存在");
         }
+//        通过用户输入密码和数据库中密码比对是否一致，一致就登录成功（密码注册的时候注意加密）
+//        注册加密后修改
+        String password = user.getPassword();
+        if (!Objects.equals(password, passwordInput)) {
+            return CommonResult.failed("密码错误");
+        }
+        Map<String, Object> userInfo = new HashMap<>();
+        userInfo.put("nickName", user.getName());
+        userInfo.put("avatar", user.getAvatar());
+        userInfo.put(("userId"), user.getId());
 
-        currentUser = SecurityUtils.getSubject();
-        AdminUser adminUser = (AdminUser) currentUser.getPrincipal();
+        Map<Object, Object> result = new HashMap<>();
+        JwtUser jwtUser = new JwtUser(usernameInput, null);
+        String token = JwtUtil.createJwtTokenByUser(jwtUser);
+        System.out.println("token:" + token);
+        result.put("token", token);
+        result.put("userInfo", userInfo);
+        return CommonResult.success(result);
+    }
 
-        adminUser.setLastLoginIp(adminUser.getNowLoginIp());
-        adminUser.setLastLoginTime(adminUser.getNowLoginTime());
-        adminUser.setNowLoginIp(IpUtil.getIpAddr(request));
-        adminUser.setNowLoginTime(LocalDateTime.now());
-        adminUserService.updateByPrimaryKey(adminUser);
-
-        //userInfo
-        Map<String, Object> adminInfo = new HashMap<String, Object>();
+    @PostMapping(value = "/login")
+    public CommonResult login(@RequestBody String body) {
+        System.out.println("loginAdminUser");
+        String usernameInput = JacksonUtil.parseString(body, "username");
+        String passwordInput = JacksonUtil.parseString(body, "password");
+        System.out.println("username:" + usernameInput);
+        System.out.println("password:" + passwordInput);
+        if (StringUtils.isEmpty(usernameInput) || StringUtils.isEmpty(passwordInput)) {
+            return CommonResult.validateFailed();
+        }
+        AdminUser adminUser = adminUserService.selectAdminListByName(usernameInput);
+        if (adminUser == null) {
+            return CommonResult.failed("用户不存在");
+        }
+//        通过用户输入密码和数据库中密码比对是否一致，一致就登录成功（密码注册的时候注意加密）
+//        注册加密后修改
+        String password = adminUser.getPassword();
+        if (!Objects.equals(password, passwordInput)) {
+            return CommonResult.failed("密码错误");
+        }
+        Map<String, Object> adminInfo = new HashMap<>();
         adminInfo.put("nickName", adminUser.getName());
         adminInfo.put("avatar", adminUser.getAvatar());
         adminInfo.put("adminUserId", adminUser.getId());
         adminInfo.put("adminRoleId", adminUser.getRoleId());
         adminInfo.put("lastLoginIp", adminUser.getLastLoginIp());
         adminInfo.put("lastLoginTime", adminUser.getLastLoginTime());
+        String role = adminRoleService.selectNameById(adminUser.getRoleId());
+        List<String> permissions = adminPermissionService.selectPermissionByRoleId(adminUser.getRoleId());
+        adminInfo.put("role", role);
+        adminInfo.put("perms", toApi(permissions));
 
-        System.out.println("adminInfooooo:" + adminInfo);
-        Map<Object, Object> result = new HashMap<Object, Object>();
-        result.put("token", currentUser.getSession().getId());
+        Map<Object, Object> result = new HashMap<>();
+        JwtUser jwtUser = new JwtUser(usernameInput, adminUser.getRoleId());
+        String token = JwtUtil.createJwtTokenByUser(jwtUser);
+        System.out.println("token:" + token);
+        result.put("token", token);
         result.put("adminInfo", adminInfo);
-        return CommonResult.success(result);
-    }
-
-
-    @PostMapping(value = "/client/login")
-    public CommonResult clientLogin(@RequestBody String body, HttpServletRequest request) {
-        System.out.println("yes");
-        String username = JacksonUtil.parseString(body, "username");
-        String password = JacksonUtil.parseString(body, "password");
-
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-            return CommonResult.validateFailed();
-        }
-
-        Subject currentUser = SecurityUtils.getSubject();
-        try {
-            currentUser.login(new UsernamePasswordToken(username, password));
-        } catch (UnknownAccountException uae) {
-            return CommonResult.failed("用户账号或密码不正确");
-        } catch (LockedAccountException lae) {
-            return CommonResult.failed("用户已锁定");
-        } catch (AuthenticationException ae) {
-            return CommonResult.failed("认证失败");
-        }
-
-        currentUser = SecurityUtils.getSubject();
-        User user = (User) currentUser.getPrincipal();
-
-        //userInfo
-        Map<String, Object> userInfo = new HashMap<String, Object>();
-        userInfo.put("nickName", user.getName());
-        userInfo.put("avatar", user.getAvatar());
-        userInfo.put(("userId"), user.getId());
-
-
-        Map<Object, Object> result = new HashMap<Object, Object>();
-        result.put("token", currentUser.getSession().getId());
-        result.put("userInfo", userInfo);
+        System.out.println("adminInfo"+adminInfo);
         return CommonResult.success(result);
     }
 
     @PostMapping("/client/sendEmailCode")
-        public CommonResult sendEmailCode(@RequestParam String email){
-        System.out.println("email:"+email);
+    public CommonResult sendEmailCode(@RequestParam String email) {
+        System.out.println("email:" + email);
         shiroService.sendMailCode(email);
         return CommonResult.success("已发送");
     }
 
-    @RequiresAuthentication
     @PostMapping("/logout")
     public CommonResult logout() {
         Subject currentUser = SecurityUtils.getSubject();
-
-//        logHelper.logAuthSucceed("退出");
         currentUser.logout();
         return CommonResult.success("退出");
     }
 
-    @RequiresAuthentication
     @PostMapping("/client/logout")
     public CommonResult clientLogout() {
-        System.out.println("已退出");
         Subject currentUser = SecurityUtils.getSubject();
+        System.out.println("currentUser:" + currentUser);
 
 //        logHelper.logAuthSucceed("退出");
         currentUser.logout();
         return CommonResult.success("退出");
     }
+
 
     @RequiresAuthentication
     @GetMapping("/info")
     public CommonResult info() {
-        Subject currentUser = SecurityUtils.getSubject();
-        AdminUser adminUser = (AdminUser) currentUser.getPrincipal();
+        System.out.println("使用了admin info");
+        JwtUser jwtUser = (JwtUser) SecurityUtils.getSubject().getPrincipal();
+        System.out.println("adminUser:" + jwtUser);
         Map<String, Object> data = new HashMap<>();
+        AdminUser adminUser = adminUserService.selectAdminListByName(jwtUser.getUsername());
         Long roleId = adminUser.getRoleId();
         System.out.println("roleId:" + roleId);
         String role = adminRoleService.selectNameById(roleId);
@@ -172,7 +162,6 @@ public class ShiroController {
         data.put("adminUserId", adminUser.getId());
         data.put("lastLoginIp", adminUser.getLastLoginIp());
         data.put("lastLoginTime", adminUser.getLastLoginTime());
-//        data.put("adminRoleId",adminUser.getRoleId());
         data.put("role", role);
         data.put("perms", toApi(permissions));
         System.out.println("toApi(permissions):" + toApi(permissions));
@@ -182,11 +171,11 @@ public class ShiroController {
     @RequiresAuthentication
     @GetMapping("/client/info")
     public CommonResult clientInfo() {
-        Subject currentUser = SecurityUtils.getSubject();
-        System.out.println("currentUser:" + currentUser);
-        User user = (User) currentUser.getPrincipal();
-        System.out.println("user:" + user);
+        System.out.println("使用了user info");
+        JwtUser jwtUser = (JwtUser) SecurityUtils.getSubject().getPrincipal();
+        System.out.println("user:" + jwtUser);
         Map<String, Object> data = new HashMap<>();
+        User user = userClientService.selectUserListByName(jwtUser.getUsername());
         Long id = user.getId();
         System.out.println("id:" + id);
         data.put("name", user.getName());
@@ -194,27 +183,6 @@ public class ShiroController {
         data.put("id", user.getId());
         return CommonResult.success(data);
     }
-
-//    @RequiresAuthentication
-//    @GetMapping("/client/info")
-//    public CommonResult clientInfo() {
-//        Subject currentUser = SecurityUtils.getSubject();
-//        System.out.println("currentUser:" + currentUser);
-//        User user = (User) currentUser.getPrincipal();
-//        System.out.println("user:" + user);
-//        Map<String, Object> data = new HashMap<>();
-//        Long roleId = user.getRoleId();
-//        System.out.println("roleId:" + roleId);
-//        String role = adminRoleService.selectNameById(roleId);
-//        List<String> permissions = adminPermissionService.selectPermissionByRoleId(roleId);
-//        System.out.println("permissions:" + permissions);
-//        data.put("name", adminUser.getName());
-//        data.put("avatar", adminUser.getAvatar());
-//        data.put("role", role);
-//        data.put("perms", toApi(permissions));
-//        System.out.println("toApi(permissions):" + toApi(permissions));
-//        return CommonResult.success(data);
-//    }
 
     @Autowired
     private ApplicationContext context;

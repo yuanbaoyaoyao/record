@@ -18,6 +18,7 @@ public class AdminUser implements Serializable {
     private Long id;
     private String name;
     private String password;
+    private String salt;
     private String avatar;
     private Long roleId;
     private String role;

@@ -5,6 +5,7 @@
     <select id="selectListSearch" resultType="com.yuanbao.record.mbp.mapper.entity.User">
         SELECT
         u.id,
+        u.salt,
         u.NAME,
         u.avatar,
         u.email,
@@ -24,6 +25,7 @@
 
     <select id="selectUserListByName" resultType="com.yuanbao.record.mbp.mapper.entity.User">
         SELECT u.id,
+               u.salt,
                u.NAME,
                u.PASSWORD,
                u.avatar,
@@ -32,6 +34,19 @@
         WHERE u.deleted != '1' and u.enable !='0'
         AND
         u.NAME = #{u.name ,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserByEmail" resultType="com.yuanbao.record.mbp.mapper.entity.User">
+        SELECT u.id,
+               u.salt,
+               u.NAME,
+               u.PASSWORD,
+               u.avatar,
+               u.created_at
+        FROM user u
+        WHERE u.deleted != '1' and u.enable !='0'
+        AND
+        u.email = #{u.email ,jdbcType=VARCHAR}
     </select>
 
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.User">
@@ -46,6 +61,9 @@
             <if test="password!=null">
                 password,
             </if>
+            <if test="salt!=null">
+                salt,
+            </if>
             <if test="avatar!=null">
                 avatar,
             </if>
@@ -59,6 +77,9 @@
             </if>
             <if test="password!=null">
                 #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt!=null">
+                #{salt,jdbcType=VARCHAR},
             </if>
             <if test="avatar!=null">
                 #{avatar,jdbcType=VARCHAR},

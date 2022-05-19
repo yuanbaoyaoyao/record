@@ -27,4 +27,14 @@ public class UserClientServiceImpl extends ServiceImpl<UserMapper, User> impleme
     public int updateByPrimaryKey(User user) {
         return userMapper.updateByPrimaryKey(user);
     }
+
+    @Override
+    public Boolean isExistEmail(String email) {
+        User user = userMapper.selectUserByEmail(email);
+        if (user != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

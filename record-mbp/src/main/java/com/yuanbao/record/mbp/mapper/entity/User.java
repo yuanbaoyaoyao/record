@@ -10,10 +10,11 @@ public class User implements Serializable {
     static final Long serialVersionUID = 1L;
     private Long id;
     private String name;
+    private String password;
+    private String salt;
     private String avatar;
     private String email;
     private LocalDateTime emailVerifiedAt;
-    private String password;
     private Boolean enable;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

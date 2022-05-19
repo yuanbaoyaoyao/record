@@ -11,6 +11,8 @@ public interface UserMapper extends BaseMapper<User> {
 
     User selectUserListByName(String userName);
 
+    User selectUserByEmail(String email);
+
     int insert(User user);
 
     int updateByPrimaryKey(User user);

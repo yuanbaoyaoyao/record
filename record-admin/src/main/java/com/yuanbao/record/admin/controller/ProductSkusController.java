@@ -52,7 +52,7 @@ public class ProductSkusController {
         }
     }
 
-    @RequiresPermissions("productSkus:update")
+//    @RequiresPermissions("productSkus:update")
     @PutMapping(value = "/update")
     public CommonResult update(@RequestBody ProductSkus productSkus) {
         int count = productSkusService.updateByPrimaryKey(productSkus);

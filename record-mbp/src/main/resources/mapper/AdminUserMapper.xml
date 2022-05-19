@@ -5,6 +5,7 @@
         <id column="id" property="id"></id>
         <result column="name" property="name"></result>
         <result column="password" property="password"></result>
+        <result column="salt" property="salt"></result>
         <result column="avatar" property="avatar"></result>
         <result column="role_id" property="roleId"></result>
         <result column="created_at" property="createdAt"></result>
@@ -21,6 +22,7 @@
         au.id,
         au.NAME,
         au.PASSWORD,
+        au.salt,
         au.avatar,
         au.now_login_ip,
         au.now_login_time,
@@ -42,6 +44,7 @@
         SELECT au.id,
                au.NAME,
                au.PASSWORD,
+               au.salt,
                au.avatar,
                au.now_login_ip,
                au.now_login_time,
@@ -69,6 +72,9 @@
             <if test="password!=null">
                 password,
             </if>
+            <if test="salt!=null">
+                salt,
+            </if>
             <if test="avatar!=null">
                 avatar,
             </if>
@@ -91,6 +97,9 @@
             </if>
             <if test="password!=null">
                 #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt!=null">
+                #{salt,jdbcType=VARCHAR},
             </if>
             <if test="avatar!=null">
                 #{avatar,jdbcType=VARCHAR},

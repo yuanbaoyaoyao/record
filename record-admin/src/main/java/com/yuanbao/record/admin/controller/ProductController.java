@@ -39,7 +39,7 @@ public class ProductController {
         }
     }
 
-    @RequiresPermissions("product:delete")
+//    @RequiresPermissions("product:delete")
     @DeleteMapping(value = "/delete")
     public CommonResult delete(@RequestBody Product product){
         long tempId = product.getId();

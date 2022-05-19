@@ -9,4 +9,6 @@ public interface UserClientService extends IService<User> {
     int insert(User user);
 
     int updateByPrimaryKey(User user);
+
+    Boolean isExistEmail(String email);
 }
