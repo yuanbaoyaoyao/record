@@ -14,9 +14,10 @@ public class UserClientController {
     @Autowired
     private UserClientService userClientService;
 
-    @PostMapping(value = "/create")
-    public CommonResult create(@RequestBody User user) {
-        int newId = userClientService.insert(user);
+    @PostMapping(value = "/register")
+    public CommonResult register(@RequestBody User user) {
+        System.out.println("user:"+user);
+        int newId = userClientService.register(user);
         if (newId > 0) {
             return CommonResult.success(newId);
         } else {
@@ -32,6 +33,13 @@ public class UserClientController {
         } else {
             return CommonResult.failed();
         }
+    }
+
+    @PostMapping("/sendEmailCode")
+    public CommonResult sendEmailCode(@RequestParam String email) {
+        System.out.println("email:" + email);
+        userClientService.sendMailCode(email);
+        return CommonResult.success("已发送");
     }
 
 }

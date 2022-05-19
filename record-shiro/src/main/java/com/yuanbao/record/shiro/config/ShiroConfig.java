@@ -7,8 +7,8 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
@@ -17,7 +17,7 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
 
-        Map<String, String> filterRuleMap = new LinkedHashMap<>();
+        Map<String, String> filterRuleMap = new HashMap<>();
 
         filterRuleMap.put("/auth/login", "anon");
         filterRuleMap.put("/auth/logout", "anon");
@@ -25,8 +25,11 @@ public class ShiroConfig {
         filterRuleMap.put("/auth/client/sendEmailCode", "anon");
         filterRuleMap.put("/auth/client/logout", "anon");
         filterRuleMap.put("/**", "authcBearer");
+        System.out.println(" ");
+        System.out.println("filterRuleMap");
+        System.out.println(" ");
 
-        factoryBean.setGlobalFilters(Arrays.asList("noSessionCreation"));
+        factoryBean.setGlobalFilters(Collections.singletonList("noSessionCreation"));
 
         factoryBean.setSecurityManager(securityManager);
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
@@ -39,12 +42,4 @@ public class ShiroConfig {
         ModularRealmAuthorizer authorizer = new ModularRealmAuthorizer();
         return authorizer;
     }
-
-
-//    @Bean(name = "authenticator")
-//    public MyModularRealmAuthenticator modularRealmAuthorizer() {
-//        MyModularRealmAuthenticator modularRealmAuthorizer = new MyModularRealmAuthenticator();
-//        modularRealmAuthorizer.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
-//        return modularRealmAuthorizer;
-//    }
 }

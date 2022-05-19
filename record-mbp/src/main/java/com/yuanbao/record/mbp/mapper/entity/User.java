@@ -14,6 +14,7 @@ public class User implements Serializable {
     private String salt;
     private String avatar;
     private String email;
+    private String emailCode;
     private LocalDateTime emailVerifiedAt;
     private Boolean enable;
     private LocalDateTime createdAt;

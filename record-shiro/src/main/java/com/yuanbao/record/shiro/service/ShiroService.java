@@ -14,5 +14,4 @@ public interface ShiroService {
 //
 //    UserToken selectByUserToken(String accessToken);
 
-    void sendMailCode(String email);
 }

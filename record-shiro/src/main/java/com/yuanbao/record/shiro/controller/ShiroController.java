@@ -1,5 +1,6 @@
 package com.yuanbao.record.shiro.controller;
 
+import cn.hutool.crypto.SecureUtil;
 import com.yuanbao.record.admin.service.AdminPermissionService;
 import com.yuanbao.record.admin.service.AdminRoleService;
 import com.yuanbao.record.admin.service.AdminUserService;
@@ -9,7 +10,6 @@ import com.yuanbao.record.common.api.util.JwtUtil;
 import com.yuanbao.record.mbp.mapper.entity.AdminUser;
 import com.yuanbao.record.mbp.mapper.entity.JwtUser;
 import com.yuanbao.record.mbp.mapper.entity.User;
-import com.yuanbao.record.shiro.service.ShiroService;
 import com.yuanbao.record.shiro.util.Permission;
 import com.yuanbao.record.shiro.util.PermissionUtil;
 import com.yuanbao.record.web.service.UserClientService;
@@ -35,9 +35,6 @@ public class ShiroController {
     private UserClientService userClientService;
 
     @Autowired
-    private ShiroService shiroService;
-
-    @Autowired
     private AdminRoleService adminRoleService;
 
     @Autowired
@@ -60,7 +57,9 @@ public class ShiroController {
 //        通过用户输入密码和数据库中密码比对是否一致，一致就登录成功（密码注册的时候注意加密）
 //        注册加密后修改
         String password = user.getPassword();
-        if (!Objects.equals(password, passwordInput)) {
+        String salt = user.getSalt();
+        String passwordEncryption = SecureUtil.md5(passwordInput + salt);
+        if (!Objects.equals(password, passwordEncryption)) {
             return CommonResult.failed("密码错误");
         }
         Map<String, Object> userInfo = new HashMap<>();
@@ -94,7 +93,9 @@ public class ShiroController {
 //        通过用户输入密码和数据库中密码比对是否一致，一致就登录成功（密码注册的时候注意加密）
 //        注册加密后修改
         String password = adminUser.getPassword();
-        if (!Objects.equals(password, passwordInput)) {
+        String salt = adminUser.getSalt();
+        String passwordEncryption = SecureUtil.md5(passwordInput + salt);
+        if (!Objects.equals(password, passwordEncryption)) {
             return CommonResult.failed("密码错误");
         }
         Map<String, Object> adminInfo = new HashMap<>();
@@ -115,15 +116,8 @@ public class ShiroController {
         System.out.println("token:" + token);
         result.put("token", token);
         result.put("adminInfo", adminInfo);
-        System.out.println("adminInfo"+adminInfo);
+        System.out.println("adminInfo" + adminInfo);
         return CommonResult.success(result);
-    }
-
-    @PostMapping("/client/sendEmailCode")
-    public CommonResult sendEmailCode(@RequestParam String email) {
-        System.out.println("email:" + email);
-        shiroService.sendMailCode(email);
-        return CommonResult.success("已发送");
     }
 
     @PostMapping("/logout")
@@ -136,9 +130,6 @@ public class ShiroController {
     @PostMapping("/client/logout")
     public CommonResult clientLogout() {
         Subject currentUser = SecurityUtils.getSubject();
-        System.out.println("currentUser:" + currentUser);
-
-//        logHelper.logAuthSucceed("退出");
         currentUser.logout();
         return CommonResult.success("退出");
     }
