@@ -29,7 +29,7 @@ public class AdminPermissionServiceImpl extends ServiceImpl<AdminPermissionMappe
     public List<String> selectPermissionByRoleId(Long roleId) {
         List<AdminPermission> adminPermissionList = adminPermissionMapper.selectByRoleId(roleId);
         List<String> adminPermissions = new ArrayList<>();
-        for(AdminPermission adminPermission : adminPermissionList){
+        for (AdminPermission adminPermission : adminPermissionList) {
             adminPermissions.add(adminPermission.getPermission());
         }
         return adminPermissions;
@@ -39,5 +39,10 @@ public class AdminPermissionServiceImpl extends ServiceImpl<AdminPermissionMappe
     public int insert(AdminPermission adminPermission) {
         int id = adminPermissionMapper.insert(adminPermission);
         return id;
+    }
+
+    @Override
+    public int deleteByPrimaryKey(Long id) {
+        return adminPermissionMapper.deleteById(id);
     }
 }

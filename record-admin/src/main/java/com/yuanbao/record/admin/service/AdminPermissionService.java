@@ -13,4 +13,6 @@ public interface AdminPermissionService extends IService<AdminPermission> {
     List<String> selectPermissionByRoleId(Long roleId);
 
     int insert(AdminPermission adminPermission);
+
+    int deleteByPrimaryKey(Long id);
 }

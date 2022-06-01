@@ -19,12 +19,12 @@ public class AdminRoleController {
 
     @GetMapping(value = "list")
     public CommonResult<IPage<AdminRoleVo>> getAllAdminRole(
-        @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-        @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-        @RequestParam(value = "id", defaultValue = "") Long id,
-        @RequestParam(value = "name",defaultValue = "null") String name) {
+            @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "id", defaultValue = "") Long id,
+            @RequestParam(value = "name", defaultValue = "null") String name) {
         IPage<AdminRole> page = new Page<>();
-        IPage<AdminRoleVo> voPage = adminRoleService.selectRoleList(pageNum, pageSize, page, name,id);
+        IPage<AdminRoleVo> voPage = adminRoleService.selectRoleList(pageNum, pageSize, page, name, id);
         return CommonResult.success(voPage);
     }
 
@@ -39,8 +39,9 @@ public class AdminRoleController {
     }
 
     @DeleteMapping(value = "/delete")
-    public CommonResult delete(@RequestBody AdminRole adminRole){
+    public CommonResult delete(@RequestBody AdminRole adminRole) {
         long tempId = adminRole.getId();
+        System.out.println("tempId:" + tempId);
         int count = adminRoleService.deleteByPrimaryKey(tempId);
         if (count > 0) {
             return CommonResult.success(count);
@@ -50,7 +51,7 @@ public class AdminRoleController {
     }
 
     @PutMapping(value = "/update")
-    public CommonResult update(@RequestBody AdminRole adminRole){
+    public CommonResult update(@RequestBody AdminRole adminRole) {
         int count = adminRoleService.updateByPrimaryKey(adminRole);
         if (count > 0) {
             return CommonResult.success(count);

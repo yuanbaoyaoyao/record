@@ -12,7 +12,7 @@ public class AdminPermission implements Serializable {
     static final Long serialVersionUID = 1L;
     @TableId(type = IdType.AUTO)
     private Long id;
-    private Integer roleId;
+    private Long roleId;
     private String permission;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

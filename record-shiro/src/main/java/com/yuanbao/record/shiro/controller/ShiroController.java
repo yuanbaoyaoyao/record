@@ -7,9 +7,11 @@ import com.yuanbao.record.admin.service.AdminUserService;
 import com.yuanbao.record.common.api.CommonResult;
 import com.yuanbao.record.common.api.util.JacksonUtil;
 import com.yuanbao.record.common.api.util.JwtUtil;
+import com.yuanbao.record.mbp.mapper.entity.AdminPermission;
 import com.yuanbao.record.mbp.mapper.entity.AdminUser;
 import com.yuanbao.record.mbp.mapper.entity.JwtUser;
 import com.yuanbao.record.mbp.mapper.entity.User;
+import com.yuanbao.record.mbp.vo.PermVo;
 import com.yuanbao.record.shiro.util.Permission;
 import com.yuanbao.record.shiro.util.PermissionUtil;
 import com.yuanbao.record.web.service.UserClientService;
@@ -50,7 +52,12 @@ public class ShiroController {
         if (StringUtils.isEmpty(usernameInput) || StringUtils.isEmpty(passwordInput)) {
             return CommonResult.validateFailed();
         }
-        User user = userClientService.selectUserListByName(usernameInput);
+        User user;
+        if (usernameInput.matches("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*")) {
+            user = userClientService.selectUserByEmail(usernameInput);
+        } else {
+            user = userClientService.selectUserListByName(usernameInput);
+        }
         if (user == null) {
             return CommonResult.failed("用户不存在");
         }
@@ -59,6 +66,8 @@ public class ShiroController {
         String password = user.getPassword();
         String salt = user.getSalt();
         String passwordEncryption = SecureUtil.md5(passwordInput + salt);
+        System.out.println("passwordEncryption:" + passwordEncryption);
+        System.out.println("password:" + password);
         if (!Objects.equals(password, passwordEncryption)) {
             return CommonResult.failed("密码错误");
         }
@@ -95,6 +104,8 @@ public class ShiroController {
         String password = adminUser.getPassword();
         String salt = adminUser.getSalt();
         String passwordEncryption = SecureUtil.md5(passwordInput + salt);
+        System.out.println("passwordEncryption:" + passwordEncryption);
+        System.out.println("password:" + password);
         if (!Objects.equals(password, passwordEncryption)) {
             return CommonResult.failed("密码错误");
         }
@@ -173,6 +184,33 @@ public class ShiroController {
         data.put("avatar", user.getAvatar());
         data.put("id", user.getId());
         return CommonResult.success(data);
+    }
+
+    @GetMapping(value = "getPermissions")
+    public CommonResult getPermissions(Long roleId) {
+        List<PermVo> permVoList = PermissionUtil.getPermVoList();
+        List<String> assignedPermissions = PermissionUtil.getAssignedPermissions(roleId);
+        Map<String, Object> data = new HashMap<>();
+        data.put("perVoList", permVoList);
+        data.put("assignedPermissions", assignedPermissions);
+        return CommonResult.success(data);
+    }
+
+    @PostMapping("updatePermissions")
+    public CommonResult updatePermissions(@RequestBody String body) {
+        Long roleId = Long.valueOf(JacksonUtil.parseString(body, "roleId"));
+        List<String> permissions = JacksonUtil.parseStringList(body, "permissions");
+        if (roleId == null || permissions == null) {
+            return CommonResult.failed();
+        }
+        adminPermissionService.deleteByPrimaryKey(roleId);
+        for (String permission : permissions) {
+            AdminPermission adminPermission = new AdminPermission();
+            adminPermission.setRoleId(roleId);
+            adminPermission.setPermission(permission);
+            adminPermissionService.insert(adminPermission);
+        }
+        return CommonResult.success("success");
     }
 
     @Autowired

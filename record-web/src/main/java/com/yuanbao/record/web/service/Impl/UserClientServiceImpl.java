@@ -43,8 +43,14 @@ public class UserClientServiceImpl extends ServiceImpl<UserMapper, User> impleme
     }
 
     @Override
+    public User selectUserByEmail(String email) {
+        return userMapper.selectUserByEmail(email);
+    }
+
+    @Override
     public int register(User user) {
         Object value = redisUtils.get(user.getEmail());
+        System.out.println("输入的邮箱地址为:"+user.getEmail());
         System.out.println("redis中的value为：" + value);
         if (value == null || !value.toString().equals(user.getEmailCode())) {
             throw new RuntimeException("无效验证码");

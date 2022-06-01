@@ -22,9 +22,9 @@ public class ProductController {
     public CommonResult<IPage<ProductVo>> getAllProduct(
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-            @RequestParam(value = "keyword1", defaultValue = "null") String keyword1) {
+            @RequestParam(value = "title", defaultValue = "null") String title) {
         IPage<Product> page = new Page<>();
-        IPage<ProductVo> voPage = productService.selectProductListSearch(pageNum, pageSize, page, keyword1);
+        IPage<ProductVo> voPage = productService.selectProductListSearch(pageNum, pageSize, page, title);
         return CommonResult.success(voPage);
     }
 
@@ -39,7 +39,7 @@ public class ProductController {
         }
     }
 
-//    @RequiresPermissions("product:delete")
+    @RequiresPermissions("product:delete")
     @DeleteMapping(value = "/delete")
     public CommonResult delete(@RequestBody Product product){
         long tempId = product.getId();

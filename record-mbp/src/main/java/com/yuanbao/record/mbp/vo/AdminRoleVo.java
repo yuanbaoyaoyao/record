@@ -10,6 +10,7 @@ public class AdminRoleVo {
 //    private Integer pageNum;
 //    private Long pageTotal;
 //    private List<AdminRole> adminRoleList;
+    private Long id;
     private String name;
     private String description;
     private LocalDateTime createdAt;

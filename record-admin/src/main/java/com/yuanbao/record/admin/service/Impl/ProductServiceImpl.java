@@ -20,12 +20,12 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     private ProductMapper productMapper;
 
     @Override
-    public IPage<ProductVo> selectProductListSearch(Integer pageNum, Integer pageSize, IPage<Product> page, String keyword1) {
+    public IPage<ProductVo> selectProductListSearch(Integer pageNum, Integer pageSize, IPage<Product> page, String title) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<ProductVo> voPage = new Page<>();
         List<ProductVo> productVoList = new ArrayList<>();
-        IPage<Product> productIPage = productMapper.selectProductListSearch(pageNum, pageSize, page, keyword1);
+        IPage<Product> productIPage = productMapper.selectProductListSearch(pageNum, pageSize, page, title);
         List<Product> productList = productIPage.getRecords();
         for (Product product : productList) {
             ProductVo productVo = ProductVoMapper.productvomapper.Trans(product);

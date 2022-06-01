@@ -11,6 +11,8 @@ import java.util.List;
 public interface OrderProductMapper extends BaseMapper<OrderProduct> {
     List<OrderProduct> selectOrderProductList(Long userOrderId,Long orderSn,String productTitle,String productSkusTitle);
 
+    IPage<OrderProduct> selectOrderProductListWithReceiver(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, Long userOrderId,Long orderSn,String productTitle,String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);
+
     IPage<OrderProduct> selectOrderProductListDateSearchStatus(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, Long userOrderId,Long orderSn,String receiver,String productTitle,String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);
 
     IPage<OrderProduct> selectProductListDateCountSearch(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);

@@ -10,6 +10,8 @@ import java.util.List;
 public interface OrderProductService extends IService<OrderProduct> {
     List<OrderProductVo> selectOrderProductList(Long userOrderId, Long orderSn, String productTitle, String productSkusTitle);
 
+    IPage<OrderProductVo> selectOrderProductListWithReceiver(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, Long userOrderId,Long orderSn,String productTitle,String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);
+
     IPage<OrderProductVo> selectOrderProductListDateSearchStatus(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, Long userOrderId, Long orderSn,String receiver ,String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);
 
     IPage<OrderProductVo> selectProductListDateCountSearch(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2);
@@ -20,5 +22,4 @@ public interface OrderProductService extends IService<OrderProduct> {
 
     int deleteByPrimaryKey(Long id);
 
-//    int updateByOrderSn(OrderProduct orderProduct);
 }

@@ -12,6 +12,7 @@ public interface AdminRoleVoMapper {
     AdminRoleVoMapper adminrolevomapper = Mappers.getMapper(AdminRoleVoMapper.class);
 
     @Mappings({
+            @Mapping(target = "id", source = "adminRole.id"),
             @Mapping(target = "name", source = "adminRole.name"),
             @Mapping(target = "description", source = "adminRole.description"),
             @Mapping(target = "createdAt", source = "adminRole.createdAt"),

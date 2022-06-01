@@ -39,7 +39,7 @@ public class UserOrderController {
                                                               @RequestParam(value = "userId", required = false) Long userId,
                                                               @RequestParam(value = "receiver", required = false) String receiver,
                                                               @RequestParam(value = "orderSn", required = false) Long orderSn,
-                                                              @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
+                                                              @RequestParam(value = "dateState", defaultValue = "4", required = false) Integer dateState,
                                                               @RequestParam(value = "specifiedTime1", required = false)
                                                               @DateTimeFormat(pattern = "yyyy-MM-dd")
                                                                       String specifiedTime1,
@@ -47,6 +47,7 @@ public class UserOrderController {
                                                               @DateTimeFormat(pattern = "yyyy-MM-dd")
                                                                       String specifiedTime2) {
         IPage<UserOrder> page = new Page<>();
+        System.out.println("调用了dateList");
         IPage<UserOrderVo> userOrderVoIPage = userOrderService.selectOrderListDateSearch(pageNum, pageSize, page, userId, dateState, receiver, orderSn, specifiedTime1, specifiedTime2);
         return CommonResult.success(userOrderVoIPage);
     }
@@ -57,7 +58,7 @@ public class UserOrderController {
                                                                    @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                                    @RequestParam(value = "userId", required = false) Long userId,
                                                                    @RequestParam(value = "receiver", required = false) String receiver,
-                                                                   @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
+                                                                   @RequestParam(value = "dateState", defaultValue = "4", required = false) Integer dateState,
                                                                    @RequestParam(value = "specifiedTime1", required = false)
                                                                    @DateTimeFormat(pattern = "yyyy-MM-dd")
                                                                            String specifiedTime1,
@@ -65,7 +66,10 @@ public class UserOrderController {
                                                                    @DateTimeFormat(pattern = "yyyy-MM-dd")
                                                                            String specifiedTime2) {
         IPage<UserOrder> page = new Page<>();
+        System.out.println("dateState" + dateState);
+
         IPage<UserOrderVo> userOrderVoIPage = userOrderService.selectOrderListDateCountSearch(pageNum, pageSize, page, userId, dateState, receiver, specifiedTime1, specifiedTime2);
+        System.out.println(userOrderService.selectOrderListDateCountSearch(pageNum, pageSize, page, userId, dateState, receiver, specifiedTime1, specifiedTime2));
         return CommonResult.success(userOrderVoIPage);
     }
 
@@ -120,7 +124,7 @@ public class UserOrderController {
     public CommonResult<List<UserOrderVo>> getAllDateOrderAllListMonth(
             @RequestParam(value = "userId", required = false) Long userId,
             @RequestParam(value = "receiver", required = false) String receiver,
-            @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
+            @RequestParam(value = "dateState", defaultValue = "4", required = false) Integer dateState,
             @RequestParam(value = "specifiedTime1", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd")
                     String specifiedTime1,

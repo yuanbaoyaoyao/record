@@ -6,7 +6,7 @@ import com.yuanbao.record.mbp.mapper.entity.Product;
 import com.yuanbao.record.mbp.vo.ProductVo;
 
 public interface ProductService extends IService<Product> {
-    IPage<ProductVo> selectProductListSearch(Integer pageNum, Integer pageSize, IPage<Product> page, String keyword1);
+    IPage<ProductVo> selectProductListSearch(Integer pageNum, Integer pageSize, IPage<Product> page, String title);
 
     int insert(Product product);
 

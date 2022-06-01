@@ -31,6 +31,16 @@ public class OrderProductServiceImpl extends ServiceImpl<OrderProductMapper, Ord
     }
 
     @Override
+    public IPage<OrderProductVo> selectOrderProductListWithReceiver(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, Long userOrderId, Long orderSn, String productTitle, String productSkusTitle,Integer dateState, String specifiedTime1, String specifiedTime2) {
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        IPage<OrderProductVo> voPage = new Page<>();
+        List<OrderProductVo> orderProductVoList = new ArrayList<>();
+        IPage<OrderProduct> orderProductIPage = orderProductMapper.selectOrderProductListWithReceiver(pageNum, pageSize, page, userOrderId, orderSn, productTitle, productSkusTitle,dateState,specifiedTime1,specifiedTime2);
+        return getOrderProductVoIPage(pageNum, pageSize, voPage, orderProductVoList, orderProductIPage);
+    }
+
+    @Override
     public IPage<OrderProductVo> selectOrderProductListDateSearchStatus(Integer pageNum, Integer pageSize, IPage<OrderProduct> page, Long userOrderId, Long orderSn, String receiver, String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
@@ -87,8 +97,4 @@ public class OrderProductServiceImpl extends ServiceImpl<OrderProductMapper, Ord
         return orderProductMapper.deleteById(id);
     }
 
-//    @Override
-//    public int updateByOrderSn(OrderProduct orderProduct) {
-//        return 0;
-//    }
 }

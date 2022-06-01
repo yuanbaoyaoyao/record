@@ -1,11 +1,13 @@
 package com.yuanbao.record.shiro.util;
 
+import com.yuanbao.record.admin.service.AdminPermissionService;
 import com.yuanbao.record.mbp.vo.PermVo;
 import com.yuanbao.record.shiro.annotation.RequiresPermissionsDesc;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Controller;
@@ -90,23 +92,14 @@ public class PermissionUtil {
 
             Class<?> clz = bean.getClass();
             Class controllerClz = clz.getSuperclass();
-//            System.out.println("clz:" + clz);
-//            System.out.println("controllerClz:" + controllerClz);
             RequestMapping clazzRequestMapping = AnnotationUtils.findAnnotation(controllerClz, RequestMapping.class);
-//            System.out.println("controllerClz:" + controllerClz);
-//            System.out.println("RequestMapping.class:" + RequestMapping.class);
-//            System.out.println("clazzRequestMapping:" + clazzRequestMapping);
             List<Method> methods = MethodUtils.getMethodsListWithAnnotation(controllerClz, RequiresPermissions.class);
-//            System.out.println("methods:"+methods);
             for (Method method : methods) {
                 RequiresPermissions requiresPermissions = AnnotationUtils.getAnnotation(method,
                         RequiresPermissions.class);
                 RequiresPermissionsDesc requiresPermissionsDesc = AnnotationUtils.getAnnotation(method,
                         RequiresPermissionsDesc.class);
-//                System.out.println("requiresPermissions:"+requiresPermissions);
-//                System.out.println("requiresPermissionsDesc:"+requiresPermissionsDesc);
                 if (requiresPermissions == null && requiresPermissionsDesc == null) {
-//                    System.out.println(i++);
                     continue;
                 }
 
@@ -116,12 +109,8 @@ public class PermissionUtil {
                 }
 
                 PostMapping postMapping = AnnotationUtils.getAnnotation(method, PostMapping.class);
-//                System.out.println("postMapping:"+postMapping);
                 if (postMapping != null) {
-                    System.out.println("api1:" + api);
-                    System.out.println("getMapping.value()[0]:"+postMapping.value()[0]);
                     api = "POST " + api + postMapping.value()[0];
-                    System.out.println("api" + api);
 
                     Permission permission = new Permission();
                     permission.setRequiresPermissions(requiresPermissions);
@@ -131,12 +120,8 @@ public class PermissionUtil {
                     continue;
                 }
                 GetMapping getMapping = AnnotationUtils.getAnnotation(method, GetMapping.class);
-//                System.out.println("GetMapping:"+getMapping);
                 if (getMapping != null) {
-                    System.out.println("api1:" + api);
-                    System.out.println("getMapping.value()[0]:"+getMapping.value()[0]);
                     api = "GET " + api + getMapping.value()[0];
-                    System.out.println("api2:" + api);
 
                     Permission permission = new Permission();
                     permission.setRequiresPermissions(requiresPermissions);
@@ -147,10 +132,7 @@ public class PermissionUtil {
                 }
                 PutMapping putMapping = AnnotationUtils.getAnnotation(method, PutMapping.class);
                 if (putMapping != null) {
-                    System.out.println("api1:" + api);
-                    System.out.println("getMapping.value()[0]:"+putMapping.value()[0]);
                     api = "PUT " + api + putMapping.value()[0];
-                    System.out.println("api" + api);
 
                     Permission permission = new Permission();
                     permission.setRequiresPermissions(requiresPermissions);
@@ -161,10 +143,7 @@ public class PermissionUtil {
                 }
                 DeleteMapping deleteMapping = AnnotationUtils.getAnnotation(method, DeleteMapping.class);
                 if (deleteMapping != null) {
-                    System.out.println("api1:" + api);
-                    System.out.println("getMapping.value()[0]:"+deleteMapping.value()[0]);
                     api = "DELETE " + api + deleteMapping.value()[0];
-                    System.out.println("api" + api);
                     Permission permission = new Permission();
                     permission.setRequiresPermissions(requiresPermissions);
                     permission.setRequiresPermissionsDesc(requiresPermissionsDesc);
@@ -175,7 +154,6 @@ public class PermissionUtil {
                 throw new RuntimeException("目前权限管理应该在method的前面使用GetMapping注解或者PostMapping注解或者PutMapping注解或者DeleteMapping注解");
             }
         }
-//        System.out.println("permissions:" + permissions);
         return permissions;
     }
 
@@ -185,5 +163,26 @@ public class PermissionUtil {
             permissionsString.add(permission.getRequiresPermissions().value()[0]);
         }
         return permissionsString;
+    }
+
+    private static ApplicationContext context;
+    private static List<PermVo> permVoList = null;
+    private static Set<String> permissionsString = null;
+    @Autowired
+    private static AdminPermissionService adminPermissionService;
+
+    public static List<PermVo> getPermVoList() {
+        final String basicPackage = "com.yuanbao.record.admin";
+        if (permVoList == null) {
+            List<Permission> permissions = PermissionUtil.listPermission(context, basicPackage);
+            permVoList = PermissionUtil.permVoList(permissions);
+            permissionsString = PermissionUtil.listPermissionString(permissions);
+        }
+        return permVoList;
+    }
+
+    public static List<String> getAssignedPermissions(Long roleId) {
+        List<String> assignedPermissions = adminPermissionService.selectPermissionByRoleId(roleId);
+        return assignedPermissions;
     }
 }
