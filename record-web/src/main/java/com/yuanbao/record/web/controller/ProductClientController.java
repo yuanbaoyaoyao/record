@@ -1,6 +1,6 @@
 package com.yuanbao.record.web.controller;
 
-import com.yuanbao.record.common.api.CommonResult;
+import com.yuanbao.record.common.CommonResult;
 import com.yuanbao.record.mbp.vo.ProductVo;
 import com.yuanbao.record.web.service.ProductClientService;
 import org.springframework.beans.factory.annotation.Autowired;

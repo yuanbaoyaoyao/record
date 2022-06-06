@@ -2,7 +2,7 @@ package com.yuanbao.record.web.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yuanbao.record.common.api.CommonResult;
+import com.yuanbao.record.common.CommonResult;
 import com.yuanbao.record.mbp.mapper.entity.UserCollect;
 import com.yuanbao.record.mbp.vo.UserCollectVo;
 import com.yuanbao.record.web.service.UserCollectClientService;

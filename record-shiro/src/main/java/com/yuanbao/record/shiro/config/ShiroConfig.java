@@ -24,10 +24,12 @@ public class ShiroConfig {
         filterRuleMap.put("/auth/client/login", "anon");
         filterRuleMap.put("/auth/client/sendEmailCode", "anon");
         filterRuleMap.put("/auth/client/logout", "anon");
-        filterRuleMap.put("/**", "authcBearer");
         System.out.println(" ");
         System.out.println("filterRuleMap");
         System.out.println(" ");
+        filterRuleMap.put("/auth/getPermissions", "anon");
+        filterRuleMap.put("/auth/updatePermissions", "anon");
+        filterRuleMap.put("/**", "authcBearer");
 
         factoryBean.setGlobalFilters(Collections.singletonList("noSessionCreation"));
 

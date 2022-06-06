@@ -11,9 +11,9 @@ public class AdminOperationLogVo {
 //    private Long pageTotal;
 //    private List<AdminOperationLog> adminOperationLogList;
     private String ip;
-    private Integer type;
+    private String adminUserName;
     private String action;
-    private Boolean status;
+    private String menu;
     private String result;
     private LocalDateTime createdAt;
 }

@@ -3,7 +3,7 @@ package com.yuanbao.record.web.service.Impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yuanbao.record.common.api.util.IdGenerator;
+import com.yuanbao.record.common.util.IdGenerator;
 import com.yuanbao.record.mbp.mapper.UserOrderMapper;
 import com.yuanbao.record.mbp.mapper.entity.UserOrder;
 import com.yuanbao.record.mbp.vo.UserOrderVo;

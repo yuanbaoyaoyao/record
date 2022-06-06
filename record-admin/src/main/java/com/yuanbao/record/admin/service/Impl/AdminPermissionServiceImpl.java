@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AdminPermissionServiceImpl extends ServiceImpl<AdminPermissionMapper, AdminPermission> implements AdminPermissionService {
@@ -36,13 +37,21 @@ public class AdminPermissionServiceImpl extends ServiceImpl<AdminPermissionMappe
     }
 
     @Override
-    public int insert(AdminPermission adminPermission) {
-        int id = adminPermissionMapper.insert(adminPermission);
-        return id;
+    public boolean checkSuperPermission(Long roleId) {
+        List<AdminPermission> adminPermissionList = adminPermissionMapper.selectByRoleId(roleId);
+        if(Objects.equals(adminPermissionList.get(0).getPermission(), "*")){
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public int deleteByPrimaryKey(Long id) {
-        return adminPermissionMapper.deleteById(id);
+    public int insert(AdminPermission adminPermission) {
+        return adminPermissionMapper.insert(adminPermission);
+    }
+
+    @Override
+    public int deleteByRoleId(Long RoleId) {
+        return adminPermissionMapper.deleteByRoleId(RoleId);
     }
 }

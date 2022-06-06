@@ -13,9 +13,9 @@ public interface AdminOperationLogVoMapper {
 
     @Mappings({
             @Mapping(target = "ip", source = "adminOperationLog.ip"),
-            @Mapping(target = "type", source = "adminOperationLog.type"),
+            @Mapping(target = "adminUserName", source = "adminOperationLog.adminUserName"),
             @Mapping(target = "action", source = "adminOperationLog.action"),
-            @Mapping(target = "status", source = "adminOperationLog.status"),
+            @Mapping(target = "menu", source = "adminOperationLog.menu"),
             @Mapping(target = "result", source = "adminOperationLog.result"),
             @Mapping(target = "createdAt", source = "adminOperationLog.createdAt"),
     })

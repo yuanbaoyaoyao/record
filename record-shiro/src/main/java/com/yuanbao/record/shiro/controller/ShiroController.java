@@ -4,9 +4,10 @@ import cn.hutool.crypto.SecureUtil;
 import com.yuanbao.record.admin.service.AdminPermissionService;
 import com.yuanbao.record.admin.service.AdminRoleService;
 import com.yuanbao.record.admin.service.AdminUserService;
-import com.yuanbao.record.common.api.CommonResult;
-import com.yuanbao.record.common.api.util.JacksonUtil;
-import com.yuanbao.record.common.api.util.JwtUtil;
+import com.yuanbao.record.common.CommonResult;
+import com.yuanbao.record.common.annotation.OperationLog;
+import com.yuanbao.record.common.util.JacksonUtil;
+import com.yuanbao.record.common.util.JwtUtil;
 import com.yuanbao.record.mbp.mapper.entity.AdminPermission;
 import com.yuanbao.record.mbp.mapper.entity.AdminUser;
 import com.yuanbao.record.mbp.mapper.entity.JwtUser;
@@ -42,6 +43,7 @@ public class ShiroController {
     @Autowired
     private AdminPermissionService adminPermissionService;
 
+    @OperationLog(menu = {"客户端登录操作"}, action = "客户端登录")
     @PostMapping(value = "/client/login")
     public CommonResult clientLogin(@RequestBody String body) {
         System.out.println("loginuser");
@@ -85,6 +87,7 @@ public class ShiroController {
         return CommonResult.success(result);
     }
 
+    @OperationLog(menu = {"管理员登录操作"}, action = "管理员登录")
     @PostMapping(value = "/login")
     public CommonResult login(@RequestBody String body) {
         System.out.println("loginAdminUser");
@@ -131,6 +134,7 @@ public class ShiroController {
         return CommonResult.success(result);
     }
 
+    @OperationLog(menu = {"管理員端登出操作"}, action = "管理员登出")
     @PostMapping("/logout")
     public CommonResult logout() {
         Subject currentUser = SecurityUtils.getSubject();
@@ -138,6 +142,7 @@ public class ShiroController {
         return CommonResult.success("退出");
     }
 
+    @OperationLog(menu = {"客户端登录登出"}, action = "客户端登出")
     @PostMapping("/client/logout")
     public CommonResult clientLogout() {
         Subject currentUser = SecurityUtils.getSubject();
@@ -186,24 +191,32 @@ public class ShiroController {
         return CommonResult.success(data);
     }
 
-    @GetMapping(value = "getPermissions")
-    public CommonResult getPermissions(Long roleId) {
-        List<PermVo> permVoList = PermissionUtil.getPermVoList();
-        List<String> assignedPermissions = PermissionUtil.getAssignedPermissions(roleId);
+    @GetMapping(value = "/getPermissions")
+    public CommonResult getPermissions(@RequestParam(value = "roleId") Long roleId) {
+        List<PermVo> permVoList = getPermVoList();
+        List<String> assignedPermissions = getAssignedPermissions(roleId);
         Map<String, Object> data = new HashMap<>();
-        data.put("perVoList", permVoList);
+        data.put("allPermissions", permVoList);
         data.put("assignedPermissions", assignedPermissions);
         return CommonResult.success(data);
     }
 
-    @PostMapping("updatePermissions")
+    @PostMapping("/updatePermissions")
     public CommonResult updatePermissions(@RequestBody String body) {
-        Long roleId = Long.valueOf(JacksonUtil.parseString(body, "roleId"));
+        System.out.println("调用了updatePermissions");
+        System.out.println("body:" + body);
+
+        Long roleId = Long.valueOf(Objects.requireNonNull(JacksonUtil.parseString(body, "roleId")));
         List<String> permissions = JacksonUtil.parseStringList(body, "permissions");
-        if (roleId == null || permissions == null) {
+        if (permissions == null) {
             return CommonResult.failed();
         }
-        adminPermissionService.deleteByPrimaryKey(roleId);
+
+        if (adminPermissionService.checkSuperPermission(roleId)) {
+            return CommonResult.failed("当前角色的超级权限不能变更");
+        }
+
+        adminPermissionService.deleteByRoleId(roleId);
         for (String permission : permissions) {
             AdminPermission adminPermission = new AdminPermission();
             adminPermission.setRoleId(roleId);
@@ -216,11 +229,27 @@ public class ShiroController {
     @Autowired
     private ApplicationContext context;
     private HashMap<String, String> systemPermissionsMap = null;
+    private List<PermVo> permVoList = null;
+    private Set<String> permissionsString = null;
+
+    private List<PermVo> getPermVoList() {
+        final String basicPackage = "com.yuanbao.record.admin";
+        if (permVoList == null) {
+            List<Permission> permissions = PermissionUtil.listPermission(context, basicPackage);
+            permVoList = PermissionUtil.permVoList(permissions);
+            permissionsString = PermissionUtil.listPermissionString(permissions);
+        }
+        return permVoList;
+    }
+
+    private List<String> getAssignedPermissions(Long roleId) {
+        return adminPermissionService.selectPermissionByRoleId(roleId);
+    }
 
     private Collection<String> toApi(List<String> permissions) {
         if (systemPermissionsMap == null) {
             systemPermissionsMap = new HashMap<>();
-            final String basicPackage = "com.yuanbao.record.admin.controller";
+            final String basicPackage = "com.yuanbao.record.admin";
             List<Permission> systemPermissions = PermissionUtil.listPermission(context, basicPackage);
             System.out.println("systemPermissions:" + systemPermissions);
             for (Permission permission : systemPermissions) {

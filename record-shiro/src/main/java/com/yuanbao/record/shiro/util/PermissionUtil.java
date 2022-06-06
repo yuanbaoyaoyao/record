@@ -1,13 +1,11 @@
 package com.yuanbao.record.shiro.util;
 
-import com.yuanbao.record.admin.service.AdminPermissionService;
 import com.yuanbao.record.mbp.vo.PermVo;
-import com.yuanbao.record.shiro.annotation.RequiresPermissionsDesc;
+import com.yuanbao.record.admin.annotation.RequiresPermissionsDesc;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Controller;
@@ -17,13 +15,14 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public class PermissionUtil {
+
     public static List<PermVo> permVoList(List<Permission> permissions) {
         List<PermVo> root = new ArrayList<>();
         for (Permission permission : permissions) {
             RequiresPermissions requiresPermissions = permission.getRequiresPermissions();
             RequiresPermissionsDesc requiresPermissionsDesc = permission.getRequiresPermissionsDesc();
             String api = permission.getApi();
-
+            System.out.println("requirePermissionsDesc:"+requiresPermissionsDesc);
             String[] menus = requiresPermissionsDesc.menu();
             if (menus.length != 2) {
                 throw new RuntimeException("目前只支持两级菜单");
@@ -83,7 +82,6 @@ public class PermissionUtil {
     public static List<Permission> listPermission(ApplicationContext context, String basicPackage) {
         Map<String, Object> map = context.getBeansWithAnnotation(Controller.class);
         List<Permission> permissions = new ArrayList<>();
-        int i = 0;
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             Object bean = entry.getValue();
             if (!StringUtils.contains(ClassUtils.getPackageName(bean.getClass()), basicPackage)) {
@@ -91,7 +89,7 @@ public class PermissionUtil {
             }
 
             Class<?> clz = bean.getClass();
-            Class controllerClz = clz.getSuperclass();
+            Class<?> controllerClz = clz.getSuperclass();
             RequestMapping clazzRequestMapping = AnnotationUtils.findAnnotation(controllerClz, RequestMapping.class);
             List<Method> methods = MethodUtils.getMethodsListWithAnnotation(controllerClz, RequiresPermissions.class);
             for (Method method : methods) {
@@ -165,24 +163,4 @@ public class PermissionUtil {
         return permissionsString;
     }
 
-    private static ApplicationContext context;
-    private static List<PermVo> permVoList = null;
-    private static Set<String> permissionsString = null;
-    @Autowired
-    private static AdminPermissionService adminPermissionService;
-
-    public static List<PermVo> getPermVoList() {
-        final String basicPackage = "com.yuanbao.record.admin";
-        if (permVoList == null) {
-            List<Permission> permissions = PermissionUtil.listPermission(context, basicPackage);
-            permVoList = PermissionUtil.permVoList(permissions);
-            permissionsString = PermissionUtil.listPermissionString(permissions);
-        }
-        return permVoList;
-    }
-
-    public static List<String> getAssignedPermissions(Long roleId) {
-        List<String> assignedPermissions = adminPermissionService.selectPermissionByRoleId(roleId);
-        return assignedPermissions;
-    }
 }

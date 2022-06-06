@@ -2,7 +2,7 @@ package com.yuanbao.record.shiro.auth.admin;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.yuanbao.record.admin.service.AdminUserService;
-import com.yuanbao.record.common.api.util.JwtUtil;
+import com.yuanbao.record.common.util.JwtUtil;
 import com.yuanbao.record.mbp.mapper.entity.JwtUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;

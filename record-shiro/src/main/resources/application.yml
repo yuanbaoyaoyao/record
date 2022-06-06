@@ -4,6 +4,8 @@ server:
 spring:
   profiles:
     active: common,mbp
+  aop:
+    proxy-target-class: true
 
 ## 显示dao 执⾏sql语句
 logging:

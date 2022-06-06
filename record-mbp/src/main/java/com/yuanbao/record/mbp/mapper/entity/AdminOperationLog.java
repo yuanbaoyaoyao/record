@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 public class AdminOperationLog implements Serializable {
     static final Long serialVersionUID = 1L;
     private Long id;
-    private Integer adminUserId;
+    private Long adminUserId;
     private String ip;
-    private Integer type;
     private String action;
-    private Boolean status;
+    private String adminUserName;
+    private String menu;
     private String result;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

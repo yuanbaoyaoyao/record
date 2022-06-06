@@ -1,10 +1,13 @@
 package com.yuanbao.record.admin.controller;
 
+import com.yuanbao.record.admin.annotation.RequiresPermissionsDesc;
 import com.yuanbao.record.admin.service.ProductSkusService;
 import com.yuanbao.record.admin.service.UserOrderService;
-import com.yuanbao.record.common.api.util.ExportExcelUtils;
+import com.yuanbao.record.common.annotation.OperationLog;
+import com.yuanbao.record.common.util.ExportExcelUtils;
 import com.yuanbao.record.mbp.vo.ProductSkusVo;
 import com.yuanbao.record.mbp.vo.UserOrderVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +26,9 @@ public class ExcelController {
     @Autowired
     private UserOrderService userOrderService;
 
+    @RequiresPermissionsDesc(menu = {"导出管理", "耗材列表"}, button = "导出")
+    @OperationLog(menu = {"导出管理", "耗材列表"}, action = "导出")
+    @RequiresPermissions("excel:productSkus:list")
     @GetMapping(value = "/productSkus")
     public void ExportProductSkusListInfo(HttpServletResponse response) {
         List<ProductSkusVo> productSkusVoList = productSkusService.selectProductSkusList();
@@ -40,12 +46,15 @@ public class ExcelController {
         fieldMap.put("createdAt", "创建时间");
 
 
-        new ExportExcelUtils().export(excelName, productSkusVoList, fieldMap, headers, response);
+        ExportExcelUtils.export(excelName, productSkusVoList, fieldMap, headers, response);
     }
 
+    @RequiresPermissionsDesc(menu = {"导出管理", "用户统计"}, button = "导出")
+    @OperationLog(menu = {"导出管理", "用户统计"}, action = "导出")
+    @RequiresPermissions("excel:userStatistics:list")
     @GetMapping(value = "/userStatistics")
     public void ExportUserStatisticsListInfo(HttpServletResponse response) {
-        List<UserOrderVo> userOrderVoList = userOrderService.selectOrderListDateCountSearchAllList(null,null,null,"","");
+        List<UserOrderVo> userOrderVoList = userOrderService.selectOrderListDateCountSearchAllList(null, null, null, "", "");
         System.out.println(userOrderVoList);
         String excelName = "用户统计表";
 
@@ -59,7 +68,7 @@ public class ExcelController {
         fieldMap.put("timeFrame", "时间范围");
 
 
-        new ExportExcelUtils().export(excelName, userOrderVoList, fieldMap, headers, response);
+        ExportExcelUtils.export(excelName, userOrderVoList, fieldMap, headers, response);
     }
 
 
