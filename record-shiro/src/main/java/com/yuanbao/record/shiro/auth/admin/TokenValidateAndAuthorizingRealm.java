@@ -85,6 +85,7 @@ public class TokenValidateAndAuthorizingRealm extends AuthorizingRealm {
 
     @Override//装配用户信息，供Matcher调用
     public AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException, TokenExpiredException {
+
         log.debug("doGetAuthenticationInfo 将token装载成用户信息");
 
         BearerToken bearerToken = (BearerToken) authenticationToken;
@@ -92,10 +93,9 @@ public class TokenValidateAndAuthorizingRealm extends AuthorizingRealm {
 
         JwtUser jwtUser = JwtUtil.recreateUserFromToken(bearerTokenString);//只带着用户名和roles
 
-        SimpleAuthenticationInfo res = new SimpleAuthenticationInfo(jwtUser, bearerTokenString, this.getName());
         /*Constructor that takes in an account's identifying principal(s) and its corresponding credentials that verify the principals.*/
 //        这个返回值是造Subject用的，返回值供createSubject使用
-        return res;
+        return new SimpleAuthenticationInfo(jwtUser, bearerTokenString, this.getName());
     }
 
 }

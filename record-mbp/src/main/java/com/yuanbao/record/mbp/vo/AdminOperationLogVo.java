@@ -6,10 +6,11 @@ import java.time.LocalDateTime;
 
 @Data
 public class AdminOperationLogVo {
-//    private Integer pageSize;
+    //    private Integer pageSize;
 //    private Integer pageNum;
 //    private Long pageTotal;
 //    private List<AdminOperationLog> adminOperationLogList;
+    private Long id;
     private String ip;
     private String adminUserName;
     private String action;

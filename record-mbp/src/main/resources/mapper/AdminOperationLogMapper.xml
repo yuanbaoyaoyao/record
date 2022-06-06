@@ -5,11 +5,10 @@
     <select id="selectAdminOperationLogListSearch" resultType="com.yuanbao.record.mbp.mapper.entity.AdminOperationLog">
         SELECT
         aol.id,
-        aol.admin_user_id,
         aol.ip,
-        aol.type,
+        aol.admin_user_name,
         aol.action,
-        aol.status,
+        aol.menu,
         aol.result,
         aol.created_at
         FROM admin_operation_log aol
@@ -26,44 +25,38 @@
         </selectKey>
         insert into admin_operation_log
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="adminUserId!=null">
-                admin_user_id,
+            <if test="adminUserName!=null">
+                admin_user_name,
             </if>
             <if test="ip!=null">
                 ip,
             </if>
-            <if test="type!=null">
-                type,
-            </if>
             <if test="action!=null">
                 action,
-            </if>
-            <if test="status!=null">
-                status,
             </if>
             <if test="result!=null">
                 result,
             </if>
+            <if test="menu!=null">
+                menu,
+            </if>
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="adminUserId!=null">
-                #{adminUserId,jdbcType=INTEGER},
+            <if test="adminUserName!=null">
+                #{adminUserName,jdbcType=INTEGER},
             </if>
             <if test="ip!=null">
                 #{ip,jdbcType=VARCHAR},
             </if>
-            <if test="type!=null">
-                #{type,jdbcType=INTEGER},
-            </if>
             <if test="action!=null">
                 #{action,jdbcType=INTEGER},
             </if>
-            <if test="status!=null">
-                #{status,jdbcType=BOOLEAN},
-            </if>
             <if test="result!=null">
-                #{result,jdbcType=INTEGER},
+                #{result,jdbcType=BOOLEAN},
+            </if>
+            <if test="menu!=null">
+                #{menu,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>

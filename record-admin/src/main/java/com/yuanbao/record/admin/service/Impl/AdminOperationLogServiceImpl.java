@@ -40,7 +40,6 @@ public class AdminOperationLogServiceImpl extends ServiceImpl<AdminOperationLogM
 
     @Override
     public int insert(AdminOperationLogVo adminOperationLogVo) {
-        int id = adminOperationLogMapper.insert(adminOperationLogVo);
-        return id;
+        return adminOperationLogMapper.insert(adminOperationLogVo);
     }
 }

@@ -12,6 +12,7 @@ public interface AdminOperationLogVoMapper {
     AdminOperationLogVoMapper adminoperationlogvomapper = Mappers.getMapper(AdminOperationLogVoMapper.class);
 
     @Mappings({
+            @Mapping(target = "id", source = "adminOperationLog.id"),
             @Mapping(target = "ip", source = "adminOperationLog.ip"),
             @Mapping(target = "adminUserName", source = "adminOperationLog.adminUserName"),
             @Mapping(target = "action", source = "adminOperationLog.action"),
