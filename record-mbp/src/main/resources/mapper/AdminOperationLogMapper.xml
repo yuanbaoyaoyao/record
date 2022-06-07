@@ -16,8 +16,9 @@
         aol.deleted != '1'
         <if test="keyword != 'null'.toString() and keyword != '' ">
             AND
-            aol.admin_user_id like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
+            aol.admin_user_name like concat ('%',#{keyword,jdbcType=VARCHAR},'%')
         </if>
+        order by aol.created_at desc
     </select>
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.AdminOperationLog">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
