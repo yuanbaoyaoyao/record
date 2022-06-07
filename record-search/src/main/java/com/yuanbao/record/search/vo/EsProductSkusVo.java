@@ -1,21 +1,17 @@
-package com.yuanbao.record.mbp.mapper.entity;
+package com.yuanbao.record.search.vo;
 
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class ProductSkus implements Serializable {
-    static final Long serialVersionUID = 1L;
+public class EsProductSkusVo {
     private Long id;
-    private Long productId;
     private String productName;
+    private Long productId;
     private String title;
     private String avatar;
     private String description;
     private Integer stock;
     private LocalDateTime createdAt;
-    private LocalDateTime Date;
-    private Boolean deleted;
 }

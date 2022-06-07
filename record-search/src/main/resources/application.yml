@@ -1,0 +1,12 @@
+server:
+  port: 8084
+
+spring:
+  profiles:
+    active: common,mbp
+
+## 显示dao 执⾏sql语句
+logging:
+  level:
+    com.yuanbao.record.mbp.mapper: debug # 改成你的dao接口文件所在包路径可以打印出sql语句
+

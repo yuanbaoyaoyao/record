@@ -17,6 +17,7 @@
         <module>record-web</module>
     </modules>
 
+<!--    elasticsearch版本对应关系-->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
