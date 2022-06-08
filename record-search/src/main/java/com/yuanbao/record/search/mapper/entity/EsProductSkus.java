@@ -7,7 +7,6 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Data
 @Document(indexName = "productskus")
@@ -28,10 +27,10 @@ public class EsProductSkus implements Serializable {
     private String description;
     @Field(type = FieldType.Integer)
     private Integer stock;
-    @Field(type = FieldType.Date)
-    private LocalDateTime createdAt;
-    @Field(type = FieldType.Long)
-    private LocalDateTime Date;
-    @Field(type = FieldType.Boolean)
-    private Boolean deleted;
+//    @Field(type = FieldType.Date)
+//    private LocalDateTime createdAt;
+//    @Field(type = FieldType.Long)
+//    private LocalDateTime Date;
+//    @Field(type = FieldType.Boolean)
+//    private Boolean deleted;
 }

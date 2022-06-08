@@ -1,11 +1,13 @@
 package com.yuanbao.record.search.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yuanbao.record.search.mapper.EsProductSkusMapper;
 import com.yuanbao.record.search.mapper.entity.EsProductSkus;
 import com.yuanbao.record.search.repository.EsProductSkusRepository;
 import com.yuanbao.record.search.service.EsProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +28,9 @@ public class EsProductServiceImpl implements EsProductService {
     }
 
     @Override
-    public IPage<EsProductSkus> selectProductSkusListSearchIPage(Integer pageNum, Integer pageSize, IPage<EsProductSkus> page, String title, String productName) {
-        page.setCurrent(pageNum);
-        page.setSize(pageSize);
-        return esProductSkusRepository.findByTitleOrProductName(pageNum, pageSize, page, title,productName);
+    public Page<EsProductSkus> selectProductSkusListSearchIPage(Integer pageNum, Integer pageSize, String title, String productName) {
+        Pageable page = PageRequest.of(pageNum - 1, pageSize);
+        System.out.println("findByTitleOrProductName:" + esProductSkusRepository.findByTitleOrProductName(page, title, productName));
+        return esProductSkusRepository.findByTitleOrProductName(page, title, productName);
     }
 }
