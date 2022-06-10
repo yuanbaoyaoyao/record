@@ -56,16 +56,6 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         return getUserOrderVoIPage(pageNum, pageSize, voPage, userOrderVoList, userOrderIPage);
     }
 
-//    @Override
-//    public IPage<UserOrderVo> selectProductListDateCountSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, String productTitle, String productSkusTitle, Integer dateState, String specifiedTime1, String specifiedTime2) {
-//        page.setCurrent(pageNum);
-//        page.setSize(pageSize);
-//        IPage<UserOrderVo> voPage = new Page<>();
-//        List<UserOrderVo> userOrderVoList = new ArrayList<>();
-//        IPage<UserOrder> userOrderIPage = userOrderMapper.selectProductListDateCountSearch(pageNum, pageSize, page, productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
-//        return getUserOrderVoIPage(pageNum, pageSize, voPage, userOrderVoList, userOrderIPage);
-//    }
-
     @Override
     public IPage<UserOrderVo> selectOrderListDateCountSearchNoGroup(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String receiver, Integer dateState, String specifiedTime1, String specifiedTime2) {
         page.setCurrent(pageNum);

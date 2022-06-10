@@ -10,6 +10,7 @@ public class UserVo {
 //    private Integer pageNum;
 //    private Long pageTotal;
 //    private List<User> userList;
+    private Long id;
     private String name;
     private String avatar;
     private String email;

@@ -1,13 +1,11 @@
-package com.yuanbao.record.mbp.mapper.entity;
+package com.yuanbao.record.mbp.vo;
 
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class UserFeedback implements Serializable {
-    static final Long serialVersionUID = 1L;
+public class UserFeedbackVo {
     private Long id;
     private Integer userId;
     private String username;
@@ -17,6 +15,4 @@ public class UserFeedback implements Serializable {
     private Boolean isRead;
     private Boolean isFinished;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private Boolean deleted;
 }

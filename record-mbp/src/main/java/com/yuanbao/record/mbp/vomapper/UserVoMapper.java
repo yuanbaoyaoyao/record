@@ -12,6 +12,7 @@ public interface UserVoMapper {
     UserVoMapper uservomapper = Mappers.getMapper(UserVoMapper.class);
 
     @Mappings({
+            @Mapping(target = "id", source = "user.id"),
             @Mapping(target = "name", source = "user.name"),
             @Mapping(target = "avatar", source = "user.avatar"),
             @Mapping(target = "email", source = "user.email"),

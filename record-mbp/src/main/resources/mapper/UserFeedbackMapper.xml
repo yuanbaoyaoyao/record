@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuanbao.record.mbp.mapper.UserFeedbackMapper">
+
+    <select id="selectListSearch" resultType="com.yuanbao.record.mbp.mapper.entity.UserFeedback">
+        SELECT
+        uf.id,
+        uf.user_id,
+        uf.feedback_title,
+        uf.feedback_pic_url,
+        uf.feedback_content,
+        uf.is_read,
+        uf.is_finished,
+        uf.created_at,
+        u.`name` as username
+        FROM
+        user_feedback uf
+        INNER JOIN user u ON u.id = uf.user_id
+        WHERE
+        uf.deleted != '1'
+        <if test="keyword != 'null'.toString() and keyword != '' ">
+            AND
+            (u.NAME like concat ('%',#{keyword,jdbcType=VARCHAR},'%'))
+            OR
+            (uf.feedback_content like concat (#{keyword,jdbcType=VARCHAR}))
+        </if>
+        order by uf.is_read desc
+    </select>
+
+    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.UserFeedback">
+        update user_feedback uf
+        set uf.is_read = 1
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>
