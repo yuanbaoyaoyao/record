@@ -12,6 +12,8 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/productSkus")
@@ -19,11 +21,11 @@ public class ProductSkusController {
     @Autowired
     private ProductSkusService productSkusService;
 
-    @RequiresPermissionsDesc(menu = {"耗材管理", "耗材列表"}, button = "查询")
-    @OperationLog(menu = {"耗材管理", "耗材列表"}, action = "查询")
+    @RequiresPermissionsDesc(menu = {"耗材管理", "耗材列表"}, button = "分页查询")
+    @OperationLog(menu = {"耗材管理", "耗材列表"}, action = "分页查询")
     @RequiresPermissions("productSkus:list")
     @GetMapping(value = "/list")
-    public CommonResult<IPage<ProductSkusVo>> getAllProductSkus(
+    public CommonResult<IPage<ProductSkusVo>> getAllProductSkusIPage(
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "id", defaultValue = "") Long id,
@@ -31,6 +33,24 @@ public class ProductSkusController {
         IPage<ProductSkus> page = new Page<>();
         IPage<ProductSkusVo> voPage = productSkusService.selectProductSkusListSearchIPage(pageNum, pageSize, page, title, id);
         return CommonResult.success(voPage);
+    }
+
+    @RequiresPermissionsDesc(menu = {"耗材管理", "耗材列表"}, button = "查询")
+    @OperationLog(menu = {"耗材管理", "耗材列表"}, action = "查询")
+    @RequiresPermissions("productSkus:listAll")
+    @GetMapping(value = "/listAll")
+    public CommonResult<List<ProductSkusVo>> getAllProductSkus() {
+        List<ProductSkusVo> productSkusVoList = productSkusService.selectProductSkusList();
+        return CommonResult.success(productSkusVoList);
+    }
+
+    @RequiresPermissionsDesc(menu = {"耗材管理", "耗材列表"}, button = "查询")
+    @OperationLog(menu = {"耗材管理", "耗材列表"}, action = "查询")
+    @RequiresPermissions("productSkus:listAll")
+    @GetMapping(value = "/listAllChildren")
+    public CommonResult getAllProductSkusChildren() {
+        System.out.println("productSkusService.selectProductSkusChildrenLikeList():"+productSkusService.selectProductSkusChildrenLikeList());
+        return CommonResult.success(productSkusService.selectProductSkusChildrenLikeList());
     }
 
     @RequiresPermissionsDesc(menu = {"耗材管理", "耗材列表"}, button = "添加")

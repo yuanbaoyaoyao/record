@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuanbao.record.mbp.mapper.FrontShowMapper">
+    <!--    <resultMap id="frontShowMap" type="com.yuanbao.record.mbp.mapper.entity.FrontShow">-->
+    <!--        <id column="id" property="id"></id>-->
+    <!--        <result column="product_skus_id" property="productSkusId"></result>-->
+    <!--        <result column="show_rotation" property="showRotation"></result>-->
+    <!--        <result column="show_old" property="showOld"></result>-->
+    <!--        <result column="show_new" property="showNew"></result>-->
+    <!--        <result column="created_at" property="createdAt"></result>-->
+    <!--        <result column="updated_at" property="updatedAt"></result>-->
+    <!--        <result column="deleted" property="deleted"></result>-->
+    <!--        <collection property="id" ofType="com.yuanbao.record.mbp.mapper.entity.ProductSkus" javaType="java.util.List">-->
+    <!--            <id column="id" property="id"></id>-->
+    <!--            <result column="title" property="title"></result>-->
+    <!--        </collection>-->
+    <!--    </resultMap>-->
+
+    <select id="selectByShowRotation" resultType="com.yuanbao.record.mbp.mapper.entity.FrontShow">
+        SELECT fs.id,
+               fs.product_skus_id,
+               ps.title as product_skus_name,
+               p.title  as product_name
+        FROM front_show fs
+                 INNER JOIN product_skus ps ON ps.id = fs.product_skus_id
+                 INNER JOIN product p ON p.id = ps.product_id
+        WHERE fs.deleted != '1'
+	AND fs.show_rotation = 1
+    </select>
+
+    <select id="selectByShowOld" resultType="com.yuanbao.record.mbp.mapper.entity.FrontShow">
+        SELECT fs.id,
+               fs.product_skus_id,
+               ps.title as product_skus_name,
+               p.title  as product_name
+        FROM front_show fs
+                 INNER JOIN product_skus ps ON ps.id = fs.product_skus_id
+                 INNER JOIN product p ON p.id = ps.product_id
+        WHERE fs.deleted != '1'
+         AND fs.show_old = 1
+    </select>
+
+    <select id="selectByShowNew" resultType="com.yuanbao.record.mbp.mapper.entity.FrontShow">
+        SELECT fs.id,
+               fs.product_skus_id,
+               ps.title as product_skus_name,
+               p.title  as product_name
+        FROM front_show fs
+                 INNER JOIN product_skus ps ON ps.id = fs.product_skus_id
+                 INNER JOIN product p ON p.id = ps.product_id
+        WHERE fs.deleted != '1'
+         AND fs.show_new = 1
+    </select>
+
+    <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.FrontShow">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into front_show
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productSkusId!=null">
+                product_skus_id,
+            </if>
+            <if test="showRotation!=null">
+                show_rotation,
+            </if>
+            <if test="showOld!=null">
+                show_old,
+            </if>
+            <if test="showNew!=null">
+                show_new,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productSkusId!=null">
+                #{productSkusId,jdbcType=INTEGER},
+            </if>
+            <if test="showRotation!=null">
+                #{showRotation,jdbcType=INTEGER},
+            </if>
+            <if test="showOld!=null">
+                #{showOld,jdbcType=INTEGER},
+            </if>
+            <if test="showNew!=null">
+                #{showNew,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByShowNew" parameterType="com.yuanbao.record.mbp.mapper.entity.FrontShow">
+        update front_show
+        set show_new = 0
+        where show_new = 1
+    </update>
+
+</mapper>

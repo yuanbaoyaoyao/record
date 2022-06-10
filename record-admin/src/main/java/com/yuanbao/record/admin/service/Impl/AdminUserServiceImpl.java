@@ -50,8 +50,7 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
 
     @Override
     public int insert(AdminUser adminUser) {
-        int id = adminUserMapper.insert(adminUser);
-        return id;
+        return adminUserMapper.insert(adminUser);
     }
 
     @Override

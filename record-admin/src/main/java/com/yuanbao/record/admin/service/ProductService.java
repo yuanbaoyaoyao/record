@@ -5,8 +5,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuanbao.record.mbp.mapper.entity.Product;
 import com.yuanbao.record.mbp.vo.ProductVo;
 
+import java.util.List;
+
 public interface ProductService extends IService<Product> {
     IPage<ProductVo> selectProductListSearch(Integer pageNum, Integer pageSize, IPage<Product> page, String title);
+
+    List<ProductVo> selectProductList();
 
     int insert(Product product);
 

@@ -29,6 +29,12 @@ public class LogInfoAspect {
     @Autowired
     private AdminOperationLogMapper adminOperationLogMapper;
 
+    private static String tempToken;
+
+    public static void getTempToken(String loginToken) {
+        tempToken = loginToken;
+    }
+
     //    @Pointcut("execution(public * com.yuanbao.record.admin.controller.*.*(..))")
     @Pointcut("@annotation(com.yuanbao.record.common.annotation.OperationLog)")
     public void loginInfo() {
@@ -45,6 +51,9 @@ public class LogInfoAspect {
         String token = request.getHeader("token");
         if (token == null) {
             token = getUserCookieToken(request);
+            if (token == null) {
+                token = tempToken;
+            }
         }
 
         String adminUsername = JwtUtil.getUsername(token);

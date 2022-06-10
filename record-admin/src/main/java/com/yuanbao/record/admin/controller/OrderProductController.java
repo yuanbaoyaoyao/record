@@ -106,13 +106,16 @@ public class OrderProductController {
     public CommonResult<List<OrderProductVo>> getAllDateOrderProductCountAllList(
             @RequestParam(value = "productTitle", required = false) String productTitle,
             @RequestParam(value = "productSkusTitle", required = false) String productSkusTitle,
-            @RequestParam(value = "dateState", defaultValue = "1", required = false) Integer dateState,
+            @RequestParam(value = "dateState", defaultValue = "4", required = false) Integer dateState,
             @RequestParam(value = "specifiedTime1", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd")
                     String specifiedTime1,
             @RequestParam(value = "specifiedTime2", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd")
                     String specifiedTime2) {
+        System.out.println("----------------------");
+        System.out.println("dataState:" + dateState);
+        System.out.println("----------------------");
         List<OrderProductVo> orderProductVoList = orderProductService.selectProductListDateCountSearchAllList(productTitle, productSkusTitle, dateState, specifiedTime1, specifiedTime2);
         return CommonResult.success(orderProductVoList);
     }

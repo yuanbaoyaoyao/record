@@ -39,9 +39,20 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     }
 
     @Override
+    public List<ProductVo> selectProductList() {
+        List<Product> productList = productMapper.selectProductListSearchAll("");
+        System.out.println("productList:" + productList);
+        List<ProductVo> productVoList = new ArrayList<>();
+        for (Product product : productList) {
+            ProductVo productVo = ProductVoMapper.productvomapper.Trans(product);
+            productVoList.add(productVo);
+        }
+        return productVoList;
+    }
+
+    @Override
     public int insert(Product product) {
-        int id = productMapper.insert(product);
-        return id;
+        return productMapper.insert(product);
     }
 
     @Override

@@ -116,15 +116,15 @@
             AND (uo.receiver like concat ('%',#{receiver,jdbcType=VARCHAR},'%'))
         </if>
         <choose>
+            <when test="dateState == 1">
+                and DATE_FORMAT( uo.created_at, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
+            </when>
             <when test="dateState == 2">
                 and YEAR ( uo.created_at )= YEAR (NOW())
             </when>
             <when test="dateState == 3 and specifiedTime1 != '' and specifiedTime2 != ''">
                 and uo.created_at between #{specifiedTime1} and #{specifiedTime2}
             </when>
-            <otherwise>
-                and DATE_FORMAT( uo.created_at, '%Y%m' ) = DATE_FORMAT( CURDATE(), '%Y%m' )
-            </otherwise>
         </choose>
         GROUP BY
         uo.receiver,

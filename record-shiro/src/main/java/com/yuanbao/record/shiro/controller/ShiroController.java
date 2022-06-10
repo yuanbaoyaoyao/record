@@ -6,6 +6,7 @@ import com.yuanbao.record.admin.service.AdminRoleService;
 import com.yuanbao.record.admin.service.AdminUserService;
 import com.yuanbao.record.common.CommonResult;
 import com.yuanbao.record.common.annotation.OperationLog;
+import com.yuanbao.record.common.aop.LogInfoAspect;
 import com.yuanbao.record.common.util.JacksonUtil;
 import com.yuanbao.record.common.util.JwtUtil;
 import com.yuanbao.record.mbp.mapper.entity.AdminPermission;
@@ -84,6 +85,7 @@ public class ShiroController {
         System.out.println("token:" + token);
         result.put("token", token);
         result.put("userInfo", userInfo);
+        LogInfoAspect.getTempToken(token);
         return CommonResult.success(result);
     }
 
@@ -110,8 +112,10 @@ public class ShiroController {
         System.out.println("passwordEncryption:" + passwordEncryption);
         System.out.println("password:" + password);
         if (!Objects.equals(password, passwordEncryption)) {
+            System.out.println("正在对比");
             return CommonResult.failed("密码错误");
         }
+        System.out.println("_________________");
         Map<String, Object> adminInfo = new HashMap<>();
         adminInfo.put("nickName", adminUser.getName());
         adminInfo.put("avatar", adminUser.getAvatar());
@@ -127,10 +131,13 @@ public class ShiroController {
         Map<Object, Object> result = new HashMap<>();
         JwtUser jwtUser = new JwtUser(usernameInput, adminUser.getRoleId());
         String token = JwtUtil.createJwtTokenByUser(jwtUser);
+        System.out.println("loginAdminUser");
         System.out.println("token:" + token);
         result.put("token", token);
         result.put("adminInfo", adminInfo);
         System.out.println("adminInfo" + adminInfo);
+        System.out.println("22222222222");
+        LogInfoAspect.getTempToken(token);
         return CommonResult.success(result);
     }
 

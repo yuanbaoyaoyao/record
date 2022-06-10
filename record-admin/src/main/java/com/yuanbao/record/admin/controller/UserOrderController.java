@@ -116,6 +116,7 @@ public class UserOrderController {
             @RequestParam(value = "specifiedTime2", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd")
                     String specifiedTime2) {
+        System.out.println("dateState:::::::"+dateState);
         List<UserOrderVo> userOrderList = userOrderService.selectOrderListDateCountSearchAllList(userId, receiver, dateState, specifiedTime1, specifiedTime2);
         return CommonResult.success(userOrderList);
     }

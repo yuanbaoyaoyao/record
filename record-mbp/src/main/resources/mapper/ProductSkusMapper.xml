@@ -54,7 +54,7 @@
         INNER JOIN product_skus as ps ON ps.product_id = p.id
         WHERE
         ps.deleted != '1' AND p.deleted != '1'
-        <if test="title != 'null'.toString() and title != '' ">
+        <if test="title != 'null'.toString() and title != '' and title != null">
             and p.title like concat ('%',#{title,jdbcType=VARCHAR},'%')
         </if>
         <if test="productSkusName != 'null'.toString() and title != '' ">
@@ -71,6 +71,7 @@
 
     <select id="selectProductSkusList" resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
         SELECT ps.id,
+               ps.product_id,
                ps.title,
                ps.avatar,
                ps.description,
@@ -81,6 +82,24 @@
                  INNER JOIN product_skus ps ON ps.product_id = p.id
         WHERE ps.deleted != '1' AND p.deleted != '1'
         ORDER BY ps.stock
+    </select>
+
+    <select id="selectProductSkusListLimitNumber" resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
+        SELECT ps.id,
+        ps.product_id,
+        ps.title,
+        ps.avatar,
+        ps.description,
+        ps.stock,
+        ps.created_at,
+        p.title AS product_name
+        FROM product p
+        INNER JOIN product_skus ps ON ps.product_id = p.id
+        WHERE ps.deleted != '1' AND p.deleted != '1'
+        ORDER BY ps.created_at desc
+        <if test=" number != '' and number != null">
+            limit #{number}
+        </if>
     </select>
 
     <select id="selectProductSkusListLimit" resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
@@ -96,6 +115,7 @@
         WHERE ps.deleted != '1' AND p.deleted != '1'
         ORDER BY ps.stock desc limit 5
     </select>
+
 
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">

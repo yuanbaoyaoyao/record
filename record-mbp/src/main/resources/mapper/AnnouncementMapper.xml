@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuanbao.record.mbp.mapper.AnnouncementMapper">
+
+    <select id="selectAll" resultType="com.yuanbao.record.mbp.mapper.entity.Announcement">
+        SELECT *
+        FROM announcement a
+        WHERE a.deleted != '1'
+        ORDER by a.created_at desc
+    </select>
+
+    <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.Announcement">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into announcement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title!=null">
+                title,
+            </if>
+            <if test="content!=null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title!=null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content!=null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.Announcement">
+        update announcement
+        set title   = #{title,jdbcType=VARCHAR},
+            content = #{content,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

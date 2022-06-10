@@ -12,6 +12,8 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/product")
@@ -19,17 +21,26 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @RequiresPermissionsDesc(menu = {"耗材管理", "耗材类别"}, button = "查询")
-    @OperationLog(menu = {"耗材管理", "耗材类别"}, action = "查询")
+    @RequiresPermissionsDesc(menu = {"耗材管理", "耗材类别"}, button = "分页查询")
+    @OperationLog(menu = {"耗材管理", "耗材类别"}, action = "分页查询")
     @RequiresPermissions("product:list")
     @GetMapping(value = "/list")
-    public CommonResult<IPage<ProductVo>> getAllProduct(
+    public CommonResult<IPage<ProductVo>> getAllProductIPage(
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "title", defaultValue = "null") String title) {
         IPage<Product> page = new Page<>();
         IPage<ProductVo> voPage = productService.selectProductListSearch(pageNum, pageSize, page, title);
         return CommonResult.success(voPage);
+    }
+
+    @RequiresPermissionsDesc(menu = {"耗材管理", "耗材类别"}, button = "查询")
+    @OperationLog(menu = {"耗材管理", "耗材类别"}, action = "查询")
+    @RequiresPermissions("product:listAll")
+    @GetMapping(value = "/listAll")
+    public CommonResult<List<ProductVo>> getAllProduct() {
+        List<ProductVo> productVoList = productService.selectProductList();
+        return CommonResult.success(productVoList);
     }
 
     @RequiresPermissionsDesc(menu = {"耗材管理", "耗材类别"}, button = "添加")
