@@ -10,4 +10,6 @@ public interface AdminReminderService extends IService<AdminReminder> {
     List<AdminReminderVo> selectList();
 
     int updateByPrimaryKey(AdminReminder adminReminder);
+
+    int deleteByPrimaryKey(Long id);
 }

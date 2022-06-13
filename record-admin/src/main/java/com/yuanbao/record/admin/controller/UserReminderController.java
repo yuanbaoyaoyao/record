@@ -19,7 +19,7 @@ public class UserReminderController {
 
     @RequiresPermissionsDesc(menu = {"消息提醒", "消息列表"}, button = "创建")
     @OperationLog(menu = {"消息提醒", "消息列表"}, action = "创建")
-    @RequiresPermissions("adminReminder:create")
+    @RequiresPermissions("userReminder:create")
     @PostMapping(value = "/create")
     public CommonResult create(@RequestBody UserReminder userReminder) {
         int newId = userReminderService.insert(userReminder);

@@ -12,12 +12,12 @@ public interface UserReminderVoMapper {
     UserReminderVoMapper userremindervomapper = Mappers.getMapper(UserReminderVoMapper.class);
 
     @Mappings({
-            @Mapping(target = "id", source = "adminReminder.id"),
-            @Mapping(target = "userId", source = "adminReminder.userId"),
-            @Mapping(target = "userFeedbackId", source = "adminReminder.userFeedbackId"),
-            @Mapping(target = "orderProductId", source = "adminReminder.orderProductId"),
-            @Mapping(target = "isRead", source = "adminReminder.isRead"),
-            @Mapping(target = "createdAt", source = "adminReminder.createdAt"),
+            @Mapping(target = "id", source = "userReminder.id"),
+            @Mapping(target = "userId", source = "userReminder.userId"),
+            @Mapping(target = "userFeedbackId", source = "userReminder.userFeedbackId"),
+            @Mapping(target = "orderProductId", source = "userReminder.orderProductId"),
+            @Mapping(target = "isRead", source = "userReminder.isRead"),
+            @Mapping(target = "createdAt", source = "userReminder.createdAt"),
     })
     UserReminderVo Trans(UserReminder userReminder);
 }

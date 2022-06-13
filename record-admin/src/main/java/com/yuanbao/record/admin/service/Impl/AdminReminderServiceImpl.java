@@ -33,4 +33,9 @@ public class AdminReminderServiceImpl extends ServiceImpl<AdminReminderMapper, A
     public int updateByPrimaryKey(AdminReminder adminReminder) {
         return adminReminderMapper.updateByPrimaryKey(adminReminder);
     }
+
+    @Override
+    public int deleteByPrimaryKey(Long id) {
+        return adminReminderMapper.deleteById(id);
+    }
 }

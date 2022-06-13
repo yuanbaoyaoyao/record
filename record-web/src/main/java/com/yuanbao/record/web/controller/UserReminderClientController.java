@@ -27,6 +27,5 @@ public class UserReminderClientController {
     public CommonResult update(@RequestBody UserReminder userReminder) {
         int count = userReminderClientService.updateByPrimaryKey(userReminder);
         return CommonResult.success(count);
-
     }
 }

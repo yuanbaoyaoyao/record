@@ -3,10 +3,28 @@
 <mapper namespace="com.yuanbao.record.mbp.mapper.AdminReminderMapper">
 
     <select id="selectList" resultType="com.yuanbao.record.mbp.mapper.entity.AdminReminder">
-        SELECT *
+        SELECT ar.id,
+               ar.user_feedback_id,
+               ar.order_product_id,
+               ar.product_skus_id,
+               ar.is_read,
+               ar.created_at,
+               b.name   AS user_name,
+               op.order_sn,
+               ps.title AS product_skus_title
         FROM admin_reminder ar
+                 LEFT JOIN (SELECT name,
+                                   a.user_feedback_id
+                            FROM user
+                                     INNER JOIN (SELECT uf.user_id, ar.user_feedback_id
+                                                 FROM admin_reminder ar
+                                                          LEFT JOIN user_feedback uf ON uf.id = ar.user_feedback_id) a
+                                                ON a.user_id = user.id) b ON b.user_feedback_id = ar.user_feedback_id
+                 LEFT JOIN order_product op ON op.id = ar.order_product_id
+                 LEFT JOIN product_skus ps ON ps.id = ar.product_skus_id
         WHERE ar.deleted != 1
-        Order by ar.is_read desc
+        ORDER BY
+            ar.is_read
     </select>
 
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.AdminReminder">

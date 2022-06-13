@@ -17,6 +17,9 @@ public interface AdminReminderVoMapper {
             @Mapping(target = "orderProductId", source = "adminReminder.orderProductId"),
             @Mapping(target = "productSkusId", source = "adminReminder.productSkusId"),
             @Mapping(target = "isRead", source = "adminReminder.isRead"),
+            @Mapping(target = "userName", source = "adminReminder.userName"),
+            @Mapping(target = "orderSn", source = "adminReminder.orderSn"),
+            @Mapping(target = "productSkusTitle", source = "adminReminder.productSkusTitle"),
             @Mapping(target = "createdAt", source = "adminReminder.createdAt"),
     })
     AdminReminderVo Trans(AdminReminder adminReminder);

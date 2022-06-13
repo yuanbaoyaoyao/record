@@ -10,5 +10,6 @@ public class UserReminderVo {
     private Long userId;
     private Long userFeedbackId;
     private Long orderProductId;
+    private Boolean isRead;
     private LocalDateTime createdAt;
 }
