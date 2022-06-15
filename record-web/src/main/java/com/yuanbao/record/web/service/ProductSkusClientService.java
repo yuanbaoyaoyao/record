@@ -8,13 +8,15 @@ import com.yuanbao.record.mbp.vo.ProductSkusVo;
 import java.util.List;
 
 public interface ProductSkusClientService extends IService<ProductSkus> {
-    IPage<ProductSkusVo> selectProductSkusListSearchIPage(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String title,Long id);
+    IPage<ProductSkusVo> selectProductSkusListSearchIPage(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String productName, Long id,String productSkusName);
 
-    List<ProductSkusVo> selectProductSkusListSearch(String title,Long id,Long productId,String productSkusName);
+    List<ProductSkusVo> selectProductSkusListSearch(String title, Long id, Long productId, String productSkusName);
 
     List<ProductSkusVo> selectProductSkusList();
 
     List<ProductSkusVo> selectProductSkusListLimit();
+
+    List<ProductSkusVo> selectProductSkusListLimitNumber(Integer number);
 
     int updateByPrimaryKey(ProductSkus productSkus);
 }

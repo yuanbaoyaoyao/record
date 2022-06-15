@@ -12,6 +12,7 @@ public class FrontShow implements Serializable {
     private Long productSkusId;
     private String productSkusName;
     private String productName;
+    private String avatar;
     private Boolean showRotation;
     private Boolean showOld;
     private Boolean showNew;

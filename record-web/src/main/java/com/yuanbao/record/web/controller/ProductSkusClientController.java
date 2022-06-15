@@ -23,9 +23,10 @@ public class ProductSkusClientController {
             @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "id", defaultValue = "") Long id,
-            @RequestParam(value = "title", defaultValue = "null") String title) {
+            @RequestParam(value = "productName", defaultValue = "null") String productName,
+            @RequestParam(value = "productSkusName", defaultValue = "null") String productSkusName) {
         IPage<ProductSkus> page = new Page<>();
-        IPage<ProductSkusVo> voPage = productSkusClientService.selectProductSkusListSearchIPage(pageNum, pageSize, page, title, id);
+        IPage<ProductSkusVo> voPage = productSkusClientService.selectProductSkusListSearchIPage(pageNum, pageSize, page, productName, id,productSkusName);
         return CommonResult.success(voPage);
     }
 
@@ -35,13 +36,21 @@ public class ProductSkusClientController {
             @RequestParam(value = "productId", defaultValue = "") Long productId,
             @RequestParam(value = "title", defaultValue = "null") String title,
             @RequestParam(value = "productSkusName", defaultValue = "null") String productSkusName) {
-        List<ProductSkusVo> productSkusVoList = productSkusClientService.selectProductSkusListSearch(title, id, productId,productSkusName);
+        List<ProductSkusVo> productSkusVoList = productSkusClientService.selectProductSkusListSearch(title, id, productId, productSkusName);
         return CommonResult.success(productSkusVoList);
     }
 
     @GetMapping(value = "/listLimit")
     public CommonResult<List<ProductSkusVo>> getAllProductSkusLimit() {
         List<ProductSkusVo> productSkusVoList = productSkusClientService.selectProductSkusListLimit();
+        return CommonResult.success(productSkusVoList);
+    }
+
+    @GetMapping(value = "/listLimitByNumber")
+    public CommonResult<List<ProductSkusVo>> getAllProductSkusLimitByNumber(
+            @RequestParam(value = "number", defaultValue = "null") Integer number
+    ) {
+        List<ProductSkusVo> productSkusVoList = productSkusClientService.selectProductSkusListLimitNumber(number);
         return CommonResult.success(productSkusVoList);
     }
 

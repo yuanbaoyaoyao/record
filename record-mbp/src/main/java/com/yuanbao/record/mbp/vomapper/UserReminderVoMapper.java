@@ -16,6 +16,8 @@ public interface UserReminderVoMapper {
             @Mapping(target = "userId", source = "userReminder.userId"),
             @Mapping(target = "userFeedbackId", source = "userReminder.userFeedbackId"),
             @Mapping(target = "orderProductId", source = "userReminder.orderProductId"),
+            @Mapping(target = "feedbackTitle", source = "userReminder.feedbackTitle"),
+            @Mapping(target = "orderSn", source = "userReminder.orderSn"),
             @Mapping(target = "isRead", source = "userReminder.isRead"),
             @Mapping(target = "createdAt", source = "userReminder.createdAt"),
     })

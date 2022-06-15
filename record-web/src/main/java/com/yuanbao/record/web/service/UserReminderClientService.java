@@ -11,4 +11,7 @@ public interface UserReminderClientService extends IService<UserReminder> {
     List<UserReminderVo> selectListByUserId(Long userId);
 
     int updateByPrimaryKey(UserReminder userReminder);
+
+    int deleteByPrimaryKey(Long id);
+
 }

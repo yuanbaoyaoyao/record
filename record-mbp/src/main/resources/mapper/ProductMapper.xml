@@ -6,8 +6,8 @@
         SELECT *
         FROM product p
         WHERE p.deleted != '1'
-        <if test="title != 'null'.toString() and title != '' ">
-            and p.title like concat ('%',#{title,jdbcType=VARCHAR},'%')
+        <if test="productName != 'null'.toString() and productName != '' ">
+            and p.title like concat ('%',#{productName,jdbcType=VARCHAR},'%')
         </if>
     </select>
 

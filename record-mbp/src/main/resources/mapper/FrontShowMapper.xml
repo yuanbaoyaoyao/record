@@ -19,6 +19,7 @@
     <select id="selectByShowRotation" resultType="com.yuanbao.record.mbp.mapper.entity.FrontShow">
         SELECT fs.id,
                fs.product_skus_id,
+               ps.avatar as avatar,
                ps.title as product_skus_name,
                p.title  as product_name
         FROM front_show fs
@@ -31,6 +32,7 @@
     <select id="selectByShowOld" resultType="com.yuanbao.record.mbp.mapper.entity.FrontShow">
         SELECT fs.id,
                fs.product_skus_id,
+               ps.avatar as avatar,
                ps.title as product_skus_name,
                p.title  as product_name
         FROM front_show fs
@@ -43,6 +45,8 @@
     <select id="selectByShowNew" resultType="com.yuanbao.record.mbp.mapper.entity.FrontShow">
         SELECT fs.id,
                fs.product_skus_id,
+               ps.avatar as avatar,
+
                ps.title as product_skus_name,
                p.title  as product_name
         FROM front_show fs

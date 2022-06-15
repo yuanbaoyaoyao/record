@@ -16,13 +16,20 @@ public class UserClientController {
 
     @PostMapping(value = "/register")
     public CommonResult register(@RequestBody User user) {
-        System.out.println("user:"+user);
+        System.out.println("user:" + user);
         int newId = userClientService.register(user);
         if (newId > 0) {
             return CommonResult.success(newId);
         } else {
             return CommonResult.failed();
         }
+    }
+
+    @PostMapping(value = "/forget")
+    public CommonResult forget(@RequestBody User user) {
+        System.out.println("user:" + user);
+        userClientService.forget(user);
+        return CommonResult.success("修改密码成功");
     }
 
     @PutMapping(value = "/update")

@@ -12,6 +12,8 @@ public class UserReminder implements Serializable {
     private Long userId;
     private Long userFeedbackId;
     private Long orderProductId;
+    private String feedbackTitle;
+    private String orderSn;
     private Boolean isRead;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

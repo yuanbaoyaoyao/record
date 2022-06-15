@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProductSkusService extends IService<ProductSkus> {
-    IPage<ProductSkusVo> selectProductSkusListSearchIPage(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String title,Long id);
+    IPage<ProductSkusVo> selectProductSkusListSearchIPage(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String productName, Long id, String productSkusName);
 
     List<ProductSkusVo> selectProductSkusList();
 

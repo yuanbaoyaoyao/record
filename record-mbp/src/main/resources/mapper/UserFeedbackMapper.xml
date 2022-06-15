@@ -27,9 +27,66 @@
         order by uf.is_read desc
     </select>
 
+    <select id="selectListByUserId" resultType="com.yuanbao.record.mbp.mapper.entity.UserFeedback">
+        SELECT uf.id,
+               uf.user_id,
+               uf.feedback_title,
+               uf.feedback_pic_url,
+               uf.feedback_content,
+               uf.is_read,
+               uf.is_finished,
+               uf.created_at,
+               u.`name` as username
+        FROM user_feedback uf
+                 INNER JOIN user u ON u.id = uf.user_id
+        WHERE uf.deleted != '1' uf.user_id = #{userId}
+        order by uf.is_read desc
+    </select>
+
+    <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.UserFeedback">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user_feedback
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId!=null">
+                user_id,
+            </if>
+            <if test="feedbackTitle!=null">
+                feedback_title,
+            </if>
+            <if test="feedbackPicUrl!=null">
+                feedback_pic_url,
+            </if>
+            <if test="feedbackContent!=null">
+                feedback_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId!=null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="feedbackTitle!=null">
+                #{feedbackTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="feedbackPicUrl!=null">
+                #{feedbackPicUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="feedbackContent!=null">
+                #{feedbackContent,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
     <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.UserFeedback">
         update user_feedback uf
         set uf.is_read = 1
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateFinished" parameterType="com.yuanbao.record.mbp.mapper.entity.UserFeedback">
+        update user_feedback uf
+        set uf.is_finished = 1
         where id = #{id,jdbcType=BIGINT}
     </update>
 

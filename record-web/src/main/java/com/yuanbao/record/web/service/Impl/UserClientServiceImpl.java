@@ -50,12 +50,12 @@ public class UserClientServiceImpl extends ServiceImpl<UserMapper, User> impleme
     @Override
     public int register(User user) {
         Object value = redisUtils.get(user.getEmail());
-        System.out.println("输入的邮箱地址为:"+user.getEmail());
+        System.out.println("输入的邮箱地址为:" + user.getEmail());
         System.out.println("redis中的value为：" + value);
         if (value == null || !value.toString().equals(user.getEmailCode())) {
             throw new RuntimeException("无效验证码");
         }
-        System.out.println("userrrrrrrrrrrr:"+user);
+        System.out.println("userrrrrrrrrrrr:" + user);
         String username = user.getName();
         String email = user.getEmail();
         String password = user.getPassword();
@@ -72,6 +72,19 @@ public class UserClientServiceImpl extends ServiceImpl<UserMapper, User> impleme
         System.out.println("DigestUtil.md5Hex(password, salt):" + SecureUtil.md5(password + salt));
         user.setPassword(SecureUtil.md5(password + salt));
         return userMapper.insert(user);
+    }
+
+    @Override
+    public int forget(User user) {
+        Object value = redisUtils.get(user.getEmail());
+        System.out.println("输入的邮箱地址为:" + user.getEmail());
+        System.out.println("redis中的value为：" + value);
+        if (value == null || !value.toString().equals(user.getEmailCode())) {
+            throw new RuntimeException("无效验证码");
+        }
+        User user1 = userMapper.selectUserByEmail(user.getEmail());
+        user1.setPassword(SecureUtil.md5(user.getPassword() + user1.getSalt()));
+        return userMapper.updateByPrimaryKey(user1);
     }
 
     @Override

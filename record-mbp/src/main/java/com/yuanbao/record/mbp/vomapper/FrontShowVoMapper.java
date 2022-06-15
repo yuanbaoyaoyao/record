@@ -14,6 +14,7 @@ public interface FrontShowVoMapper {
             @Mapping(target = "id", source = "frontShow.id"),
             @Mapping(target = "productSkusId", source = "frontShow.productSkusId"),
             @Mapping(target = "productSkusName", source = "frontShow.productSkusName"),
+            @Mapping(target = "avatar", source = "frontShow.avatar"),
             @Mapping(target = "productName", source = "frontShow.productName"),
             @Mapping(target = "showRotation", source = "frontShow.showRotation"),
             @Mapping(target = "showOld", source = "frontShow.showOld"),

@@ -13,4 +13,8 @@ public interface UserReminderMapper extends BaseMapper<UserReminder> {
     int insert(UserReminder userReminder);
 
     int updateByPrimaryKey(UserReminder userReminder);
+
+    int updateUserFeedback();
+
+    int updateOrderProduct();
 }

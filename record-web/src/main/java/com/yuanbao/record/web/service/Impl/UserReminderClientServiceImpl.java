@@ -33,4 +33,9 @@ public class UserReminderClientServiceImpl extends ServiceImpl<UserReminderMappe
     public int updateByPrimaryKey(UserReminder userReminder) {
         return userReminderMapper.updateByPrimaryKey(userReminder);
     }
+
+    @Override
+    public int deleteByPrimaryKey(Long id) {
+        return userReminderMapper.deleteById(id);
+    }
 }

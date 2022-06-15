@@ -29,9 +29,10 @@ public class ProductSkusController {
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "id", defaultValue = "") Long id,
-            @RequestParam(value = "title", defaultValue = "null") String title) {
+            @RequestParam(value = "productName", defaultValue = "null") String productName,
+            @RequestParam(value = "productSkusName", defaultValue = "null") String productSkusName) {
         IPage<ProductSkus> page = new Page<>();
-        IPage<ProductSkusVo> voPage = productSkusService.selectProductSkusListSearchIPage(pageNum, pageSize, page, title, id);
+        IPage<ProductSkusVo> voPage = productSkusService.selectProductSkusListSearchIPage(pageNum, pageSize, page, productName, id, productSkusName);
         return CommonResult.success(voPage);
     }
 
@@ -49,7 +50,7 @@ public class ProductSkusController {
     @RequiresPermissions("productSkus:listAll")
     @GetMapping(value = "/listAllChildren")
     public CommonResult getAllProductSkusChildren() {
-        System.out.println("productSkusService.selectProductSkusChildrenLikeList():"+productSkusService.selectProductSkusChildrenLikeList());
+        System.out.println("productSkusService.selectProductSkusChildrenLikeList():" + productSkusService.selectProductSkusChildrenLikeList());
         return CommonResult.success(productSkusService.selectProductSkusChildrenLikeList());
     }
 

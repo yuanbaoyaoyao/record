@@ -21,12 +21,12 @@ public class ProductSkusClientServiceImpl extends ServiceImpl<ProductSkusMapper,
     private ProductSkusMapper productSkusMapper;
 
     @Override
-    public IPage<ProductSkusVo> selectProductSkusListSearchIPage(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String title, Long id) {
+    public IPage<ProductSkusVo> selectProductSkusListSearchIPage(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, String productName, Long id, String productSkusName) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<ProductSkusVo> voPage = new Page<>();
         List<ProductSkusVo> productSkusVoList = new ArrayList<>();
-        IPage<ProductSkus> productSkusIPage = productSkusMapper.selectProductSkusListSearchIPage(pageNum, pageSize, page, title, id);
+        IPage<ProductSkus> productSkusIPage = productSkusMapper.selectProductSkusListSearchIPage(pageNum, pageSize, page, productName, id, productSkusName);
         List<ProductSkus> productSkusList = productSkusIPage.getRecords();
         for (ProductSkus productSkus : productSkusList) {
             ProductSkusVo productSkusVo = ProductSkusVoMapper.productskusvomapper.Trans(productSkus);
@@ -40,9 +40,8 @@ public class ProductSkusClientServiceImpl extends ServiceImpl<ProductSkusMapper,
     }
 
     @Override
-    public List<ProductSkusVo> selectProductSkusListSearch(String title, Long id,Long productId,String productSkusName) {
-        List<ProductSkusVo> productSkusVoList = productSkusMapper.selectProductSkusListSearch(title, id,productId,productSkusName);
-        return productSkusVoList;
+    public List<ProductSkusVo> selectProductSkusListSearch(String title, Long id, Long productId, String productSkusName) {
+        return productSkusMapper.selectProductSkusListSearch(title, id, productId, productSkusName);
     }
 
     @Override
@@ -53,6 +52,17 @@ public class ProductSkusClientServiceImpl extends ServiceImpl<ProductSkusMapper,
     @Override
     public List<ProductSkusVo> selectProductSkusListLimit() {
         return productSkusMapper.selectProductSkusListLimit();
+    }
+
+    @Override
+    public List<ProductSkusVo> selectProductSkusListLimitNumber(Integer number) {
+        List<ProductSkus> productSkusList = productSkusMapper.selectProductSkusListLimitNumber(number);
+        List<ProductSkusVo> productSkusVoList = new ArrayList<>();
+        for (ProductSkus productSkus : productSkusList) {
+            ProductSkusVo productSkusVo = ProductSkusVoMapper.productskusvomapper.Trans(productSkus);
+            productSkusVoList.add(productSkusVo);
+        }
+        return productSkusVoList;
     }
 
     @Override
