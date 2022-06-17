@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RequestMapping("/userFeedbackClient")
 public class UserFeedbackClientController {
+
     @Autowired
     private UserFeedbackClientService userFeedbackClientService;
 
@@ -20,7 +21,8 @@ public class UserFeedbackClientController {
     public CommonResult<IPage<UserFeedbackVo>> getUserFeedback(
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-            @RequestParam(value = "userId", defaultValue = "null") Long userId) {
+            @RequestParam(value = "userId") Long userId) {
+        System.out.println("userId:"+userId);
         IPage<UserFeedback> page = new Page<>();
         IPage<UserFeedbackVo> voPage = userFeedbackClientService.selectListByUserId(pageNum, pageSize, page, userId);
         return CommonResult.success(voPage);

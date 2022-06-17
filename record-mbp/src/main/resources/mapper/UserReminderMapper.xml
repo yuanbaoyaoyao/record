@@ -3,7 +3,8 @@
 <mapper namespace="com.yuanbao.record.mbp.mapper.UserReminderMapper">
 
     <select id="selectListByUserId" resultType="com.yuanbao.record.mbp.mapper.entity.UserReminder">
-        SELECT ur.user_id,
+        SELECT ur.id,
+               ur.user_id,
                ur.user_feedback_id,
                ur.order_product_id,
                ur.is_read,

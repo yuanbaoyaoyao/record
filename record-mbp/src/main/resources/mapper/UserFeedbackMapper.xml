@@ -39,7 +39,7 @@
                u.`name` as username
         FROM user_feedback uf
                  INNER JOIN user u ON u.id = uf.user_id
-        WHERE uf.deleted != '1' uf.user_id = #{userId}
+        WHERE uf.deleted != '1' and uf.user_id = #{userId,jdbcType=BIGINT}
         order by uf.is_read desc
     </select>
 
