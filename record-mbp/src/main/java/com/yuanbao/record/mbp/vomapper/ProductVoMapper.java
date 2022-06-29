@@ -14,6 +14,8 @@ public interface ProductVoMapper {
     @Mappings({
             @Mapping(target = "id", source = "product.id"),
             @Mapping(target = "title", source = "product.title"),
+            @Mapping(target = "avatar", source = "product.avatar"),
+            @Mapping(target = "type", source = "product.type"),
             @Mapping(target = "description", source = "product.description"),
             @Mapping(target = "createdAt", source = "product.createdAt"),
     })

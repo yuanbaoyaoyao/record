@@ -8,6 +8,7 @@
         <result column="receiver" property="receiver"></result>
         <result column="user" property="user"></result>
         <result column="phone" property="phone"></result>
+        <result column="isDefault" property="isDefault"></result>
         <result column="created_at" property="createdAt"></result>
         <result column="updated_at" property="updatedAt"></result>
         <result column="deleted" property="deleted"></result>
@@ -59,6 +60,9 @@
             <if test="phone!=null">
                 phone,
             </if>
+            <if test="isDefault!=null">
+                is_default,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId!=null">
@@ -76,6 +80,9 @@
             <if test="phone!=null">
                 #{phone,jdbcType=VARCHAR},
             </if>
+            <if test="isDefault!=null">
+                #{isDefault,jdbcType=BOOLEAN},
+            </if>
         </trim>
     </insert>
 
@@ -85,8 +92,15 @@
             address_detail = #{addressDetail,jdbcType=VARCHAR},
             receiver       = #{receiver,jdbcType=VARCHAR},
             user           = #{user,jdbcType=VARCHAR},
-            phone          = #{phone,jdbcType=VARCHAR}
+            phone          = #{phone,jdbcType=VARCHAR},
+            is_default     = #{isDefault,jdbcType=INTEGER}
         where id = #{id}
+    </update>
+
+    <update id="updateIsDefault" parameterType="com.yuanbao.record.mbp.mapper.entity.UserAddress">
+        update user_address
+        set is_default = 0
+        where user_id = #{userId,jdbcType=INTEGER}
     </update>
 
 </mapper>

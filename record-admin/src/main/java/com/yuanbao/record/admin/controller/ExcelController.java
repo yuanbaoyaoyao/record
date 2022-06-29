@@ -1,12 +1,12 @@
 package com.yuanbao.record.admin.controller;
 
-import com.yuanbao.record.admin.annotation.RequiresPermissionsDesc;
 import com.yuanbao.record.admin.service.ProductSkusService;
 import com.yuanbao.record.admin.service.UserOrderService;
 import com.yuanbao.record.common.annotation.OperationLog;
 import com.yuanbao.record.common.util.ExportExcelUtils;
 import com.yuanbao.record.mbp.vo.ProductSkusVo;
 import com.yuanbao.record.mbp.vo.UserOrderVo;
+import com.yuanbao.record.shiro.annotation.RequiresPermissionsDesc;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,6 +1,6 @@
 package com.yuanbao.record.shiro.util;
 
-import com.yuanbao.record.admin.annotation.RequiresPermissionsDesc;
+import com.yuanbao.record.shiro.annotation.RequiresPermissionsDesc;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

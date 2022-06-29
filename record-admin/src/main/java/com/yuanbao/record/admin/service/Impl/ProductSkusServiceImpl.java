@@ -53,7 +53,7 @@ public class ProductSkusServiceImpl extends ServiceImpl<ProductSkusMapper, Produ
     @Override
     public Map<String, Object> selectProductSkusChildrenLikeList() {
         Map<String, Object> data = new HashMap<>();
-        List<Product> productList = productMapper.selectProductListSearchAll("");
+        List<Product> productList = productMapper.selectProductListSearchAll("", null);
         for (Product product : productList) {
             List<ProductSkusVo> productSkusVoList = productSkusMapper.selectProductSkusListSearch("", null, product.getId(), null);
             if (productSkusVoList.size() != 0) {

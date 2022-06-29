@@ -9,9 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface ProductMapper extends BaseMapper<Product> {
-    IPage<Product> selectProductListSearch(Integer pageNum, Integer pageSize, IPage<Product> page, String title);
+    IPage<Product> selectProductListSearch(Integer pageNum, Integer pageSize, IPage<Product> page, String title,Integer type);
 
-    List<Product> selectProductListSearchAll(String title);
+    List<Product> selectProductListSearchAll(String title,Integer type);
 
     int insert(Product product);
 

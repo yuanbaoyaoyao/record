@@ -37,12 +37,7 @@
     </select>
 
     <select id="selectUserByEmail" resultType="com.yuanbao.record.mbp.mapper.entity.User">
-        SELECT u.id,
-               u.salt,
-               u.NAME,
-               u.PASSWORD,
-               u.avatar,
-               u.created_at
+        SELECT *
         FROM user u
         WHERE u.deleted != '1' and u.enable !='0'
         AND
@@ -91,6 +86,12 @@
             password = #{password,jdbcType=VARCHAR},
             avatar   = #{avatar,jdbcType=VARCHAR},
             email    = #{email,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateAvatarByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.User">
+        update user
+        set avatar = #{avatar,jdbcType=VARCHAR}
         where id = #{id,jdbcType=BIGINT}
     </update>
 

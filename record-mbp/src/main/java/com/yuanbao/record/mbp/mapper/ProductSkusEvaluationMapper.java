@@ -14,6 +14,8 @@ public interface ProductSkusEvaluationMapper extends BaseMapper<ProductSkusEvalu
 
     List<ProductSkusEvaluation> selectProductSkusEvaluationListSearch(Long orderSn, Long orderProductId, Long productSkusId);
 
-    int insert(ProductSkusEvaluation ProductSkusEvaluation);
+    int insert(ProductSkusEvaluation productSkusEvaluation);
+
+    int updateByPrimaryKey(ProductSkusEvaluation productSkusEvaluation);
 
 }

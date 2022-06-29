@@ -6,6 +6,7 @@
         <result column="product_id" property="productId"></result>
         <result column="title" property="title"></result>
         <result column="avatar" property="avatar"></result>
+        <result column="type" property="type"></result>
         <result column="description" property="description"></result>
         <result column="stock" property="stock"></result>
         <result column="created_at" property="createdAt"></result>
@@ -14,6 +15,10 @@
         <collection property="product" ofType="com.yuanbao.record.mbp.mapper.entity.Product" javaType="java.util.List">
             <id column="id" property="id"></id>
             <result column="title" property="title"></result>
+        </collection>
+        <collection property="orderProduct" ofType="com.yuanbao.record.mbp.mapper.entity.OrderProduct"
+                    javaType="java.util.List">
+            <id column="id" property="id"></id>
         </collection>
     </resultMap>
 
@@ -25,6 +30,7 @@
         ps.avatar,
         ps.description,
         ps.stock,
+        p.type,
         ps.created_at,
         p.title AS product_name
         FROM product as p
@@ -37,8 +43,29 @@
         <if test="productName != 'null'.toString() and productName != '' ">
             and p.title like concat ('%',#{productName,jdbcType=VARCHAR},'%')
         </if>
-        <if test="id != null and id != '' ">
+        <if test="id != null and id != '' and id !=0 ">
             and ps.id = #{id}
+        </if>
+        ORDER BY ps.stock
+    </select>
+
+    <select id="selectProductSkusListByProductTypeIPage" resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
+        SELECT
+        ps.id,
+        ps.title,
+        ps.product_id,
+        ps.avatar,
+        ps.description,
+        ps.stock,
+        p.type,
+        ps.created_at,
+        p.title AS product_name
+        FROM product as p
+        INNER JOIN product_skus as ps ON ps.product_id = p.id
+        WHERE
+        ps.deleted != '1' AND p.deleted != '1'
+        <if test="type != null and type != '' ">
+            and p.type = #{type,jdbcType=INTEGER}
         </if>
         ORDER BY ps.stock
     </select>
@@ -117,6 +144,51 @@
                  INNER JOIN product_skus ps ON ps.product_id = p.id
         WHERE ps.deleted != '1' AND p.deleted != '1'
         ORDER BY ps.stock desc limit 5
+    </select>
+
+    <select id="selectProductSkusListCountByProductIdAndTypeIPage"
+            resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkus">
+        SELECT ps.id,
+        p.title as productName,
+        ps.product_Id,
+        ps.description,
+        ps.title,
+        ps.stock,
+        ps.avatar,
+        ps.created_at,
+        sum(op.number) AS sum_product_number
+        FROM user_order uo
+        INNER JOIN order_product op ON op.user_order_id = uo.id
+        INNER JOIN product_skus ps ON ps.id = op.product_id
+        INNER JOIN product p on p.id = ps.product_id
+        WHERE uo.deleted != '1'
+        <if test="productId != '' and productId != null">
+            AND ps.product_id = #{productId,jdbcType=VARCHAR}
+        </if>
+        <if test="productId != '' and productId != null">
+            AND ps.product_id = #{productId,jdbcType=VARCHAR}
+        </if>
+        <if test="type == 4">
+            AND uo.user_id = #{userId,jdbcType=INTEGER}
+        </if>
+
+        AND ps.deleted != '1'
+        GROUP BY
+        ps.id,
+        ps.title,
+        ps.stock,
+        ps.avatar
+        <choose>
+            <when test="type==2">
+                ORDER BY
+                sum_product_number DESC
+            </when>
+            <when test="type == 3 and type==4">
+                ORDER BY
+                ps.stock DESC
+            </when>
+        </choose>
+
     </select>
 
 

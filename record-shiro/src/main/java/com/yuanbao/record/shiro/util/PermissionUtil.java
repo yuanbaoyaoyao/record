@@ -1,7 +1,7 @@
 package com.yuanbao.record.shiro.util;
 
 import com.yuanbao.record.mbp.vo.PermVo;
-import com.yuanbao.record.admin.annotation.RequiresPermissionsDesc;
+import com.yuanbao.record.shiro.annotation.RequiresPermissionsDesc;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;

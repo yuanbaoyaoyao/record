@@ -20,8 +20,9 @@
         SELECT fs.id,
                fs.product_skus_id,
                ps.avatar as avatar,
-               ps.title as product_skus_name,
-               p.title  as product_name
+               ps.title  as product_skus_name,
+               ps.stock,
+               p.title   as product_name
         FROM front_show fs
                  INNER JOIN product_skus ps ON ps.id = fs.product_skus_id
                  INNER JOIN product p ON p.id = ps.product_id
@@ -32,9 +33,11 @@
     <select id="selectByShowOld" resultType="com.yuanbao.record.mbp.mapper.entity.FrontShow">
         SELECT fs.id,
                fs.product_skus_id,
+               ps.stock,
                ps.avatar as avatar,
-               ps.title as product_skus_name,
-               p.title  as product_name
+               ps.title  as product_skus_name,
+               p.title   as product_name,
+               ps.description
         FROM front_show fs
                  INNER JOIN product_skus ps ON ps.id = fs.product_skus_id
                  INNER JOIN product p ON p.id = ps.product_id
@@ -46,9 +49,10 @@
         SELECT fs.id,
                fs.product_skus_id,
                ps.avatar as avatar,
-
-               ps.title as product_skus_name,
-               p.title  as product_name
+               ps.stock,
+               ps.description,
+               ps.title  as product_skus_name,
+               p.title   as product_name
         FROM front_show fs
                  INNER JOIN product_skus ps ON ps.id = fs.product_skus_id
                  INNER JOIN product p ON p.id = ps.product_id

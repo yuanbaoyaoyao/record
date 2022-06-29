@@ -1,9 +1,6 @@
 package com.yuanbao.record.shiro.controller;
 
 import cn.hutool.crypto.SecureUtil;
-import com.yuanbao.record.admin.service.AdminPermissionService;
-import com.yuanbao.record.admin.service.AdminRoleService;
-import com.yuanbao.record.admin.service.AdminUserService;
 import com.yuanbao.record.common.CommonResult;
 import com.yuanbao.record.common.annotation.OperationLog;
 import com.yuanbao.record.common.aop.LogInfoAspect;
@@ -14,9 +11,12 @@ import com.yuanbao.record.mbp.mapper.entity.AdminUser;
 import com.yuanbao.record.mbp.mapper.entity.JwtUser;
 import com.yuanbao.record.mbp.mapper.entity.User;
 import com.yuanbao.record.mbp.vo.PermVo;
+import com.yuanbao.record.shiro.service.ShiroAdminPermissionService;
+import com.yuanbao.record.shiro.service.ShiroAdminRoleService;
+import com.yuanbao.record.shiro.service.ShiroAdminUserService;
+import com.yuanbao.record.shiro.service.ShiroUserClientService;
 import com.yuanbao.record.shiro.util.Permission;
 import com.yuanbao.record.shiro.util.PermissionUtil;
-import com.yuanbao.record.web.service.UserClientService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -33,16 +33,19 @@ import java.util.*;
 public class ShiroController {
 
     @Autowired
-    private AdminUserService adminUserService;
+    private ShiroAdminUserService shiroAdminUserService;
+
 
     @Autowired
-    private UserClientService userClientService;
+    private ShiroUserClientService shiroUserClientService;
+
 
     @Autowired
-    private AdminRoleService adminRoleService;
+    private ShiroAdminRoleService shiroAdminRoleService;
+
 
     @Autowired
-    private AdminPermissionService adminPermissionService;
+    private ShiroAdminPermissionService shiroAdminPermissionService;
 
     @OperationLog(menu = {"客户端登录操作"}, action = "客户端登录")
     @PostMapping(value = "/client/login")
@@ -57,9 +60,9 @@ public class ShiroController {
         }
         User user;
         if (usernameInput.matches("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*")) {
-            user = userClientService.selectUserByEmail(usernameInput);
+            user = shiroUserClientService.selectUserByEmail(usernameInput);
         } else {
-            user = userClientService.selectUserListByName(usernameInput);
+            user = shiroUserClientService.selectUserListByName(usernameInput);
         }
         if (user == null) {
             return CommonResult.failed("用户不存在");
@@ -100,7 +103,7 @@ public class ShiroController {
         if (StringUtils.isEmpty(usernameInput) || StringUtils.isEmpty(passwordInput)) {
             return CommonResult.validateFailed();
         }
-        AdminUser adminUser = adminUserService.selectAdminListByName(usernameInput);
+        AdminUser adminUser = shiroAdminUserService.selectAdminListByName(usernameInput);
         if (adminUser == null) {
             return CommonResult.failed("用户不存在");
         }
@@ -123,8 +126,8 @@ public class ShiroController {
         adminInfo.put("adminRoleId", adminUser.getRoleId());
         adminInfo.put("lastLoginIp", adminUser.getLastLoginIp());
         adminInfo.put("lastLoginTime", adminUser.getLastLoginTime());
-        String role = adminRoleService.selectNameById(adminUser.getRoleId());
-        List<String> permissions = adminPermissionService.selectPermissionByRoleId(adminUser.getRoleId());
+        String role = shiroAdminRoleService.selectNameById(adminUser.getRoleId());
+        List<String> permissions = shiroAdminPermissionService.selectPermissionByRoleId(adminUser.getRoleId());
         adminInfo.put("role", role);
         adminInfo.put("perms", toApi(permissions));
 
@@ -161,16 +164,12 @@ public class ShiroController {
     @RequiresAuthentication
     @GetMapping("/info")
     public CommonResult info() {
-        System.out.println("使用了admin info");
         JwtUser jwtUser = (JwtUser) SecurityUtils.getSubject().getPrincipal();
-        System.out.println("adminUser:" + jwtUser);
         Map<String, Object> data = new HashMap<>();
-        AdminUser adminUser = adminUserService.selectAdminListByName(jwtUser.getUsername());
+        AdminUser adminUser = shiroAdminUserService.selectAdminListByName(jwtUser.getUsername());
         Long roleId = adminUser.getRoleId();
-        System.out.println("roleId:" + roleId);
-        String role = adminRoleService.selectNameById(roleId);
-        List<String> permissions = adminPermissionService.selectPermissionByRoleId(roleId);
-        System.out.println("permissions:" + permissions);
+        String role = shiroAdminRoleService.selectNameById(roleId);
+        List<String> permissions = shiroAdminPermissionService.selectPermissionByRoleId(roleId);
         data.put("name", adminUser.getName());
         data.put("avatar", adminUser.getAvatar());
         data.put("adminUserId", adminUser.getId());
@@ -178,20 +177,15 @@ public class ShiroController {
         data.put("lastLoginTime", adminUser.getLastLoginTime());
         data.put("role", role);
         data.put("perms", toApi(permissions));
-        System.out.println("toApi(permissions):" + toApi(permissions));
         return CommonResult.success(data);
     }
 
     @RequiresAuthentication
     @GetMapping("/client/info")
     public CommonResult clientInfo() {
-        System.out.println("使用了user info");
         JwtUser jwtUser = (JwtUser) SecurityUtils.getSubject().getPrincipal();
-        System.out.println("user:" + jwtUser);
         Map<String, Object> data = new HashMap<>();
-        User user = userClientService.selectUserListByName(jwtUser.getUsername());
-        Long id = user.getId();
-        System.out.println("id:" + id);
+        User user = shiroUserClientService.selectUserListByName(jwtUser.getUsername());
         data.put("name", user.getName());
         data.put("avatar", user.getAvatar());
         data.put("id", user.getId());
@@ -219,16 +213,16 @@ public class ShiroController {
             return CommonResult.failed();
         }
 
-        if (adminPermissionService.checkSuperPermission(roleId)) {
+        if (shiroAdminPermissionService.checkSuperPermission(roleId)) {
             return CommonResult.failed("当前角色的超级权限不能变更");
         }
 
-        adminPermissionService.deleteByRoleId(roleId);
+        shiroAdminPermissionService.deleteByRoleId(roleId);
         for (String permission : permissions) {
             AdminPermission adminPermission = new AdminPermission();
             adminPermission.setRoleId(roleId);
             adminPermission.setPermission(permission);
-            adminPermissionService.insert(adminPermission);
+            shiroAdminPermissionService.insert(adminPermission);
         }
         return CommonResult.success("success");
     }
@@ -250,7 +244,7 @@ public class ShiroController {
     }
 
     private List<String> getAssignedPermissions(Long roleId) {
-        return adminPermissionService.selectPermissionByRoleId(roleId);
+        return shiroAdminPermissionService.selectPermissionByRoleId(roleId);
     }
 
     private Collection<String> toApi(List<String> permissions) {

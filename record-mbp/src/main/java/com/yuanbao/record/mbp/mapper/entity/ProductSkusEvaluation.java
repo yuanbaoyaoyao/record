@@ -10,10 +10,12 @@ public class ProductSkusEvaluation {
     private Long id;
     private Long orderProductId;
     private String productSkusEvaluation;
+    private String additionalEvaluation;
     private Long orderSn;
     private Long productSkusId;
     private String productTitle;
     private String productSkusTitle;
+    private Integer number;
     private LocalDateTime createdAt;
     private LocalDateTime Date;
     private Boolean deleted;

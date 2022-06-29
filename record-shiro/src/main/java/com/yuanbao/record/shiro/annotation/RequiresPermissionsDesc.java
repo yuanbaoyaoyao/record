@@ -1,4 +1,4 @@
-package com.yuanbao.record.admin.annotation;
+package com.yuanbao.record.shiro.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

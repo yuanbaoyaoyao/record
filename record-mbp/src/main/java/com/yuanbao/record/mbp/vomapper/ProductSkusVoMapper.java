@@ -18,6 +18,7 @@ public interface ProductSkusVoMapper {
             @Mapping(target = "avatar", source = "productSkus.avatar"),
             @Mapping(target = "description", source = "productSkus.description"),
             @Mapping(target = "stock", source = "productSkus.stock"),
+            @Mapping(target = "type", source = "productSkus.type"),
             @Mapping(target = "createdAt", source = "productSkus.createdAt"),
     })
     ProductSkusVo Trans(ProductSkus productSkus);

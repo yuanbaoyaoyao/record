@@ -27,12 +27,14 @@ public class UserAddressClientServiceImpl extends ServiceImpl<UserAddressMapper,
 
     @Override
     public int insert(UserAddress userAddress) {
-        int id = userAddressMapper.insert(userAddress);
-        return id;
+        return userAddressMapper.insert(userAddress);
     }
 
     @Override
     public int updateByPrimaryKey(UserAddress userAddress) {
+        if (userAddress.getIsDefault()) {
+            userAddressMapper.updateIsDefault(userAddress.getUserId());
+        }
         return userAddressMapper.updateByPrimaryKey(userAddress);
     }
 

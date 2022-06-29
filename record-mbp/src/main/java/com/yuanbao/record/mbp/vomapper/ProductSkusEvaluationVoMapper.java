@@ -15,10 +15,12 @@ public interface ProductSkusEvaluationVoMapper {
             @Mapping(target = "id", source = "productSkusEvaluation.id"),
             @Mapping(target = "orderProductId", source = "productSkusEvaluation.orderProductId"),
             @Mapping(target = "productSkusEvaluation", source = "productSkusEvaluation.productSkusEvaluation"),
+            @Mapping(target = "additionalEvaluation", source = "productSkusEvaluation.additionalEvaluation"),
             @Mapping(target = "orderSn", source = "productSkusEvaluation.orderSn"),
             @Mapping(target = "productSkusId", source = "productSkusEvaluation.productSkusId"),
             @Mapping(target = "productTitle", source = "productSkusEvaluation.productTitle"),
             @Mapping(target = "productSkusTitle", source = "productSkusEvaluation.productSkusTitle"),
+            @Mapping(target = "number", source = "productSkusEvaluation.number"),
             @Mapping(target = "createdAt", source = "productSkusEvaluation.createdAt"),
     })
     ProductSkusEvaluationVo Trans(ProductSkusEvaluation productSkusEvaluation);

@@ -10,5 +10,9 @@ public class CartVo {
     private Long userId;
     private Long productSkusId;
     private Integer productSkusNumber;
+    private String avatar;
+    private String title;
+    private String productName;
+    private Integer stock;
     private LocalDateTime createdAt;
 }

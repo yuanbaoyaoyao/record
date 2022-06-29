@@ -14,5 +14,7 @@ public interface UserAddressMapper extends BaseMapper<UserAddress> {
 
     int insert(UserAddress userAddress);
 
+    int updateIsDefault(Long userId);
+
     int updateByPrimaryKey(UserAddress userAddress);
 }

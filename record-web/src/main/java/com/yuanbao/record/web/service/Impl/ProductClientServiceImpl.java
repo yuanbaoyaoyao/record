@@ -20,14 +20,14 @@ public class ProductClientServiceImpl extends ServiceImpl<ProductMapper, Product
     private ProductMapper productMapper;
 
     @Override
-    public IPage<ProductVo> selectProductListSearch(Integer pageNum, Integer pageSize, IPage<Product> page, String keyword1) {
+    public IPage<ProductVo> selectProductListSearch(Integer pageNum, Integer pageSize, IPage<Product> page, String keyword1, Integer type) {
         return null;
     }
 
     @Override
-    public List<ProductVo> selectProductListSearchAll(String title) {
+    public List<ProductVo> selectProductListSearchAll(String title, Integer type) {
         List<ProductVo> productVoList = new ArrayList<>();
-        List<Product> productList = productMapper.selectProductListSearchAll(title);
+        List<Product> productList = productMapper.selectProductListSearchAll(title, type);
         for (Product product : productList) {
             ProductVo productVo = ProductVoMapper.productvomapper.Trans(product);
             productVoList.add(productVo);

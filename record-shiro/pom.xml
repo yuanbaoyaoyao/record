@@ -20,16 +20,7 @@
             <artifactId>record-mbp</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.yuanbao</groupId>
-            <artifactId>record-admin</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yuanbao</groupId>
-            <artifactId>record-web</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -76,6 +67,10 @@
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.yuanbao</groupId>
+            <artifactId>record-common</artifactId>
         </dependency>
 
     </dependencies>

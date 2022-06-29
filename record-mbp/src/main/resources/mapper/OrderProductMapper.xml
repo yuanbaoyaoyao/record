@@ -167,6 +167,7 @@
         product_title,product_skus_title
     </select>
 
+
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.OrderProduct">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()

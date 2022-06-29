@@ -12,7 +12,9 @@ public interface ProductSkusEvaluationClientService extends IService<ProductSkus
 
     List<ProductSkusEvaluationVo> selectProductSkusEvaluationListSearch(Long orderSn, Long orderProductId, Long productSkusId);
 
-    int insert(ProductSkusEvaluation ProductSkusEvaluation);
+    int insert(ProductSkusEvaluation productSkusEvaluation);
+
+    int updateByPrimaryKey(ProductSkusEvaluation productSkusEvaluation);
 
     int deleteByPrimaryKey(Long id);
 }

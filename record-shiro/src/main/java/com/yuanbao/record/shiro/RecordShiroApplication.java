@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = "com.yuanbao.**", exclude = {ShiroAnnotationProcessorAutoConfiguration.class})
 @MapperScan(basePackages = {"com.yuanbao.record.mbp.mapper"})
-//@ComponentScan(nameGenerator = UniqueNameGenerator.class)
 
 public class RecordShiroApplication {
 

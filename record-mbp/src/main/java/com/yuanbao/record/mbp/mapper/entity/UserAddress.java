@@ -14,6 +14,7 @@ public class UserAddress implements Serializable {
     private String receiver;
     private String user;
     private String phone;
+    private Boolean isDefault;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean deleted;

@@ -27,6 +27,27 @@ public class ProductSkusClientServiceImpl extends ServiceImpl<ProductSkusMapper,
         IPage<ProductSkusVo> voPage = new Page<>();
         List<ProductSkusVo> productSkusVoList = new ArrayList<>();
         IPage<ProductSkus> productSkusIPage = productSkusMapper.selectProductSkusListSearchIPage(pageNum, pageSize, page, productName, id, productSkusName);
+
+        List<ProductSkus> productSkusList = productSkusIPage.getRecords();
+        for (ProductSkus productSkus : productSkusList) {
+            ProductSkusVo productSkusVo = ProductSkusVoMapper.productskusvomapper.Trans(productSkus);
+            productSkusVoList.add(productSkusVo);
+        }
+        voPage.setRecords(productSkusVoList);
+        voPage.setCurrent(pageNum);
+        voPage.setSize(pageSize);
+        voPage.setTotal(productSkusIPage.getTotal());
+        return voPage;
+    }
+
+    @Override
+    public IPage<ProductSkusVo> selectProductSkusListByProductTypeIPage(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, Integer type) {
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        IPage<ProductSkusVo> voPage = new Page<>();
+        List<ProductSkusVo> productSkusVoList = new ArrayList<>();
+        IPage<ProductSkus> productSkusIPage = productSkusMapper.selectProductSkusListByProductTypeIPage(pageNum, pageSize, page, type);
+
         List<ProductSkus> productSkusList = productSkusIPage.getRecords();
         for (ProductSkus productSkus : productSkusList) {
             ProductSkusVo productSkusVo = ProductSkusVoMapper.productskusvomapper.Trans(productSkus);
@@ -42,6 +63,25 @@ public class ProductSkusClientServiceImpl extends ServiceImpl<ProductSkusMapper,
     @Override
     public List<ProductSkusVo> selectProductSkusListSearch(String title, Long id, Long productId, String productSkusName) {
         return productSkusMapper.selectProductSkusListSearch(title, id, productId, productSkusName);
+    }
+
+    @Override
+    public IPage<ProductSkusVo> selectProductSkusListCountByProductIdAndTypeIPage(Integer pageNum, Integer pageSize, IPage<ProductSkus> page, Long productId, Integer type, Long userId) {
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        IPage<ProductSkusVo> voPage = new Page<>();
+        List<ProductSkusVo> productSkusVoList = new ArrayList<>();
+        IPage<ProductSkus> productSkusIPage = productSkusMapper.selectProductSkusListCountByProductIdAndTypeIPage(pageNum, pageSize, page, productId, type, userId);
+        List<ProductSkus> productSkusList = productSkusIPage.getRecords();
+        for (ProductSkus productSkus : productSkusList) {
+            ProductSkusVo productSkusVo = ProductSkusVoMapper.productskusvomapper.Trans(productSkus);
+            productSkusVoList.add(productSkusVo);
+        }
+        voPage.setRecords(productSkusVoList);
+        voPage.setCurrent(pageNum);
+        voPage.setSize(pageSize);
+        voPage.setTotal(productSkusIPage.getTotal());
+        return voPage;
     }
 
     @Override

@@ -24,8 +24,7 @@ public class ShiroConfig {
         filterRuleMap.put("/auth/client/login", "anon");
         filterRuleMap.put("/auth/client/sendEmailCode", "anon");
         filterRuleMap.put("/auth/client/logout", "anon");
-        //test
-        filterRuleMap.put("/announcement/**", "anon");
+        filterRuleMap.put("/frontShowClient/listRotation", "anon");
         filterRuleMap.put("/**", "authcBearer");
 
         factoryBean.setGlobalFilters(Collections.singletonList("noSessionCreation"));
@@ -38,7 +37,6 @@ public class ShiroConfig {
 
     @Bean
     protected Authorizer authorizer() {
-        ModularRealmAuthorizer authorizer = new ModularRealmAuthorizer();
-        return authorizer;
+        return new ModularRealmAuthorizer();
     }
 }

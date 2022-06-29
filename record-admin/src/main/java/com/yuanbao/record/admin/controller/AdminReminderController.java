@@ -1,12 +1,12 @@
 package com.yuanbao.record.admin.controller;
 
-import com.yuanbao.record.admin.annotation.RequiresPermissionsDesc;
 import com.yuanbao.record.admin.service.AdminReminderService;
 import com.yuanbao.record.common.CommonResult;
 import com.yuanbao.record.common.annotation.OperationLog;
 import com.yuanbao.record.mbp.mapper.AdminReminderMapper;
 import com.yuanbao.record.mbp.mapper.entity.AdminReminder;
 import com.yuanbao.record.mbp.vo.AdminReminderVo;
+import com.yuanbao.record.shiro.annotation.RequiresPermissionsDesc;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

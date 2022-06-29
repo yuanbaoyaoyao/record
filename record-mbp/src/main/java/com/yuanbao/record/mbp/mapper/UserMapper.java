@@ -16,4 +16,6 @@ public interface UserMapper extends BaseMapper<User> {
     int insert(User user);
 
     int updateByPrimaryKey(User user);
+
+    int updateAvatarByPrimaryKey(User user);
 }

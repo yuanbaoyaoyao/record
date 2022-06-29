@@ -8,7 +8,7 @@ import com.yuanbao.record.mbp.vo.ProductVo;
 import java.util.List;
 
 public interface ProductClientService extends IService<Product> {
-    IPage<ProductVo> selectProductListSearch(Integer pageNum, Integer pageSize, IPage<Product> page, String keyword1);
+    IPage<ProductVo> selectProductListSearch(Integer pageNum, Integer pageSize, IPage<Product> page, String keyword1, Integer type);
 
-    List<ProductVo> selectProductListSearchAll(String title);
+    List<ProductVo> selectProductListSearchAll(String title, Integer type);
 }

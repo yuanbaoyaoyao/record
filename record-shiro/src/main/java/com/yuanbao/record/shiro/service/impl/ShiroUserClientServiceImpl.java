@@ -1,4 +1,4 @@
-package com.yuanbao.record.web.service.Impl;
+package com.yuanbao.record.shiro.service.impl;
 
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.RandomUtil;
@@ -14,7 +14,7 @@ import com.yuanbao.record.common.util.SaltUtil;
 import com.yuanbao.record.mbp.dto.EmailDto;
 import com.yuanbao.record.mbp.mapper.UserMapper;
 import com.yuanbao.record.mbp.mapper.entity.User;
-import com.yuanbao.record.web.service.UserClientService;
+import com.yuanbao.record.shiro.service.ShiroUserClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 @Service
-public class UserClientServiceImpl extends ServiceImpl<UserMapper, User> implements UserClientService {
+public class ShiroUserClientServiceImpl extends ServiceImpl<UserMapper, User> implements ShiroUserClientService {
     @Autowired
     private UserMapper userMapper;
 
@@ -31,6 +31,8 @@ public class UserClientServiceImpl extends ServiceImpl<UserMapper, User> impleme
 
     @Autowired
     private EmailService emailService;
+
+    private final static int EXPIRE = 12;
 
     @Value("${code.expiration}")
     private Long expiration;
@@ -75,6 +77,8 @@ public class UserClientServiceImpl extends ServiceImpl<UserMapper, User> impleme
     @Override
     public int forget(User user) {
         Object value = redisUtils.get(user.getEmail());
+        System.out.println("输入的邮箱地址为:" + user.getEmail());
+        System.out.println("redis中的value为：" + value);
         if (value == null || !value.toString().equals(user.getEmailCode())) {
             throw new RuntimeException("无效验证码");
         }
@@ -114,6 +118,5 @@ public class UserClientServiceImpl extends ServiceImpl<UserMapper, User> impleme
         }
         emailService.send(new EmailDto(Collections.singletonList(email),
                 "邮箱验证码", template.render(Dict.create().set("code", code))));
-        System.out.println("codeeeeeeeeeee:" + code);
     }
 }

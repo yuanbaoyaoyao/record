@@ -27,7 +27,8 @@ public class ProductSkusEvaluationClientController {
             @RequestParam(value = "orderProductId", required = false) Long orderProductId,
             @RequestParam(value = "productSkusId", required = false) Long productSkusId) {
         IPage<ProductSkusEvaluation> page = new Page<>();
-        IPage<ProductSkusEvaluationVo> productSkusEvaluationVoIPage = productSkusEvaluationClientService.selectProductSkusEvaluationListSearchIPage(pageSize, pageNum, page, orderSn, orderProductId, productSkusId);
+        IPage<ProductSkusEvaluationVo> productSkusEvaluationVoIPage = productSkusEvaluationClientService.selectProductSkusEvaluationListSearchIPage(pageNum, pageSize, page, orderSn, orderProductId, productSkusId);
+        System.out.println(productSkusEvaluationVoIPage.getRecords());
         return CommonResult.success(productSkusEvaluationVoIPage);
     }
 
@@ -45,6 +46,16 @@ public class ProductSkusEvaluationClientController {
         int newId = productSkusEvaluationClientService.insert(productSkusEvaluation);
         if (newId > 0) {
             return CommonResult.success(newId);
+        } else {
+            return CommonResult.failed();
+        }
+    }
+
+    @PutMapping(value = "/update")
+    public CommonResult update(@RequestBody ProductSkusEvaluation productSkusEvaluation) {
+        int count = productSkusEvaluationClientService.updateByPrimaryKey(productSkusEvaluation);
+        if (count > 0) {
+            return CommonResult.success(count);
         } else {
             return CommonResult.failed();
         }

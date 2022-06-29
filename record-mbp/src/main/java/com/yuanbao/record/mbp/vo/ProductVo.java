@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 public class ProductVo {
     private Long id;
     private String title;
+    private String avatar;
     private String description;
+    private Integer type;
     private LocalDateTime createdAt;
 }

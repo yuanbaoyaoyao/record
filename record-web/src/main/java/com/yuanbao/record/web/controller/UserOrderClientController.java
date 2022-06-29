@@ -45,7 +45,6 @@ public class UserOrderClientController {
                                                         @RequestParam(value = "orderSn", required = false) Long orderSn,
                                                         @RequestParam(value = "orderStatus", required = false) Integer orderStatus) {
         IPage<UserOrder> page = new Page<>();
-        System.out.println("orderStatus" + orderStatus);
         IPage<UserOrderVo> userOrderVoIPage = userOrderClientService.selectOrderListSearch(pageNum, pageSize, page, userId, productTitle, productSkusTitle, orderSn, orderStatus);
         return CommonResult.success(userOrderVoIPage);
     }
@@ -55,6 +54,7 @@ public class UserOrderClientController {
         int count = userOrderClientService.updateByOrderSn(userOrder);
         return CommonResult.success(count);
     }
+
 
     @DeleteMapping(value = "/delete")
     public CommonResult delete(@RequestBody UserOrder userOrder) {

@@ -57,6 +57,11 @@ public class ProductSkusEvaluationClientServiceImpl extends ServiceImpl<ProductS
     }
 
     @Override
+    public int updateByPrimaryKey(ProductSkusEvaluation productSkusEvaluation) {
+        return productSkusEvaluationMapper.updateByPrimaryKey(productSkusEvaluation);
+    }
+
+    @Override
     public int deleteByPrimaryKey(Long id) {
         return productSkusEvaluationMapper.deleteById(id);
     }

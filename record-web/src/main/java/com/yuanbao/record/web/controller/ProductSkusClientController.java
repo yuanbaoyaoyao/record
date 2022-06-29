@@ -26,7 +26,29 @@ public class ProductSkusClientController {
             @RequestParam(value = "productName", defaultValue = "null") String productName,
             @RequestParam(value = "productSkusName", defaultValue = "null") String productSkusName) {
         IPage<ProductSkus> page = new Page<>();
-        IPage<ProductSkusVo> voPage = productSkusClientService.selectProductSkusListSearchIPage(pageNum, pageSize, page, productName, id,productSkusName);
+        IPage<ProductSkusVo> voPage = productSkusClientService.selectProductSkusListSearchIPage(pageNum, pageSize, page, productName, id, productSkusName);
+        return CommonResult.success(voPage);
+    }
+
+    @GetMapping(value = "/listByTypeIPage")
+    public CommonResult<IPage<ProductSkusVo>> getAllProductSkusByTypeIPage(
+            @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize,
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "type", required = false) Integer type) {
+        IPage<ProductSkus> page = new Page<>();
+        IPage<ProductSkusVo> voPage = productSkusClientService.selectProductSkusListByProductTypeIPage(pageNum, pageSize, page, type);
+        return CommonResult.success(voPage);
+    }
+
+    @GetMapping(value = "/listCountByProductIdAndTypeIPage")
+    public CommonResult<IPage<ProductSkusVo>> getAllProductSkusCountByProductIdAndTypeIPage(
+            @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize,
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "productId") Long productId,
+            @RequestParam(value = "type", defaultValue = "1") Integer type,
+            @RequestParam(value = "userId", required = false) Long userId) {
+        IPage<ProductSkus> page = new Page<>();
+        IPage<ProductSkusVo> voPage = productSkusClientService.selectProductSkusListCountByProductIdAndTypeIPage(pageNum, pageSize, page, productId, type, userId);
         return CommonResult.success(voPage);
     }
 

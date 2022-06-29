@@ -17,8 +17,9 @@ public class ProductClientController {
     private ProductClientService productClientService;
 
     @GetMapping(value = "/listAll")
-    public CommonResult<List<ProductVo>> getAllAddress(@RequestParam(value = "productName", defaultValue = "") String productName) {
-        List<ProductVo> productVoList = productClientService.selectProductListSearchAll(productName);
+    public CommonResult<List<ProductVo>> getAllProduct(@RequestParam(value = "productName", defaultValue = "") String productName,
+                                                       @RequestParam(value = "type", required = false) Integer type) {
+        List<ProductVo> productVoList = productClientService.selectProductListSearchAll(productName, type);
         return CommonResult.success(productVoList);
     }
 }

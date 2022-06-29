@@ -14,6 +14,7 @@ public class ProductSkus implements Serializable {
     private String title;
     private String avatar;
     private String description;
+    private Integer type;
     private Integer stock;
     private LocalDateTime createdAt;
     private LocalDateTime Date;

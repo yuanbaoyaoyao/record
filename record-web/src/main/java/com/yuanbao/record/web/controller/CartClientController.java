@@ -93,4 +93,14 @@ public class CartClientController {
             return CommonResult.failed();
         }
     }
+
+    @DeleteMapping(value = "/deleteList")
+    public CommonResult deleteList(@RequestBody List<Cart> cartList) {
+        for (Cart cart : cartList) {
+            long tempId = cart.getId();
+            cartClientService.deleteByPrimaryKey(tempId);
+        }
+
+        return CommonResult.success("删除成功");
+    }
 }

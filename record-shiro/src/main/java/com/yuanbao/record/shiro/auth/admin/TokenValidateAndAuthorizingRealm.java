@@ -1,9 +1,9 @@
 package com.yuanbao.record.shiro.auth.admin;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.yuanbao.record.admin.service.AdminUserService;
 import com.yuanbao.record.common.util.JwtUtil;
 import com.yuanbao.record.mbp.mapper.entity.JwtUser;
+import com.yuanbao.record.shiro.service.ShiroAdminUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -26,12 +26,12 @@ public class TokenValidateAndAuthorizingRealm extends AuthorizingRealm {
 //为了有鉴权方法，最高只能继承AuthorizingRealm，但是这个父类会自动生成一个SimpleCredentialsMatcher强制走matcher。只能说这套Realm的继承树不够成熟
 //鉴权方法放到usernamePasswordRealm里实现也可以，这样这个Realm可以直接继承Realm，最清爽简洁。但是逻辑上应该放这里，毕竟除了login之外的所有业务接口都靠这个realm验证身份。且u+p的验证方式是可选项，jwt的必然存在
 
-    AdminUserService adminUserService;
+    ShiroAdminUserService adminUserService;
 
     Map<String, Collection<String>> rolePermissionsMap;
 
     @Autowired
-    public void setAdminUserService(AdminUserService adminUserService){
+    public void setAdminUserService(ShiroAdminUserService adminUserService){
         this.adminUserService = adminUserService;
     }
 
@@ -97,5 +97,4 @@ public class TokenValidateAndAuthorizingRealm extends AuthorizingRealm {
 //        这个返回值是造Subject用的，返回值供createSubject使用
         return new SimpleAuthenticationInfo(jwtUser, bearerTokenString, this.getName());
     }
-
 }

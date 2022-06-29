@@ -16,6 +16,7 @@ public class ProductSkusVo {
     private String title;
     private String avatar;
     private String description;
+    private Integer type;
     private Integer stock;
     private LocalDateTime createdAt;
 }

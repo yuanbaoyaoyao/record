@@ -6,11 +6,13 @@
             resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkusEvaluation">
         SELECT
         pse.id,
+        pse.additional_evaluation,
         pse.order_product_id,
         pse.product_skus_evaluation,
         pse.created_at,
         op.product_skus_id,
         op.order_sn,
+        op.number,
         op.product_title,
         op.product_skus_title
         FROM
@@ -30,13 +32,16 @@
         ORDER BY pse.created_at desc
     </select>
 
-    <select id="selectProductSkusEvaluationListSearch" resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkusEvaluation">
+    <select id="selectProductSkusEvaluationListSearch"
+            resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkusEvaluation">
         SELECT
+        pse.additional_evaluation,
         pse.id,
         pse.order_product_id,
         pse.product_skus_evaluation,
         pse.created_at,
         op.product_skus_id,
+        op.number,
         op.order_sn,
         op.product_title,
         op.product_skus_title
@@ -69,6 +74,9 @@
             <if test="productSkusEvaluation!=null">
                 product_skus_evaluation,
             </if>
+            <if test="additionalEvaluation!=null">
+                additional_evaluation,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderProductId!=null">
@@ -77,7 +85,16 @@
             <if test="productSkusEvaluation!=null">
                 #{productSkusEvaluation,jdbcType=VARCHAR},
             </if>
+            <if test="additionalEvaluation!=null">
+                #{additionalEvaluation,jdbcType=VARCHAR},
+            </if>
         </trim>
     </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.ProductSkusEvaluation">
+        update product_skus_evaluation
+        set additional_evaluation = #{additionalEvaluation,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 
 </mapper>
