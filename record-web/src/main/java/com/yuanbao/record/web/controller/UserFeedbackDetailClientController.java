@@ -19,6 +19,7 @@ public class UserFeedbackDetailClientController {
     @GetMapping(value = "list")
     public CommonResult<List<UserFeedbackDetailVo>> getUserFeedbackDetail(
             @RequestParam(value = "userFeedbackId") Long userFeedbackId) {
+        System.out.println("userFeedbackId" + userFeedbackId);
         List<UserFeedbackDetailVo> userFeedbackDetailVoList = userFeedbackDetailClientService.selectUserFeedbackDetailByUserFeedbackId(userFeedbackId);
         return CommonResult.success(userFeedbackDetailVoList);
     }

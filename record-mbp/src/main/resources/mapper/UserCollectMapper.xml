@@ -23,9 +23,19 @@
     </resultMap>
 
     <select id="selectProductSkusByUserId" resultType="com.yuanbao.record.mbp.mapper.entity.UserCollect">
-        SELECT id, product_skus_id
+        SELECT uc.id,
+               ps.id   as productSkusId,
+               ps.avatar,
+               ps.stock,
+               ps.title,
+               p.title AS productName,
+               ps.description
         FROM user_collect uc
-        WHERE uc.deleted != '1' and uc.user_id = #{userId}
+                 INNER JOIN product_skus ps ON ps.id = uc.product_skus_id
+                 INNER JOIN product p ON p.id = ps.product_id
+        WHERE uc.deleted != '1'
+	AND uc.user_id = #{userId}
+        order by uc.created_at desc
     </select>
 
     <select id="selectIDByUserIdAndProuductSkusId" resultType="com.yuanbao.record.mbp.mapper.entity.UserCollect">

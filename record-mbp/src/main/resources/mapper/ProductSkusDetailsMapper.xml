@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuanbao.record.mbp.mapper.ProductSkusDetailsMapper">
+
+    <select id="selectList" resultType="com.yuanbao.record.mbp.mapper.entity.ProductSkusDetails">
+        SELECT *
+        FROM product_skus_details psd
+        WHERE psd.deleted != '1'
+        and psd.product_skus_id = #{productSkusId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.ProductSkusDetails">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into product_skus_details
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productSkusId!=null">
+                product_skus_id,
+            </if>
+            <if test="avatar!=null">
+                avatar,
+            </if>
+            <if test="sequence!=null">
+                sequence,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productSkusId!=null">
+                #{productSkusId,jdbcType=INTEGER},
+            </if>
+            <if test="avatar!=null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="sequence!=null">
+                #{sequence,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yuanbao.record.mbp.mapper.entity.ProductSkusDetails">
+        update product
+        set product_skus_id = #{productSkusId,jdbcType=INTEGER},
+            avatar          = #{avatar,jdbcType=VARCHAR},
+            sequence        = #{sequence,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

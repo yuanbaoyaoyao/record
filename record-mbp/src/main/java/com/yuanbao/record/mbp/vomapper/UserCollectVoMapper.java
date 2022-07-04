@@ -13,8 +13,12 @@ public interface UserCollectVoMapper {
 
     @Mappings({
             @Mapping(target = "id", source = "userCollect.id"),
-            @Mapping(target = "userId", source = "userCollect.userId"),
             @Mapping(target = "productSkusId", source = "userCollect.productSkusId"),
+            @Mapping(target = "avatar", source = "userCollect.avatar"),
+            @Mapping(target = "title", source = "userCollect.title"),
+            @Mapping(target = "productName", source = "userCollect.productName"),
+            @Mapping(target = "description", source = "userCollect.description"),
+            @Mapping(target = "stock", source = "userCollect.stock"),
             @Mapping(target = "createdAt", source = "userCollect.createdAt"),
     })
     UserCollectVo Trans(UserCollect userCollect);

@@ -40,7 +40,7 @@
         FROM user_feedback uf
                  INNER JOIN user u ON u.id = uf.user_id
         WHERE uf.deleted != '1' and uf.user_id = #{userId,jdbcType=BIGINT}
-        order by uf.is_read desc
+        order by uf.is_read, uf.is_finished
     </select>
 
     <insert id="insert" parameterType="com.yuanbao.record.mbp.mapper.entity.UserFeedback">

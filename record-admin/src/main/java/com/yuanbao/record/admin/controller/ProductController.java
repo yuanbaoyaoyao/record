@@ -28,10 +28,10 @@ public class ProductController {
     public CommonResult<IPage<ProductVo>> getAllProductIPage(
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-            @RequestParam(value = "title", defaultValue = "null") String title,
-            @RequestParam(value = "type", defaultValue = "null") Integer type) {
+            @RequestParam(value = "productName", defaultValue = "") String productName,
+            @RequestParam(value = "type", defaultValue = "") Integer type) {
         IPage<Product> page = new Page<>();
-        IPage<ProductVo> voPage = productService.selectProductListSearch(pageNum, pageSize, page, title, type);
+        IPage<ProductVo> voPage = productService.selectProductListSearch(pageNum, pageSize, page, productName, type);
         return CommonResult.success(voPage);
     }
 

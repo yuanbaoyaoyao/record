@@ -193,7 +193,7 @@
                 product_skus_title,
             </if>
             <if test="number!=null">
-                number
+                number,
             </if>
             <if test="productPicUrl!=null">
                 product_pic_url

@@ -14,10 +14,14 @@
         op.order_sn,
         op.number,
         op.product_title,
-        op.product_skus_title
+        op.product_skus_title,
+        uo.receiver,
+        u.avatar
         FROM
         product_skus_evaluation pse
         INNER JOIN order_product op ON op.id = pse.id
+        INNER JOIN user_order uo on uo.id = op.user_order_id
+        INNER JOIN user u on u.id = uo.user_id
         WHERE
         pse.deleted !=1
         <if test="orderSn != null and orderSn != '' ">
@@ -27,7 +31,7 @@
             and op.order_product_id = #{orderProductId,jdbcType=VARCHAR}
         </if>
         <if test="productSkusId != null and productSkusId != '' ">
-            and ps.product_skus_id = #{productSkusId}
+            and op.product_skus_id = #{productSkusId}
         </if>
         ORDER BY pse.created_at desc
     </select>
@@ -44,20 +48,24 @@
         op.number,
         op.order_sn,
         op.product_title,
-        op.product_skus_title
+        op.product_skus_title,
+        uo.receiver,
+        u.avatar
         FROM
         product_skus_evaluation pse
         INNER JOIN order_product op ON op.id = pse.id
+        INNER JOIN user_order uo on uo.id = op.user_order_id
+        INNER JOIN user u on u.id = uo.user_id
         WHERE
         pse.deleted !=1
         <if test="orderSn != null and orderSn != '' ">
             and op.order_sn = #{orderSn,jdbcType=VARCHAR}
         </if>
         <if test="orderProductId != null and orderProductId != '' ">
-            and op.order_product_id = #{orderProductId,jdbcType=VARCHAR}
+            and op.order_prodnuuct_id = #{orderProductId,jdbcType=VARCHAR}
         </if>
         <if test="productSkusId != null and productSkusId != '' ">
-            and ps.product_skus_id = #{productSkusId}
+            and op.product_skus_id = #{productSkusId}
         </if>
         ORDER BY pse.created_at desc
     </select>

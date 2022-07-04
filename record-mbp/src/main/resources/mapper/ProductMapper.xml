@@ -9,7 +9,7 @@
         <if test="productName != 'null'.toString() and productName != '' ">
             and p.title like concat ('%',#{productName,jdbcType=VARCHAR},'%')
         </if>
-        <if test="type != null and type != '' ">
+        <if test="type != 'null'.toString() and type != '' and type != null ">
             and p.type = #{type,jdbcType=INTEGER}
         </if>
     </select>

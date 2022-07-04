@@ -36,4 +36,13 @@ public class OrderProductClientController {
             return CommonResult.failed();
         }
     }
+
+    @PostMapping(value = "/createList")
+    public CommonResult create(@RequestBody List<OrderProduct> orderProductList) {
+        System.out.println("List<OrderProduct>:" + orderProductList);
+        for (OrderProduct orderProduct : orderProductList) {
+            orderProductClientService.insert(orderProduct);
+        }
+        return CommonResult.success("创建成功");
+    }
 }

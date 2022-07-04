@@ -2,8 +2,12 @@ package com.yuanbao.record.web.controller;
 
 import com.yuanbao.record.common.CommonResult;
 import com.yuanbao.record.mbp.mapper.entity.Cart;
+import com.yuanbao.record.mbp.mapper.entity.JwtUser;
+import com.yuanbao.record.mbp.mapper.entity.User;
 import com.yuanbao.record.mbp.vo.CartVo;
 import com.yuanbao.record.web.service.CartClientService;
+import com.yuanbao.record.web.service.UserClientService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,18 +17,25 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/cartClient")
 public class CartClientController {
+
     @Autowired
     private CartClientService cartClientService;
 
+    @Autowired
+    private UserClientService userClientService;
+
     @PostMapping(value = "/create")
     public CommonResult create(@RequestBody Cart cart) {
-
-        int newId = cartClientService.insert(cart);
-        if (newId > 0) {
-            return CommonResult.success(newId);
+        JwtUser jwtUser = (JwtUser) SecurityUtils.getSubject().getPrincipal();
+        User user = userClientService.selectUserListByName(jwtUser.getUsername());
+        Cart cart1 = cartClientService.selectByUserIdAndProductSkusId(user.getId(), cart.getProductSkusId());
+        if (cart1 != null) {
+            cart.setProductSkusNumber(cart.getProductSkusNumber() + cart1.getProductSkusNumber());
+            cartClientService.updateByUserIdAndProductSkusId(cart);
         } else {
-            return CommonResult.failed();
+            cartClientService.insert(cart);
         }
+        return CommonResult.success("加入购物车成功");
     }
 
     @GetMapping(value = "/list")

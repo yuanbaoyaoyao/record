@@ -14,6 +14,7 @@ public interface CartVoMapper {
     @Mappings({
             @Mapping(target = "id", source = "cart.id"),
             @Mapping(target = "userId", source = "cart.userId "),
+            @Mapping(target = "productId", source = "cart.productId "),
             @Mapping(target = "productSkusId", source = "cart.productSkusId"),
             @Mapping(target = "productSkusNumber", source = "cart.productSkusNumber"),
             @Mapping(target = "avatar", source = "cart.avatar"),

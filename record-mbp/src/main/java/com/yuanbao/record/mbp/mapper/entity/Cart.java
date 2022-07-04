@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public class Cart implements Serializable {
     static final Long serialVersionUID = 1L;
     private Long id;
+    private Long productId;
     private Long userId;
     private Long productSkusId;
     private Integer productSkusNumber;

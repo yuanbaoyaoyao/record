@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 public class CartVo {
     private Long id;
     private Long userId;
+    private Long productId;
+
     private Long productSkusId;
     private Integer productSkusNumber;
     private String avatar;

@@ -17,6 +17,7 @@ public class CartClientServiceImpl extends ServiceImpl<CartMapper, Cart> impleme
 
     @Override
     public List<CartVo> selectByUserId(Long userId) {
+        System.out.println("cartMapper.selectByUserId(userId):" + cartMapper.selectByUserId(userId));
         return cartMapper.selectByUserId(userId);
     }
 
@@ -27,7 +28,7 @@ public class CartClientServiceImpl extends ServiceImpl<CartMapper, Cart> impleme
 
     @Override
     public Cart selectByUserIdAndProductSkusId(Long userId, Long productSkusId) {
-         return  cartMapper.selectByUserIdAndProductSkusId(userId,productSkusId);
+        return cartMapper.selectByUserIdAndProductSkusId(userId, productSkusId);
     }
 
     @Override

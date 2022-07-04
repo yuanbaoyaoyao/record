@@ -18,6 +18,7 @@
                ps.avatar,
                ps.title,
                p.title AS product_name,
+               p.id    as product_id,
                ps.description,
                ps.stock,
                c.product_skus_number
@@ -37,6 +38,7 @@
                ps.avatar,
                ps.title,
                p.title AS product_name,
+               p.id    as product_id,
                ps.description,
                ps.stock,
                c.product_skus_number

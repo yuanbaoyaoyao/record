@@ -47,8 +47,7 @@ public class UserOrderClientServiceImpl extends ServiceImpl<UserOrderMapper, Use
         //1：审核中
         userOrder.setOrderStatus(1);
         System.out.println("insert userOrder" + userOrder);
-        int id = userOrderMapper.insert(userOrder);
-        return id;
+        return userOrderMapper.insert(userOrder);
     }
 
     @Override

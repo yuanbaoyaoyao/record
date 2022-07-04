@@ -21,6 +21,8 @@ public interface ProductSkusEvaluationVoMapper {
             @Mapping(target = "productTitle", source = "productSkusEvaluation.productTitle"),
             @Mapping(target = "productSkusTitle", source = "productSkusEvaluation.productSkusTitle"),
             @Mapping(target = "number", source = "productSkusEvaluation.number"),
+            @Mapping(target = "receiver", source = "productSkusEvaluation.receiver"),
+            @Mapping(target = "avatar", source = "productSkusEvaluation.avatar"),
             @Mapping(target = "createdAt", source = "productSkusEvaluation.createdAt"),
     })
     ProductSkusEvaluationVo Trans(ProductSkusEvaluation productSkusEvaluation);

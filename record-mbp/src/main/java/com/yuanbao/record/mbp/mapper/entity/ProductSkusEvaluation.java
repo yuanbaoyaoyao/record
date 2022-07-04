@@ -16,6 +16,8 @@ public class ProductSkusEvaluation {
     private String productTitle;
     private String productSkusTitle;
     private Integer number;
+    private String receiver;
+    private String avatar;
     private LocalDateTime createdAt;
     private LocalDateTime Date;
     private Boolean deleted;

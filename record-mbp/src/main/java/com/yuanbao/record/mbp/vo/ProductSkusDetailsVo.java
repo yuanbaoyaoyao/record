@@ -5,13 +5,10 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class UserCollectVo {
+public class ProductSkusDetailsVo {
     private Long id;
+    private Long productId;
     private String avatar;
-    private String title;
-    private String productName;
-    private Long productSkusId;
-    private String description;
-    private Integer stock;
+    private Integer sequence;
     private LocalDateTime createdAt;
 }
