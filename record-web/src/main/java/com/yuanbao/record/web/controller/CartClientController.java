@@ -26,6 +26,7 @@ public class CartClientController {
 
     @PostMapping(value = "/create")
     public CommonResult create(@RequestBody Cart cart) {
+        System.out.println("cartrrrrrrrrrrrr:"+cart);
         JwtUser jwtUser = (JwtUser) SecurityUtils.getSubject().getPrincipal();
         User user = userClientService.selectUserListByName(jwtUser.getUsername());
         Cart cart1 = cartClientService.selectByUserIdAndProductSkusId(user.getId(), cart.getProductSkusId());
@@ -104,9 +105,31 @@ public class CartClientController {
             return CommonResult.failed();
         }
     }
+    @PostMapping(value = "/deleteDD")
+    public CommonResult deleteDD(@RequestBody Cart cart) {
+        long tempId = cart.getId();
+        int count = cartClientService.deleteByPrimaryKey(tempId);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
 
     @DeleteMapping(value = "/deleteList")
     public CommonResult deleteList(@RequestBody List<Cart> cartList) {
+        System.out.println("cartList:" + cartList);
+        for (Cart cart : cartList) {
+            long tempId = cart.getId();
+            cartClientService.deleteByPrimaryKey(tempId);
+        }
+
+        return CommonResult.success("删除成功");
+    }
+
+    @PostMapping(value = "/deleteListDD")
+    public CommonResult deleteListDD(@RequestBody List<Cart> cartList) {
+        System.out.println("cartList:" + cartList);
         for (Cart cart : cartList) {
             long tempId = cart.getId();
             cartClientService.deleteByPrimaryKey(tempId);

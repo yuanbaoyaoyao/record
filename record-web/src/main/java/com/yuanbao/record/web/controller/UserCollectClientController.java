@@ -20,10 +20,11 @@ public class UserCollectClientController {
 
     @PostMapping(value = "/create")
     public CommonResult create(@RequestBody UserCollect userCollect) {
-
         int newId = userCollectClientService.insert(userCollect);
+        System.out.println("newId:" + newId);
+        System.out.println(userCollect);
         if (newId > 0) {
-            return CommonResult.success(newId);
+            return CommonResult.success(userCollect);
         } else {
             return CommonResult.failed();
         }
@@ -40,8 +41,8 @@ public class UserCollectClientController {
 
     @GetMapping(value = "/IsLike")
     public CommonResult<List<UserCollectVo>> getAllOrder(@RequestParam(value = "productSkusId") Long productSkusId,
-                                                          @RequestParam(value = "userId") Long userId) {
-        List<UserCollectVo> userCollectVoList = userCollectClientService.selectIDByUserIdAndProuductSkusId(userId,productSkusId);
+                                                         @RequestParam(value = "userId") Long userId) {
+        List<UserCollectVo> userCollectVoList = userCollectClientService.selectIDByUserIdAndProuductSkusId(userId, productSkusId);
         return CommonResult.success(userCollectVoList);
     }
 
@@ -54,5 +55,34 @@ public class UserCollectClientController {
         } else {
             return CommonResult.failed();
         }
+    }
+
+    @PostMapping(value = "/deleteDD")
+    public CommonResult deleteDD(@RequestBody UserCollect userCollect) {
+        long tempId = userCollect.getId();
+        int count = userCollectClientService.deleteByPrimaryKey(tempId);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
+
+    @DeleteMapping(value = "/deleteList")
+    public CommonResult deleteList(@RequestBody List<UserCollect> userCollectList) {
+        for (UserCollect userCollect : userCollectList) {
+            long tempId = userCollect.getId();
+            userCollectClientService.deleteByPrimaryKey(tempId);
+        }
+        return CommonResult.success("删除成功");
+    }
+
+    @PostMapping(value = "/deleteListDD")
+    public CommonResult deleteListDD(@RequestBody List<UserCollect> userCollectList) {
+        for (UserCollect userCollect : userCollectList) {
+            long tempId = userCollect.getId();
+            userCollectClientService.deleteByPrimaryKey(tempId);
+        }
+        return CommonResult.success("删除成功");
     }
 }

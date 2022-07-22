@@ -43,9 +43,10 @@ public class UserOrderClientController {
                                                         @RequestParam(value = "productTitle", defaultValue = "null") String productTitle,
                                                         @RequestParam(value = "productSkusTitle", defaultValue = "null") String productSkusTitle,
                                                         @RequestParam(value = "orderSn", required = false) Long orderSn,
+                                                        @RequestParam(value = "id", required = false) Long id,
                                                         @RequestParam(value = "orderStatus", required = false) Integer orderStatus) {
         IPage<UserOrder> page = new Page<>();
-        IPage<UserOrderVo> userOrderVoIPage = userOrderClientService.selectOrderListSearch(pageNum, pageSize, page, userId, productTitle, productSkusTitle, orderSn, orderStatus);
+        IPage<UserOrderVo> userOrderVoIPage = userOrderClientService.selectOrderListSearch(pageNum, pageSize, page, userId, productTitle, productSkusTitle, orderSn,id, orderStatus);
         return CommonResult.success(userOrderVoIPage);
     }
 

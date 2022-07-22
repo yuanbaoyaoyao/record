@@ -12,6 +12,9 @@
         <if test="orderSn != null and orderSn != '' ">
             AND (uo.order_sn like concat (#{orderSn,jdbcType=BIGINT}))
         </if>
+        <if test="id != null and id != '' ">
+            AND uo.id = #{id,jdbcType=BIGINT}
+        </if>
         <if test="orderStatus != '' and orderStatus != null">
             AND (uo.order_status like concat (#{orderStatus,jdbcType=BIGINT}))
         </if>

@@ -23,11 +23,22 @@ public class EsProductController {
 
     @GetMapping(value = "/search")
     @ResponseBody
-    public CommonResult<Page<EsProductSkus>> getAllAdminOperationLog(
-            @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+    public CommonResult<Page<EsProductSkus>> search(
+            @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "keyword", defaultValue = "null") String keyword) {
+        System.out.println("keyword:"+keyword);
         Page<EsProductSkus> productSkusPage = esProductService.selectProductSkusListSearchIPage(pageNum, pageSize, keyword, keyword);
+        return CommonResult.success(productSkusPage);
+    }
+
+    @GetMapping(value = "/searchByStock")
+    @ResponseBody
+    public CommonResult<Page<EsProductSkus>> searchByStock(
+            @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize,
+            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "keyword", defaultValue = "null") String keyword) {
+        Page<EsProductSkus> productSkusPage = esProductService.selectProductSkusListOrderByStockSearchIPage(pageNum, pageSize, keyword, keyword);
         return CommonResult.success(productSkusPage);
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface UserOrderMapper extends BaseMapper<UserOrder> {
-    IPage<UserOrder> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle, Long orderSn, Integer orderStatus);
+    IPage<UserOrder> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle, Long orderSn,Long id, Integer orderStatus);
 
     IPage<UserOrder> selectOrderListDateSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String receiver, Long orderSn, Integer dateState, String specifiedTime1, String specifiedTime2);
 

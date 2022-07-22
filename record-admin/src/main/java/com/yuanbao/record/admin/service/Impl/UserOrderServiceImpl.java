@@ -26,12 +26,12 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     private OrderProductMapper orderProductMapper;
 
     @Override
-    public IPage<UserOrderVo> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle, Long orderSn, Integer orderStatus) {
+    public IPage<UserOrderVo> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle, Long orderSn,Long id, Integer orderStatus) {
         page.setCurrent(pageNum);
         page.setSize(pageSize);
         IPage<UserOrderVo> voPage = new Page<>();
         List<UserOrderVo> userOrderVoList = new ArrayList<>();
-        IPage<UserOrder> userOrderIPage = userOrderMapper.selectOrderListSearch(pageNum, pageSize, page, userId, productTitle, productSkusTitle, orderSn, orderStatus);
+        IPage<UserOrder> userOrderIPage = userOrderMapper.selectOrderListSearch(pageNum, pageSize, page, userId, productTitle, productSkusTitle, orderSn,id, orderStatus);
 
         return getUserOrderVoIPage(pageNum, pageSize, voPage, userOrderVoList, userOrderIPage);
     }

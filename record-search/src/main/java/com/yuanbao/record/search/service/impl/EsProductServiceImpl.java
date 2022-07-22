@@ -33,4 +33,11 @@ public class EsProductServiceImpl implements EsProductService {
         System.out.println("findByTitleOrProductName:" + esProductSkusRepository.findByTitleOrProductNameContaining(page, title, productName));
         return esProductSkusRepository.findByTitleOrProductNameContaining(page, title, productName);
     }
+
+    @Override
+    public Page<EsProductSkus> selectProductSkusListOrderByStockSearchIPage(Integer pageNum, Integer pageSize, String title, String productName) {
+        Pageable page = PageRequest.of(pageNum - 1, pageSize);
+        System.out.println("findByTitleOrProductName:" + esProductSkusRepository.findByTitleOrProductNameContainingOrderByStockDesc(page, title, productName));
+        return esProductSkusRepository.findByTitleOrProductNameContainingOrderByStockDesc(page, title, productName);
+    }
 }

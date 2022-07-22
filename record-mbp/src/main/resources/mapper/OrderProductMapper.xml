@@ -12,10 +12,10 @@
         <if test="orderSn != '' and orderSn != null">
             AND (op.order_sn = (#{orderSn,jdbcType=BIGINT}))
         </if>
-        <if test="productTitle != null and productTitle != '' ">
+        <if test="productTitle != null and productTitle != '' and productTitle != 'null'.toString">
             AND (op.product_title = (#{productTitle,jdbcType=VARCHAR}))
         </if>
-        <if test="productSkusTitle != null and productSkusTitle != '' ">
+        <if test="productSkusTitle != null and productSkusTitle != '' and productSkusTitle != 'null'.toString">
             AND (op.product_skus_title = (#{productSkusTitle,jdbcType=VARCHAR}))
         </if>
     </select>

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public class UserCollect implements Serializable {
     static final Long serialVersionUID = 1L;
     private Long id;
+    private Long userId;
     private String avatar;
     private String title;
     private String productName;

@@ -36,5 +36,4 @@ public class FrontShowClientController {
         List<FrontShowVo> frontShowVoList = frontShowClientService.selectByShowNew();
         return CommonResult.success(frontShowVoList);
     }
-
 }

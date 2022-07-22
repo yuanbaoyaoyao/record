@@ -73,4 +73,15 @@ public class UserAddressClientController {
             return CommonResult.failed();
         }
     }
+
+    @PostMapping(value = "/deleteDD")
+    public CommonResult deleteDD(@RequestBody UserAddress userAddress) {
+        long tempId = userAddress.getId();
+        int count = userAddressClientService.deleteByPrimaryKey(tempId);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
 }

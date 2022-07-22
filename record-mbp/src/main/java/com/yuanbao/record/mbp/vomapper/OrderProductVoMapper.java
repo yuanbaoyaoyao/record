@@ -9,6 +9,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface OrderProductVoMapper {
+
     OrderProductVoMapper orderproductvomapper = Mappers.getMapper(OrderProductVoMapper.class);
 
     @Mappings({
@@ -23,8 +24,10 @@ public interface OrderProductVoMapper {
             @Mapping(target = "countOrderNumber", source = "orderProduct.countOrderNumber"),
             @Mapping(target = "sumProductNumber", source = "orderProduct.sumProductNumber"),
             @Mapping(target = "number", source = "orderProduct.number"),
+            @Mapping(target = "productPicUrl", source = "orderProduct.productPicUrl"),
             @Mapping(target = "createdAt", source = "orderProduct.createdAt"),
             @Mapping(target = "updatedAt", source = "orderProduct.updatedAt"),
+
     })
     OrderProductVo Trans(OrderProduct orderProduct);
 }

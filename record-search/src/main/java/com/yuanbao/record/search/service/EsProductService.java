@@ -9,4 +9,6 @@ public interface EsProductService {
 
     Page<EsProductSkus> selectProductSkusListSearchIPage(Integer pageNum, Integer pageSize, String title, String productName);
 
+    Page<EsProductSkus> selectProductSkusListOrderByStockSearchIPage(Integer pageNum, Integer pageSize, String title, String productName);
+
 }

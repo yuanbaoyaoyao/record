@@ -8,7 +8,7 @@ import com.yuanbao.record.mbp.vo.UserOrderVo;
 import java.util.List;
 
 public interface UserOrderService extends IService<UserOrder> {
-    IPage<UserOrderVo> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle, Long orderSn, Integer orderStatus);
+    IPage<UserOrderVo> selectOrderListSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, String productTitle, String productSkusTitle, Long orderSn,Long id, Integer orderStatus);
 
     IPage<UserOrderVo> selectOrderListDateSearch(Integer pageNum, Integer pageSize, IPage<UserOrder> page, Long userId, Integer dateState, String receiver,Long orderSn, String specifiedTime1, String specifiedTime2);
 

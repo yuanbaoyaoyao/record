@@ -52,8 +52,27 @@ public class UserReminderClientController {
         }
     }
 
+    @PostMapping(value = "/delete")
+    public CommonResult deleteDD(@RequestBody UserReminder userReminder) {
+        long tempId = userReminder.getId();
+        int count = userReminderClientService.deleteByPrimaryKey(tempId);
+        if (count > 0) {
+            return CommonResult.success(count);
+        } else {
+            return CommonResult.failed();
+        }
+    }
+
     @DeleteMapping(value = "/deleteByIds")
     public CommonResult deleteByIds(@RequestBody List<UserReminder> userReminderList) {
+        for (UserReminder userReminder : userReminderList) {
+            userReminderClientService.deleteByPrimaryKey(userReminder.getId());
+        }
+        return CommonResult.success("全部删除成功");
+    }
+
+    @PostMapping(value = "/deleteByIds")
+    public CommonResult deleteByIdsDD(@RequestBody List<UserReminder> userReminderList) {
         for (UserReminder userReminder : userReminderList) {
             userReminderClientService.deleteByPrimaryKey(userReminder.getId());
         }

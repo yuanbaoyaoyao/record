@@ -17,6 +17,7 @@ public class OrderProductVo {
     private Long productSkusId;
     private String productTitle;
     private String productSkusTitle;
+    private String productPicUrl;
     private Integer number;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
