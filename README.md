@@ -25,3 +25,5 @@ record项目是一套类似电商的系统，包含前台用户界面和后台�
 - mall：(https://github.com/macrozheng/mall)
 - litemall：(https://github.com/linlinjava/litemall)
 还有好多其他大佬的，谢谢大佬们
+### sql位置
+record/record-mbp/src/main/resources/sql/
